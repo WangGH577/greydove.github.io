@@ -1,0 +1,984 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://greydoveh.github.io</id>
+    <title>Gridea</title>
+    <updated>2021-12-28T13:20:18.591Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://greydoveh.github.io"/>
+    <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
+    <subtitle>温故而知新</subtitle>
+    <logo>https://greydoveh.github.io/images/avatar.png</logo>
+    <icon>https://greydoveh.github.io/favicon.ico</icon>
+    <rights>All rights reserved 2021, Gridea</rights>
+    <entry>
+        <title type="html"><![CDATA[【Gym-101972G】G.Minimax 动态规划]]></title>
+        <id>https://greydoveh.github.io/post/gym-101972g/</id>
+        <link href="https://greydoveh.github.io/post/gym-101972g/">
+        </link>
+        <updated>2021-12-28T12:20:20.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="gym-101972g">Gym-101972G</h1>
+<font size = 3> 
+<h2 id="minimax"><strong><a href="https://vjudge.net/problem/Gym-101972G">Minimax</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>定义一个矩阵的beauty值为矩阵中的最大元素<br>
+给出一个m*n的矩阵，从中删除一行一列，将矩阵分成四个象限，每个象限有一个beauty值，问怎样分能够使得四个象限beauty值得最大与最小值之差最小，求这个最小值。</p>
+<p><strong>Time  : 2500 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>从四个方向开始DP，记录四个方向子矩阵的beauty值，然后枚举每一行每一列，更新最小值</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+typedef long double ldouble;
+using namespace std;
+
+const int N = 500 + 10;
+int n, m;
+int a[N][N];
+int lu[N][N], ru[N][N], ld[N][N], rd[N][N];
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+
+    int T;	scanf(&quot;%d&quot;, &amp;T);
+    while (T--) {
+        scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= m; j++) {
+                scanf(&quot;%d&quot;, &amp;a[i][j]);
+            }
+        }
+        for (int i = 0; i &lt;= n; i++) {
+            lu[i][0] = ru[i][0] = ld[i][0] = rd[i][0] = 0;
+            lu[i][m + 1] = ru[i][m + 1] = ld[i][m + 1] = rd[i][m + 1] = 0;
+        }
+        for (int j = 0; j &lt;= m; j++) {
+            lu[0][j] = ru[0][j] = ld[0][j] = rd[0][j] = 0;
+            lu[n + 1][j] = ru[n + 1][j] = ld[n + 1][j] = rd[n + 1][j] = 0;
+        }
+        // lu
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = 1; j &lt;= m; j++) {
+                lu[i][j] = max(a[i][j], max(lu[i][j - 1], lu[i - 1][j]));
+            }
+        }
+        // ru
+        for (int i = 1; i &lt;= n; i++) {
+            for (int j = m; j &gt; 0; j--) {
+                ru[i][j] = max(a[i][j], max(ru[i][j + 1], ru[i - 1][j]));
+            }
+        }
+        // ld
+        for (int i = n; i &gt; 0; i--) {
+            for (int j = 1; j &lt;= m; j++) {
+                ld[i][j] = max(a[i][j], max(ld[i][j - 1], ld[i + 1][j]));
+            }
+        }
+        // rd
+        for (int i = n; i &gt; 0; i--) {
+            for (int j = m; j &gt; 0; j--) {
+                rd[i][j] = max(a[i][j], max(rd[i][j + 1], rd[i + 1][j]));
+            }
+        }
+        int ans = 1e9 + 10;
+        for (int i = 2; i &lt; n; i++) {
+            for (int j = 2; j &lt; m; j++) {
+                int mx = max(lu[i - 1][j - 1], max(ru[i - 1][j + 1], max(ld[i + 1][j - 1], rd[i + 1][j + 1])));
+                int mi = min(lu[i - 1][j - 1], min(ru[i - 1][j + 1], min(ld[i + 1][j - 1], rd[i + 1][j + 1])));
+                ans = min(ans, mx - mi);
+            }
+        }
+        printf(&quot;%d\n&quot;, ans);
+    }
+
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论]]></title>
+        <id>https://greydoveh.github.io/post/gym-103117e/</id>
+        <link href="https://greydoveh.github.io/post/gym-103117e/">
+        </link>
+        <updated>2021-12-28T12:17:01.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="2021四川省赛e">2021四川省赛E</h1>
+<font size = 3> 
+<h2 id="dont-really-like-how-the-story-ends"><strong><a href="https://vjudge.net/problem/Gym-103117E">Don't Really Like How The Story Ends</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>给图加边，使得一个可能的DFS序列刚好是从1到n</p>
+<p><strong>Time  : 1000 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>第一次打正式比赛，场上E因为自己的nt行为T了好几发，这个是赛后补题<br>
+直接搜索，但是需要有一定条件<br>
+如果想要DFS序列刚好为从1到N，需要满足的条件：</p>
+<ol>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>直接相连，则访问搜索<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点存在没有访问的相邻节点且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点不与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>点相连，此时必须将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>连接到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>上</li>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点所有相邻节点都被访问了，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>可以与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>相连，也可以和从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>=&gt;<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>中路径上的任意一点相连，路径上的点都在递归栈里面，此时可以让<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点退栈，一直回到某个满足条件<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>的节点</li>
+<li>如果第3点的点退栈一直到起点1号点都没有直接相连，说明存在不连通部分，此时必须加边，此时再去搜索不连通的部分，一直到全部搜索完</li>
+</ol>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+const int N = 1e5 + 5;
+using namespace std;
+vector&lt;int&gt; mp[N];
+bool vis[N];
+int cnt;
+int n, m, nxt;
+
+void dfs(int u) {
+    nxt++;
+    for (int i = 0; i &lt; mp[u].size(); i++) {
+        int to = mp[u][i];
+        if (vis[to]) continue;
+        if (to == nxt) {	// [1]
+            vis[nxt] = true;
+            dfs(nxt);
+        } else {			// [2]
+            cnt++;
+            vis[nxt] = true;
+            dfs(nxt);
+            i--;
+        } 
+    }
+    if (u == 1) {			// [3] [4]
+        while (nxt &lt;= n) {
+            vis[nxt] = true;
+            dfs(nxt);
+            cnt++;
+        }
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);cin.tie(0);
+    int T;	cin &gt;&gt; T;
+    while (T--) {
+        cin &gt;&gt; n &gt;&gt; m;
+        for (int i = 1; i &lt;= n; i++) {
+            mp[i].clear();
+            vis[i] = false;
+        }
+        nxt = 1;
+        cnt = 0;
+        for (int i = 0; i &lt; m; i++) {
+            int u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            if (u &lt; v)  mp[u].push_back(v);
+            if (u &gt; v)  mp[v].push_back(u);	// 一个小优化，只由编号小的节点连接到编号大的节点
+        }
+        for (int i = 1; i &lt;= n; i++) {
+            sort(mp[i].begin(), mp[i].end());	
+            // 这里进行排序，就可以保证每次访问的节点都是最小的，方便判断刚刚解题思路中说的条件
+            // 不要用堆，亲测会T（场上nt的我）
+        }
+        vis[1] = true;
+        dfs(1);
+        cout &lt;&lt; cnt &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造]]></title>
+        <id>https://greydoveh.github.io/post/gym-103118c/</id>
+        <link href="https://greydoveh.github.io/post/gym-103118c/">
+        </link>
+        <updated>2021-12-28T12:12:36.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="2021山东省赛c">2021山东省赛C</h1>
+<font size = 3> 
+<h2 id="cat-virus"><strong><a href="https://vjudge.net/problem/Gym-103118C">Cat Virus</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>一棵树，节点有黑色和白色，黑色节点的所有子节点都为黑色<br>
+一棵树有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>(</mo><mn>2</mn><mo>&lt;</mo><mo>=</mo><mi>k</mi><mo>&lt;</mo><mo>=</mo><mn>2</mn><mo separator="true">⋅</mo><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">K(2&lt;=k&lt;=2·10^{18})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>种染色方式，构造这棵树。</p>
+<p><strong>Time  : 2000 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p><s>一开始把题干里的ways翻译成道路懵了半天</s><br>
+可以先找K是怎么算的，给一棵树知道怎么求K，再反过来想应该会容易些<br>
+既然是树，理论上会有与子树之间的递归的关系<br>
+稍微画画图可以发现，<strong>一棵树的K值等于所有子树K值的乘积+1</strong><br>
+理解起来也不算难理解，染成黑色的点子节点都是黑色，所以一个节点的染色是会影响它的子树，但是两棵子树之间是互不影响的，所以先考虑根节点为白色的情况，这里采用的是所有子树K值的乘积；当根节点为黑色，只有一种情况，所以<br>
+然后找递归出口，显然1个节点的情况有2种染色方式，非黑即白；空树的染色方式可以被认为是1<br>
+求K的方法如上，然后就可以反过来构造树了<br>
+构造每一层时将K减一并进行分解<br>
+这里为了方便每次减一除二，如果能整除2就一直除下去，在该层一直添加单个节点<br>
+无法整除之后进入下一层，继续减一除二<br>
+理论时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(log_2  n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+const int N = 1e5 + 5;
+using namespace std;
+vector&lt;int&gt; a[N];	// 存储子节点，类似邻接表
+ 
+// 最开始不知道怎么构造，就先写了一个求K的代码
+// int getK(vector&lt;int&gt; t) {
+//     int res = 1;
+//     for (int i = 0; i &lt; t.size(); i++) {
+//         res *= getK(a[t[i]]);
+//     }
+//     return res + 1;
+// }
+
+int n = 1;
+void to(int i, llong k) {
+    llong tmp = k - 1;
+    while (tmp % 2 == 0) {
+        tmp /= 2;
+        a[i].push_back(++n);	//能整除则一直在本层添加节点
+    }
+    if (tmp == 1)    return;	// 空树K为1，此时说明构造结束
+    a[i].push_back(++n);		// 无法整除则继续在本层添加一个节点，并在这棵树的基础上添加
+    to(n, tmp);	
+}
+ 
+int main()
+{
+    llong k;
+    cin &gt;&gt; k;
+    to(1, k);
+    printf(&quot;%d\n&quot;, n);
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 0; j &lt; a[i].size(); j++) {
+            printf(&quot;%d %d\n&quot;, i, a[i][j]);
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HDU-1401-题解-搜索、双向bfs]]></title>
+        <id>https://greydoveh.github.io/post/hdu-1401/</id>
+        <link href="https://greydoveh.github.io/post/hdu-1401/">
+        </link>
+        <updated>2021-12-28T12:01:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="hdu-1401-题解">HDU 1401 题解</h1>
+<font size = 3> 
+<h2 id="solitaire"><strong><a href="https://vjudge.net/problem/HDU-1401">Solitaire</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>每个棋子可以跳向上下左右四个方向的格子<br>
+如果格子上有棋子，可以跳过该棋子（最多跳一个）<br>
+并且保证不跳出边界<br>
+给出两个状态，每个状态包含四个棋子的坐标<br>
+问4步之内能否从第一个状态到达第二一个状态 <br><br>
+<strong>Time: 1000 ms</strong><br>
+<strong>Memory: 32768 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>对每个棋子四个方向进行bfs<br>
+由于过程是可逆的，故可以进行双向搜索<br>
+访问标记每个状态时，可以把状态的4个坐标转成一个8位数来标记<br>
+原来unordered_map自定义键值类型需要自己写哈希函数……算了，转8位数标记一样的</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">//#include &lt;bits/stdc++.h&gt;
+#include &lt;cstdio&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+struct Pos
+{
+    int x, y;
+};
+
+struct State
+{
+    Pos pos[4];
+    int step;
+};
+
+bool cmp(Pos a, Pos b)
+{
+    return (a.x == b.x) ? (a.y &lt; b.y) : (a.x &lt; b.x);
+}
+
+// unordered_map&lt;State, bool&gt; vis1, vis2;
+unordered_map&lt;int, bool&gt; vis1, vis2;
+int mp[10][10];
+int dx[] = { 1, 0, -1, 0 };
+int dy[] = { 0, 1, 0, -1 };
+bool ans;
+
+bool judge(int x, int y)    // 判断是否在边界内
+{
+    return (1 &lt;= x &amp;&amp; x &lt;= 8 &amp;&amp; 1 &lt;= y &amp;&amp; y &lt;= 8);
+}
+
+int to_num(State now)   // 转成8位数
+{
+    int res = 0;
+    for (int i = 0; i &lt; 4; i++)
+    {
+        res = res * 100 + now.pos[i].x * 10 + now.pos[i].y;
+    }
+    return res;
+}
+
+bool bfs(State s1, State s2)
+{
+    queue&lt;State&gt; q1, q2;
+    State now, next;
+    s1.step = 0;
+    s2.step = 0;
+    q1.push(s1);
+    q2.push(s2);
+    vis1[to_num(s1)] = true;
+    vis2[to_num(s2)] = true;
+    while ((!q1.empty()) || (!q2.empty()))
+    {
+        if (!q1.empty())
+        {
+            now = q1.front();
+            q1.pop();
+            memset(mp, 0, sizeof(mp));
+            for (int k = 0; k &lt; 4; k++)
+            {
+                mp[now.pos[k].x][now.pos[k].y] = 1;
+            }
+            if (now.step == 4)
+            {
+                continue;
+            }
+            if (vis2[to_num(now)])
+            {
+                return true;
+            }
+            for (int i = 0; i &lt; 4; i++) // 枚举棋子
+            {
+                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
+                {
+                    next = now;
+                    next.pos[i].x = next.pos[i].x + dx[j];
+                    next.pos[i].y = next.pos[i].y + dy[j];
+                    next.step = now.step + 1;
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
+                    {
+                        next.pos[i].x = next.pos[i].x + dx[j];
+                        next.pos[i].y = next.pos[i].y + dy[j];
+                    }
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    sort(next.pos, next.pos + 4, cmp);
+                    int goal = to_num(next);
+                    if (vis2[goal])
+                    {
+                        return true;
+                    }
+                    if (!vis1[goal])
+                    {
+                        vis1[goal] = true;
+                        q1.push(next);
+                    }
+                }
+            }
+        }
+        if (!q2.empty())
+        {
+            now = q2.front();
+            q2.pop();
+            memset(mp, 0, sizeof(mp));
+            for (int k = 0; k &lt; 4; k++)
+            {
+                mp[now.pos[k].x][now.pos[k].y] = 1;
+            }
+
+            if (now.step == 4)
+            {
+                continue;
+            }
+            if (vis1[to_num(now)])
+            {
+                return true;
+            }
+            for (int i = 0; i &lt; 4; i++) // 枚举棋子
+            {
+                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
+                {
+                    next = now;
+                    next.pos[i].x = next.pos[i].x + dx[j];
+                    next.pos[i].y = next.pos[i].y + dy[j];
+                    next.step = now.step + 1;
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
+                    {
+                        next.pos[i].x = next.pos[i].x + dx[j];
+                        next.pos[i].y = next.pos[i].y + dy[j];
+                    }
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    sort(next.pos, next.pos + 4, cmp);
+                    int goal = to_num(next);
+                    if (vis1[goal])
+                    {
+                        return true;
+                    }
+                    if (!vis2[goal])
+                    {
+                        vis2[goal] = true;
+                        q2.push(next);
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    State start, last;
+    while (~scanf(&quot;%d%d&quot;, &amp;start.pos[0].x, &amp;start.pos[0].y))
+    {
+        vis1.clear();
+        vis2.clear();
+        for (int i = 1; i &lt; 4; i++)
+        {
+            scanf(&quot;%d%d&quot;, &amp;start.pos[i].x, &amp;start.pos[i].y);
+        }
+        for (int i = 0; i &lt; 4; i++)
+        {
+            scanf(&quot;%d%d&quot;, &amp;last.pos[i].x, &amp;last.pos[i].y);
+        }  
+        // 每次排好序，否则可能会出现重复遍历
+        sort(start.pos, start.pos + 4, cmp);  
+        sort(last.pos, last.pos + 4, cmp);
+        ans = bfs(start, last);
+        printf(ans ? &quot;YES\n&quot; : &quot;NO\n&quot;);
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CodeForces-1095C-题解-思维、二进制]]></title>
+        <id>https://greydoveh.github.io/post/codeforces-1095c/</id>
+        <link href="https://greydoveh.github.io/post/codeforces-1095c/">
+        </link>
+        <updated>2021-12-28T11:39:52.000Z</updated>
+        <content type="html"><![CDATA[<font face = "Consolas">
+<h1 id="codeforces_1095c-题解">CodeForces_1095C 题解</h1>
+<font size = 3> 
+<h2 id="powers-of-two"><strong><a href="https://vjudge.net/problem/CodeForces-1095C">Powers Of Two</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>输入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>，将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>表示成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">2^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span></span></span></span> 之和 <br><br>
+<strong>Time: 4000 ms</strong><br>
+<strong>Memory: 262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>先将n分解成二的整数次幂之和，方法是和 1 2 4 8 等做 &amp; 位运算<br>
+再依次把最大数分解成两个数，判断个数与k的关系<br>
+用优先队列维护</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main()
+{
+    vector&lt;int&gt; p2, ans;
+    for (int i = 0; (1 &lt;&lt; i) &lt; 1e9; i++)
+    {
+        p2.push_back(1 &lt;&lt; i);
+    }
+    int n, k;
+    priority_queue&lt;int&gt; b;
+    cin &gt;&gt; n &gt;&gt; k;
+    for (int i = 0; i &lt; p2.size(); i++)
+    {
+        int bi = n &amp; p2[i];
+        if (bi)
+        {
+            b.push(bi);
+        }
+    }
+    while (b.size() &lt; k)
+    {
+        int x = b.top();
+        b.pop();
+        b.push(x/2);
+        b.push(x/2);
+    }
+    if (b.size() &gt; k)
+    {
+        cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+    }
+    else
+    {
+        int sum = 0;
+        while (!b.empty())
+        {
+            ans.push_back(b.top());
+            sum += b.top();
+            b.pop();
+        }
+        if (sum == n)
+        {
+            cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
+            for (int i = 0; i &lt; ans.size(); i++)
+            {
+                cout &lt;&lt; ans[i] &lt;&lt; ' ';
+            }
+            cout &lt;&lt; endl;
+        }
+        else 
+        {
+            cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CodeForces-1382B-题解-思维、博弈]]></title>
+        <id>https://greydoveh.github.io/post/codeforces-1382b/</id>
+        <link href="https://greydoveh.github.io/post/codeforces-1382b/">
+        </link>
+        <updated>2021-12-28T11:38:38.000Z</updated>
+        <content type="html"><![CDATA[<font face = "Consolas">
+<h1 id="codeforces_1382b-题解">CodeForces_1382B 题解</h1>
+<font size = 3> 
+<h2 id="sequential-nim"><strong><a href="https://vjudge.net/problem/CodeForces-1382B">Sequential Nim</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>堆石子，每堆<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个<br>
+两人按顺序从第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>∼</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1 \sim n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>堆取出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>∼</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">1 \sim a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个石子<br>
+最先取完的人获胜，若每个人都采取最优方案，求赢家 <br><br>
+<strong>Time: 1000 ms</strong><br>
+<strong>Memory: 262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>博弈论<br>
+<br></p>
+<p>结论：</p>
+<ol>
+<li>当a序列都为1时，若n为奇数，先手必赢，否则后手必赢</li>
+<li>当a序列不都为1时，偶数个前缀1后手必赢，奇数个前缀1先手必赢<br>
+<br></li>
+</ol>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>是最特殊的元素，如果当前堆只有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个石子，那么玩家别无选择，下一个玩家从新的一堆开始，如果下一堆石子个数在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个以上，那么玩家可以选择拿走<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a_i - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个，剩余1个继续让刚刚的玩家处于劣势 <br></p>
+<ol>
+<li>如果没有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，那么先手是必赢的，因为只要重复上述过程，直到最后一堆自己取完就可以赢了</li>
+<li>如果只有前缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，且为偶数堆，经过偶数轮操作，当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>被取完后，此时玩家1仍处于先手，剩余部分没有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，回到了第一种状态，先手赢；如果前缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>为偶数堆，取完前缀1后玩家2处于先手，即后手赢；</li>
+<li>考虑后缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. 实际上后缀1的奇偶并不影响结果，看一组例子</li>
+</ol>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>3</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo><msup><mo><mo>→</mo></mo><mn>2</mn></msup><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[3, 1, 1] \overset{2}{\rightarrow} [1, 1, 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.367978em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.117978em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5668699999999998em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span><br>
+接只有1的奇数情况，先手赢<br></li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>3</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo><msup><mo><mo>→</mo></mo><mn>3</mn></msup><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[3, 1, 1, 1] \overset{3}{\rightarrow} [1, 1, 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.367978em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.117978em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5668699999999998em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span><br>
+同上</li>
+</ul>
+<p>由此可知，后缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>不会影响结果故可以忽略后缀的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span><br><br>
+4. 考虑中间的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. 实际上中间的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>同样不会影响结果，由第3种情况可以知道，第一个拿到非<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>石子的人可以控制自己后面拿到哪一堆，同样，他可以控制自己是否拿到中间最后一堆是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的石子，也就可以决定自己的输赢<br>
+如果不能理解自己可以举几组石子试试，注意拿石子之后尽量归到上面几种子问题的情况<br></p>
+<br>
+综上述推理，不难得到上面的结论
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int main()
+{
+    int T;
+    int n, a[100005];
+    scanf(&quot;%d&quot;, &amp;T);
+    while (T--)
+    {
+        scanf(&quot;%d&quot;, &amp;n);
+        for (int i = 0; i &lt; n; i++)
+        {
+            scanf(&quot;%d&quot;, &amp;a[i]);
+        }
+        int cnt = 0;
+        for (int i = 0; i &lt; n; i++)
+        {
+            if (a[i] == 1)
+            {
+                cnt++;
+            }
+            else 
+            {
+                break;
+            }
+        }
+        if (cnt == n)   cnt++;  
+        // 由于是否都为1的情况和前缀1的情况相反,故这里给cnt++,统一输出格式
+        printf(cnt &amp; 1 ? &quot;Second\n&quot; : &quot;First\n&quot;);
+    }
+    return 0;
+}
+
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CodeForces-914B-题解-思维、博弈]]></title>
+        <id>https://greydoveh.github.io/post/codeforces-914b/</id>
+        <link href="https://greydoveh.github.io/post/codeforces-914b/">
+        </link>
+        <updated>2021-12-28T11:36:19.000Z</updated>
+        <content type="html"><![CDATA[<p>博客迁移</p>
+<h1 id="codeforces-914b-题解">CodeForces 914B 题解</h1>
+<font size = 3> 
+<h2 id="conan-and-agasa-play-a-card-game"><strong><a href="https://vjudge.net/problem/CodeForces-914B">Conan and Agasa play a Card Game</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>两个人玩游戏<br>
+每次选一张牌拿走，同时拿走小于这张牌的所有牌<br>
+拿走最后一张牌的获胜<br>
+每个人采取最优方案，输出获胜的人 <br><br>
+<strong>Time: 2000 ms</strong><br>
+<strong>Memory: 262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>博弈论 <br><br>
+递归的去思考这个问题<br>
+先是最简单的情况</p>
+<ol>
+<li><code>样例</code>最大牌有1个 ---&gt; <font color = "blue">先手必赢</font> （直接拿走最大牌）</li>
+<li><code>样例</code>只有一种牌 且有偶数个 ---&gt; <font color = "blue">后手必赢 </font></li>
+<li>最大牌有奇数个，先手拿走一张最大牌，后手变成情况2的先手 ---&gt; <font color = "blue">先手必赢 </font></li>
+<li>最大牌有偶数个，拿完其他牌变成情况2，故考虑次大牌<br>
+而次大牌重复上述讨论的情况，故把小于最大牌的情况统一考虑</li>
+<li>所有牌都有偶数个，递归可得到情况2 ---&gt;  <font color = "blue">后手必赢</font></li>
+<li>最大牌有偶数个，其余牌只有一种有奇数个，先手拿走奇数牌的一张得到情况5 ---&gt; <font color = "blue">先手必赢</font></li>
+<li>最大牌有偶数个，其余牌有多种有奇数个，先手拿走奇数牌中最大牌的一张，得到情况5---&gt; <font color = "blue">先手必赢</font></li>
+</ol>
+<p>综上考虑，存在奇数个数的牌即先手赢，都是偶数个则后手赢<br>
+只需统计每种牌的个数</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int cnt[100005], a[100005];
+
+int main()
+{
+    int n, maxa = 0, win = 0;
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++)
+    {
+        cin &gt;&gt; a[i];
+        cnt[a[i]]++;
+        if (a[i] &gt; maxa) 
+        {
+            maxa = a[i];
+        }
+    }
+    for (int i = 0; i &lt;= maxa; i++)
+    {
+        if (cnt[i] &amp; 1)
+        {
+            cout &lt;&lt; &quot;Conan&quot; &lt;&lt; endl;
+            win = 1;
+            break;
+        }
+    }
+    if (!win)
+    {
+        cout &lt;&lt; &quot;Agasa&quot; &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[CodeForces-1234C-题解-思维、模拟]]></title>
+        <id>https://greydoveh.github.io/post/codeforces-1234c/</id>
+        <link href="https://greydoveh.github.io/post/codeforces-1234c/">
+        </link>
+        <updated>2021-12-28T11:24:18.000Z</updated>
+        <content type="html"><![CDATA[<p>博客迁移</p>
+<h1 id="codeforces_1234c-题解">CodeForces_1234C 题解</h1>
+<font size = 3> 
+<h2 id="pipes"><strong><a href="https://vjudge.net/problem/CodeForces-1234C">Pipes</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>有一个2行n列的管道系统，含有6种管道<br>
+<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly92ai56MTgwLmNuL2YwMTZlZWU0YmRiZDA1MGM1NjVlMjdiNDI0OWQ4OWZi?x-oss-process=image/format,png" alt="" loading="lazy"><br>
+每种管道都可以任意旋转<br>
+问是否存在从(1, 0)到(2, n + 1)的路径？ <br><br>
+示例如下图<br>
+<img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly92ai56MTgwLmNuLzc5YTRiOWNmM2M1OTk2NWViODAwYWJmNDNiYzgxZmE3?x-oss-process=image/format,png" alt="示例" loading="lazy"><br>
+<strong>Time: 2000 ms</strong><br>
+<strong>Memory: 262144 kB</strong> <br></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>由于管道可任意旋转，故只有两种管道</p>
+<ol>
+<li>12</li>
+<li>3456</li>
+</ol>
+<p>模拟，碰到[<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>]直走，碰到[<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>]拐弯。<br>
+过程中保证不越界，否则不存在路径 <br></p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+int main()
+{
+	int q;
+	scanf(&quot;%d&quot;, &amp;q); 
+	while (q--)
+	{
+		int mp[2][200010] = { 0 };
+		int n;
+		scanf(&quot;%d&quot;, &amp;n);
+		for (int i = 0; i &lt; 2; i++)
+		{
+			for (int j = 0; j &lt; n; j++)
+			{
+				scanf(&quot;%1d&quot;, &amp;mp[i][j]);
+			}
+		}
+		int x = 0, y = 0;
+		while (y &lt; n + 1)
+		{
+			if (mp[x][y] &gt; 2 &amp;&amp; mp[1 - x][y] &gt; 2)
+			{
+				x = 1 - x;
+			}
+			else if (mp[x][y] &gt; 2 &amp;&amp; mp[1 - x][y] &lt;= 2)
+			{
+				break;
+			}
+			y++;
+		}
+		if (x == 1 &amp;&amp; y == n + 1)
+		{
+			printf(&quot;YES\n&quot;);
+		}
+		else 
+		{
+			printf(&quot;NO\n&quot;);
+		}
+	} 
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[HDU-1005-题解-思维/矩阵快速幂]]></title>
+        <id>https://greydoveh.github.io/post/hdu-1005/</id>
+        <link href="https://greydoveh.github.io/post/hdu-1005/">
+        </link>
+        <updated>2021-12-28T11:16:11.000Z</updated>
+        <content type="html"><![CDATA[<p>博客迁移</p>
+<h1 id="hdu-1005-题解">HDU 1005 题解</h1>
+<font size = 3> 
+<h2 id="number-sequence"><strong><a href="https://vjudge.net/problem/HDU-1005">Number Sequence</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>HDU提交不了了，大家看看题吧<s>就当娱乐一下</s><br>
+数列 类似于斐波那契的模7数列<br>
+f(1) = f(2) = 1<br>
+f(n) = (a * f(n - 1) + b * f(n - 2)) % 7 <br><br><br>
+<strong>Time: 1000 ms</strong><br>
+<strong>Memory: 32768 kB</strong> <br></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>&lt;</mo><mo>=</mo><mi>n</mi><mo>&lt;</mo><mo>=</mo><mn>100</mn><mo separator="true">,</mo><mn>000</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">1 &lt;= n &lt;= 100,000,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span> <br><br>
+直接开数组会MLE 不开数组用三个数迭代模拟会TLE <br><br>
+规律题 因为后一项只与前两项有关，所以只要数组中有连续两项在前面出现过，后面就会重复数列前面的值，即周期数列 <br><br>
+将相邻两个数组成一个二位数，只需要比较这个两位数是否出现过即可，由于每位有7种可能，共可以组成49个数字，即一个周期的最大值为50<br><br>
+需要注意的是，循环不一定是从头开始的（一开始找和开头两位相同的错了好几次……），因此后面的循环部分可能不包括开头的几个数字，故需要记录循环开始的位置<br></p>
+<h4 id="几组特殊取值-br">几组特殊取值 <br></h4>
+<pre><code>1. a = b = 1    为Fibonacci数列
+2. (a + b) % 7 = 0    从第三项都是0   
+3. a + b = 8    从第一项都是1 
+</code></pre>
+<p>题解是初学的时候写的，后来才发现这个是矩阵快速幂的板子，这里就懒得写了</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int loop[100];
+bool ap[100];	// 将相邻的两个数看成一个二位数标记出现
+int pos[100];
+
+int main()
+{
+    int n, a, b, T, flag, begin;
+    while (~scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;n) &amp;&amp; (a || b || n))
+    {
+        memset(ap, false, sizeof(ap));
+        memset(pos, 0, sizeof(pos));
+        begin = 0;
+        T = 0;
+        flag = 0;
+        loop[0] = 1;
+        loop[1] = 1;
+        ap[11] = true;
+        for (int i = 2; i &lt; n; i++)
+        {
+            loop[i] = (a * loop[i - 1] + b * loop[i - 2]) % 7;
+            int x = loop[i - 1] * 10 + loop[i];
+            if (ap[x])
+            {
+                begin = pos[x];
+                T = i - begin - 1;
+                flag = 1;
+                break;
+            }
+            else 
+            {
+                ap[x] = true;
+                pos[x] = i - 1;
+            }
+        }
+        if (flag)
+        {
+            if (T == 1)
+            {
+                printf(&quot;%d\n&quot;, loop[begin]);
+            }
+            else
+            {
+                printf(&quot;%d\n&quot;, ((n - begin) % T == 0 ? loop[begin + T - 1] : loop[(n - begin) % T - 1 + begin]));
+            }
+        }
+        else
+        {
+            printf(&quot;%d\n&quot;, loop[n - 1]);
+        }
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="题目反思及后续">题目反思及后续</h2>
+<h3 id="再谈-hdu-1005-number-sequence">再谈 HDU 1005   Number Sequence</h3>
+<blockquote>
+<p>网上有部分题解代码是错的，在此给出这篇博客，希望更多人可以看到。也不是去杠出题人和部分题解代码，不过追求完全正确答案总是正确的，探讨相关问题也有利于开拓思维。</p>
+<p>虽然我说的错误代码能够AC，黑盒测试不可能涵盖所有可能的测试样例，但是还是希望大家在做题/做研究的时候能够保持严谨性</p>
+</blockquote>
+<h3 id="问题的发现">问题的发现</h3>
+<p>前几天一个学弟给我拿过来这样一份AC代码：</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+using namespace std;
+int arr[10000];
+int main()
+{
+	int a,b,c;
+	arr[1]=arr[2]=1;
+	while(cin&gt;&gt;a&gt;&gt;b&gt;&gt;c,a||b||c)
+	{
+		int i;
+    	for( i=3;i&lt;10000;i++)
+    	{
+            arr[i]=(a*arr[i-1]+b*arr[i-2])%7;
+    	  	if(arr[i]==1&amp;&amp;arr[i-1]==1)
+				break;
+		}
+		c=c%(i-2);
+		arr[0]=arr[i-2];
+		cout&lt;&lt;arr[c]&lt;&lt;endl;
+	}
+	return 0;
+}
+</code></pre>
+<blockquote>
+<p>其实本来还有另外一段代码，他过来问我为啥一个AC了一个没有AC，其实两份代码几乎没有任何差别，只不过另外一份是用的函数返回值，这个直接break;	另外两份代码还有一点区别，这个是影响AC与否的重点：<strong>数组大小不一样</strong>。AC代码数组大小为1e5，WA代码的数组大小为1e4。</p>
+</blockquote>
+<p>题干中的范围是1 &lt;= n &lt;= 100,000,000，开数组会直接MLE，是一道找循环节的规律思维题，而且在之前的博客中也提到过，循环起始位置+循环节长度不会超过50（算是半严格证明），所以和数组大小没关系。反而，由于循环不一定是从头开始，位置并不确定，（参考上一篇博客中的数据，(a + b) % 7 == 0的情况，从第三项开始均为0）这段代码反而会有问题</p>
+<p>所以为什么他能AC呢？</p>
+<h2 id="问题的分析">问题的分析</h2>
+<p>先尝试找反例证明这段代码是错的，因为之前因为没有判断后面循环的情况WA了好几发，所以这次直接拿数据开始试，<code>7 7 1</code>、<code>7 7 2</code> 、<code>7 7 3</code>、<code>7 7 10</code>……结果发现都没有问题，所以还是要看代码</p>
+<p>很容易发现这段代码算了前10000项， 直到找到循环节为止。（此处循环节是以11为循环起始，即从头开始）</p>
+<p>但是刚刚的数据能够证明上述方式是错的，于是继续hack</p>
+<p>优先试了10000以上的数据，发现基本都没有问题，直到我用了下面l俩组数据：</p>
+<pre><code class="language-in">7 7 9999
+7 7 10000
+</code></pre>
+<p>输出均为1。至此hack成功。</p>
+<h2 id="分析出现错误的原因">分析出现错误的原因</h2>
+<p>对于上面的特殊输入，循环从3开始不会找到1 1的组合，所以循环不会通过break跳出，而是一直执行到<code>i==10000</code>结束，此时<code>i - 2 = 9998</code>。</p>
+<p>而后面的<code>c = c % (i - 2)</code>即对9998取余数，当<code>c = 9999</code>和<code>c=10000</code>时， <code>c%(i-2)</code>结果为1和2，即为输出前两项，即是该代码的问题所在。代码AC的原因可能是刚好后台数据没有对应的情况，对于该代码来说数据较弱。</p>
+<h2 id="问题的反思">问题的反思</h2>
+<p>由于黑盒测试局限性，出现有小问题但是AC了的代码是非常正常的。另外我从网上去查了一下该题的题解，发现很多代码都有问题。这道题其实数据非常水，甚至在循环节50左右就都没有进行必要的检查。</p>
+<p>毕竟也是水题，其实没必要强求那么多。也不是去杠出题人和部分题解代码，不过追求完全正确答案总是正确的，探讨相关问题也有利于开拓思维。</p>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Hello Gridea]]></title>
+        <id>https://greydoveh.github.io/post/hello-gridea/</id>
+        <link href="https://greydoveh.github.io/post/hello-gridea/">
+        </link>
+        <updated>2018-12-11T16:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+]]></summary>
+        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
+✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+<!-- more -->
+<p><a href="https://github.com/getgridea/gridea">Github</a><br>
+<a href="https://gridea.dev/">Gridea 主页</a><br>
+<a href="http://fehey.com/">示例网站</a></p>
+<h2 id="特性">特性👇</h2>
+<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
+<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
+<p>🏷️  你可以对文章进行标签分组</p>
+<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
+<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
+<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
+<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
+<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
+<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
+<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
+<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
+<p>未来，它一定会成为你离不开的伙伴</p>
+<p>尽情发挥你的才华吧！</p>
+<p>😘 Enjoy~</p>
+]]></content>
+    </entry>
+</feed>

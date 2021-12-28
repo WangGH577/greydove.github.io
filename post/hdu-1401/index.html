@@ -1,0 +1,404 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HDU-1401-题解-搜索、双向bfs | Gridea</title>
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="HDU-1401-题解-搜索、双向bfs | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="HDU 1401 题解
+ 
+Solitaire
+题目大意
+
+每个棋子可以跳向上下左右四个方向的格子
+如果格子上有棋子，可以跳过该棋子（最多跳一个）
+并且保证不跳出边界
+给出两个状态，每个状态包含四个棋子的坐标
+问4步之内能否从第一个状态到达..." />
+    <meta name="keywords" content="算法题解" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://greydoveh.github.io">
+  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              HDU-1401-题解-搜索、双向bfs
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-12-28
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
+                  # 算法题解
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/hdu-1401.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="hdu-1401-题解">HDU 1401 题解</h1>
+<font size = 3> 
+<h2 id="solitaire"><strong><a href="https://vjudge.net/problem/HDU-1401">Solitaire</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>每个棋子可以跳向上下左右四个方向的格子<br>
+如果格子上有棋子，可以跳过该棋子（最多跳一个）<br>
+并且保证不跳出边界<br>
+给出两个状态，每个状态包含四个棋子的坐标<br>
+问4步之内能否从第一个状态到达第二一个状态 <br><br>
+<strong>Time: 1000 ms</strong><br>
+<strong>Memory: 32768 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>对每个棋子四个方向进行bfs<br>
+由于过程是可逆的，故可以进行双向搜索<br>
+访问标记每个状态时，可以把状态的4个坐标转成一个8位数来标记<br>
+原来unordered_map自定义键值类型需要自己写哈希函数……算了，转8位数标记一样的</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">//#include &lt;bits/stdc++.h&gt;
+#include &lt;cstdio&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+#include &lt;algorithm&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+struct Pos
+{
+    int x, y;
+};
+
+struct State
+{
+    Pos pos[4];
+    int step;
+};
+
+bool cmp(Pos a, Pos b)
+{
+    return (a.x == b.x) ? (a.y &lt; b.y) : (a.x &lt; b.x);
+}
+
+// unordered_map&lt;State, bool&gt; vis1, vis2;
+unordered_map&lt;int, bool&gt; vis1, vis2;
+int mp[10][10];
+int dx[] = { 1, 0, -1, 0 };
+int dy[] = { 0, 1, 0, -1 };
+bool ans;
+
+bool judge(int x, int y)    // 判断是否在边界内
+{
+    return (1 &lt;= x &amp;&amp; x &lt;= 8 &amp;&amp; 1 &lt;= y &amp;&amp; y &lt;= 8);
+}
+
+int to_num(State now)   // 转成8位数
+{
+    int res = 0;
+    for (int i = 0; i &lt; 4; i++)
+    {
+        res = res * 100 + now.pos[i].x * 10 + now.pos[i].y;
+    }
+    return res;
+}
+
+bool bfs(State s1, State s2)
+{
+    queue&lt;State&gt; q1, q2;
+    State now, next;
+    s1.step = 0;
+    s2.step = 0;
+    q1.push(s1);
+    q2.push(s2);
+    vis1[to_num(s1)] = true;
+    vis2[to_num(s2)] = true;
+    while ((!q1.empty()) || (!q2.empty()))
+    {
+        if (!q1.empty())
+        {
+            now = q1.front();
+            q1.pop();
+            memset(mp, 0, sizeof(mp));
+            for (int k = 0; k &lt; 4; k++)
+            {
+                mp[now.pos[k].x][now.pos[k].y] = 1;
+            }
+            if (now.step == 4)
+            {
+                continue;
+            }
+            if (vis2[to_num(now)])
+            {
+                return true;
+            }
+            for (int i = 0; i &lt; 4; i++) // 枚举棋子
+            {
+                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
+                {
+                    next = now;
+                    next.pos[i].x = next.pos[i].x + dx[j];
+                    next.pos[i].y = next.pos[i].y + dy[j];
+                    next.step = now.step + 1;
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
+                    {
+                        next.pos[i].x = next.pos[i].x + dx[j];
+                        next.pos[i].y = next.pos[i].y + dy[j];
+                    }
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    sort(next.pos, next.pos + 4, cmp);
+                    int goal = to_num(next);
+                    if (vis2[goal])
+                    {
+                        return true;
+                    }
+                    if (!vis1[goal])
+                    {
+                        vis1[goal] = true;
+                        q1.push(next);
+                    }
+                }
+            }
+        }
+        if (!q2.empty())
+        {
+            now = q2.front();
+            q2.pop();
+            memset(mp, 0, sizeof(mp));
+            for (int k = 0; k &lt; 4; k++)
+            {
+                mp[now.pos[k].x][now.pos[k].y] = 1;
+            }
+
+            if (now.step == 4)
+            {
+                continue;
+            }
+            if (vis1[to_num(now)])
+            {
+                return true;
+            }
+            for (int i = 0; i &lt; 4; i++) // 枚举棋子
+            {
+                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
+                {
+                    next = now;
+                    next.pos[i].x = next.pos[i].x + dx[j];
+                    next.pos[i].y = next.pos[i].y + dy[j];
+                    next.step = now.step + 1;
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
+                    {
+                        next.pos[i].x = next.pos[i].x + dx[j];
+                        next.pos[i].y = next.pos[i].y + dy[j];
+                    }
+                    if (!judge(next.pos[i].x, next.pos[i].y))
+                    {
+                        continue;
+                    }
+                    sort(next.pos, next.pos + 4, cmp);
+                    int goal = to_num(next);
+                    if (vis1[goal])
+                    {
+                        return true;
+                    }
+                    if (!vis2[goal])
+                    {
+                        vis2[goal] = true;
+                        q2.push(next);
+                    }
+                }
+            }
+        }
+    }
+    return false;
+}
+
+int main()
+{
+    State start, last;
+    while (~scanf(&quot;%d%d&quot;, &amp;start.pos[0].x, &amp;start.pos[0].y))
+    {
+        vis1.clear();
+        vis2.clear();
+        for (int i = 1; i &lt; 4; i++)
+        {
+            scanf(&quot;%d%d&quot;, &amp;start.pos[i].x, &amp;start.pos[i].y);
+        }
+        for (int i = 0; i &lt; 4; i++)
+        {
+            scanf(&quot;%d%d&quot;, &amp;last.pos[i].x, &amp;last.pos[i].y);
+        }  
+        // 每次排好序，否则可能会出现重复遍历
+        sort(start.pos, start.pos + 4, cmp);  
+        sort(last.pos, last.pos + 4, cmp);
+        ans = bfs(start, last);
+        printf(ans ? &quot;YES\n&quot; : &quot;NO\n&quot;);
+    }
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#hdu-1401-%E9%A2%98%E8%A7%A3">HDU 1401 题解</a>
+<ul>
+<li><a href="#solitaire"><strong>[Solitaire][J]</strong></a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
+<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a></li>
+<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://greydoveh.github.io/post/codeforces-1095c/">
+              <h3 class="post-title">
+                CodeForces-1095C-题解-思维、二进制
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

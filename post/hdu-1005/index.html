@@ -1,0 +1,340 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HDU-1005-题解-思维/矩阵快速幂 | Gridea</title>
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="HDU-1005-题解-思维/矩阵快速幂 | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="博客迁移
+HDU 1005 题解
+ 
+Number Sequence
+题目大意
+
+HDU提交不了了，大家看看题吧就当娱乐一下
+数列 类似于斐波那契的模7数列
+f(1) = f(2) = 1
+f(n) = (a * f(n - 1) + b ..." />
+    <meta name="keywords" content="算法题解" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://greydoveh.github.io">
+  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              HDU-1005-题解-思维/矩阵快速幂
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-12-28
+              </span>
+              <span>
+                7 min read
+              </span>
+              
+                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
+                  # 算法题解
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/hdu-1005.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>博客迁移</p>
+<h1 id="hdu-1005-题解">HDU 1005 题解</h1>
+<font size = 3> 
+<h2 id="number-sequence"><strong><a href="https://vjudge.net/problem/HDU-1005">Number Sequence</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>HDU提交不了了，大家看看题吧<s>就当娱乐一下</s><br>
+数列 类似于斐波那契的模7数列<br>
+f(1) = f(2) = 1<br>
+f(n) = (a * f(n - 1) + b * f(n - 2)) % 7 <br><br><br>
+<strong>Time: 1000 ms</strong><br>
+<strong>Memory: 32768 kB</strong> <br></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>&lt;</mo><mo>=</mo><mi>n</mi><mo>&lt;</mo><mo>=</mo><mn>100</mn><mo separator="true">,</mo><mn>000</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">1 &lt;= n &lt;= 100,000,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span> <br><br>
+直接开数组会MLE 不开数组用三个数迭代模拟会TLE <br><br>
+规律题 因为后一项只与前两项有关，所以只要数组中有连续两项在前面出现过，后面就会重复数列前面的值，即周期数列 <br><br>
+将相邻两个数组成一个二位数，只需要比较这个两位数是否出现过即可，由于每位有7种可能，共可以组成49个数字，即一个周期的最大值为50<br><br>
+需要注意的是，循环不一定是从头开始的（一开始找和开头两位相同的错了好几次……），因此后面的循环部分可能不包括开头的几个数字，故需要记录循环开始的位置<br></p>
+<h4 id="几组特殊取值-br">几组特殊取值 <br></h4>
+<pre><code>1. a = b = 1    为Fibonacci数列
+2. (a + b) % 7 = 0    从第三项都是0   
+3. a + b = 8    从第一项都是1 
+</code></pre>
+<p>题解是初学的时候写的，后来才发现这个是矩阵快速幂的板子，这里就懒得写了</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+int loop[100];
+bool ap[100];	// 将相邻的两个数看成一个二位数标记出现
+int pos[100];
+
+int main()
+{
+    int n, a, b, T, flag, begin;
+    while (~scanf(&quot;%d%d%d&quot;, &amp;a, &amp;b, &amp;n) &amp;&amp; (a || b || n))
+    {
+        memset(ap, false, sizeof(ap));
+        memset(pos, 0, sizeof(pos));
+        begin = 0;
+        T = 0;
+        flag = 0;
+        loop[0] = 1;
+        loop[1] = 1;
+        ap[11] = true;
+        for (int i = 2; i &lt; n; i++)
+        {
+            loop[i] = (a * loop[i - 1] + b * loop[i - 2]) % 7;
+            int x = loop[i - 1] * 10 + loop[i];
+            if (ap[x])
+            {
+                begin = pos[x];
+                T = i - begin - 1;
+                flag = 1;
+                break;
+            }
+            else 
+            {
+                ap[x] = true;
+                pos[x] = i - 1;
+            }
+        }
+        if (flag)
+        {
+            if (T == 1)
+            {
+                printf(&quot;%d\n&quot;, loop[begin]);
+            }
+            else
+            {
+                printf(&quot;%d\n&quot;, ((n - begin) % T == 0 ? loop[begin + T - 1] : loop[(n - begin) % T - 1 + begin]));
+            }
+        }
+        else
+        {
+            printf(&quot;%d\n&quot;, loop[n - 1]);
+        }
+    }
+    return 0;
+}
+</code></pre>
+<h2 id="题目反思及后续">题目反思及后续</h2>
+<h3 id="再谈-hdu-1005-number-sequence">再谈 HDU 1005   Number Sequence</h3>
+<blockquote>
+<p>网上有部分题解代码是错的，在此给出这篇博客，希望更多人可以看到。也不是去杠出题人和部分题解代码，不过追求完全正确答案总是正确的，探讨相关问题也有利于开拓思维。</p>
+<p>虽然我说的错误代码能够AC，黑盒测试不可能涵盖所有可能的测试样例，但是还是希望大家在做题/做研究的时候能够保持严谨性</p>
+</blockquote>
+<h3 id="问题的发现">问题的发现</h3>
+<p>前几天一个学弟给我拿过来这样一份AC代码：</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+using namespace std;
+int arr[10000];
+int main()
+{
+	int a,b,c;
+	arr[1]=arr[2]=1;
+	while(cin&gt;&gt;a&gt;&gt;b&gt;&gt;c,a||b||c)
+	{
+		int i;
+    	for( i=3;i&lt;10000;i++)
+    	{
+            arr[i]=(a*arr[i-1]+b*arr[i-2])%7;
+    	  	if(arr[i]==1&amp;&amp;arr[i-1]==1)
+				break;
+		}
+		c=c%(i-2);
+		arr[0]=arr[i-2];
+		cout&lt;&lt;arr[c]&lt;&lt;endl;
+	}
+	return 0;
+}
+</code></pre>
+<blockquote>
+<p>其实本来还有另外一段代码，他过来问我为啥一个AC了一个没有AC，其实两份代码几乎没有任何差别，只不过另外一份是用的函数返回值，这个直接break;	另外两份代码还有一点区别，这个是影响AC与否的重点：<strong>数组大小不一样</strong>。AC代码数组大小为1e5，WA代码的数组大小为1e4。</p>
+</blockquote>
+<p>题干中的范围是1 &lt;= n &lt;= 100,000,000，开数组会直接MLE，是一道找循环节的规律思维题，而且在之前的博客中也提到过，循环起始位置+循环节长度不会超过50（算是半严格证明），所以和数组大小没关系。反而，由于循环不一定是从头开始，位置并不确定，（参考上一篇博客中的数据，(a + b) % 7 == 0的情况，从第三项开始均为0）这段代码反而会有问题</p>
+<p>所以为什么他能AC呢？</p>
+<h2 id="问题的分析">问题的分析</h2>
+<p>先尝试找反例证明这段代码是错的，因为之前因为没有判断后面循环的情况WA了好几发，所以这次直接拿数据开始试，<code>7 7 1</code>、<code>7 7 2</code> 、<code>7 7 3</code>、<code>7 7 10</code>……结果发现都没有问题，所以还是要看代码</p>
+<p>很容易发现这段代码算了前10000项， 直到找到循环节为止。（此处循环节是以11为循环起始，即从头开始）</p>
+<p>但是刚刚的数据能够证明上述方式是错的，于是继续hack</p>
+<p>优先试了10000以上的数据，发现基本都没有问题，直到我用了下面l俩组数据：</p>
+<pre><code class="language-in">7 7 9999
+7 7 10000
+</code></pre>
+<p>输出均为1。至此hack成功。</p>
+<h2 id="分析出现错误的原因">分析出现错误的原因</h2>
+<p>对于上面的特殊输入，循环从3开始不会找到1 1的组合，所以循环不会通过break跳出，而是一直执行到<code>i==10000</code>结束，此时<code>i - 2 = 9998</code>。</p>
+<p>而后面的<code>c = c % (i - 2)</code>即对9998取余数，当<code>c = 9999</code>和<code>c=10000</code>时， <code>c%(i-2)</code>结果为1和2，即为输出前两项，即是该代码的问题所在。代码AC的原因可能是刚好后台数据没有对应的情况，对于该代码来说数据较弱。</p>
+<h2 id="问题的反思">问题的反思</h2>
+<p>由于黑盒测试局限性，出现有小问题但是AC了的代码是非常正常的。另外我从网上去查了一下该题的题解，发现很多代码都有问题。这道题其实数据非常水，甚至在循环节50左右就都没有进行必要的检查。</p>
+<p>毕竟也是水题，其实没必要强求那么多。也不是去杠出题人和部分题解代码，不过追求完全正确答案总是正确的，探讨相关问题也有利于开拓思维。</p>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#hdu-1005-%E9%A2%98%E8%A7%A3">HDU 1005 题解</a>
+<ul>
+<li><a href="#number-sequence"><strong>[Number Sequence][1]</strong></a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
+<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a>
+<ul>
+<li><a href="#%E5%87%A0%E7%BB%84%E7%89%B9%E6%AE%8A%E5%8F%96%E5%80%BC-br">几组特殊取值 <br></a></li>
+</ul>
+</li>
+<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
+</ul>
+</li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%8F%8D%E6%80%9D%E5%8F%8A%E5%90%8E%E7%BB%AD">题目反思及后续</a>
+<ul>
+<li><a href="#%E5%86%8D%E8%B0%88-hdu-1005-number-sequence">再谈 HDU 1005   Number Sequence</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%8F%91%E7%8E%B0">问题的发现</a></li>
+</ul>
+</li>
+<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90">问题的分析</a></li>
+<li><a href="#%E5%88%86%E6%9E%90%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E5%8E%9F%E5%9B%A0">分析出现错误的原因</a></li>
+<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%8F%8D%E6%80%9D">问题的反思</a></li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://greydoveh.github.io/post/hello-gridea/">
+              <h3 class="post-title">
+                Hello Gridea
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

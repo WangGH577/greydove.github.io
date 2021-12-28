@@ -1,0 +1,255 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造 | Gridea</title>
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造 | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="2021山东省赛C
+ 
+Cat Virus
+题目大意
+
+一棵树，节点有黑色和白色，黑色节点的所有子节点都为黑色
+一棵树有K(2&lt;=k&lt;=2⋅1018)K(2&lt;=k&lt;=2·10^{18})K(2&lt;=k&lt;=2..." />
+    <meta name="keywords" content="算法题解" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://greydoveh.github.io">
+  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-12-28
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
+                  # 算法题解
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/gym-103118c.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="2021山东省赛c">2021山东省赛C</h1>
+<font size = 3> 
+<h2 id="cat-virus"><strong><a href="https://vjudge.net/problem/Gym-103118C">Cat Virus</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>一棵树，节点有黑色和白色，黑色节点的所有子节点都为黑色<br>
+一棵树有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>(</mo><mn>2</mn><mo>&lt;</mo><mo>=</mo><mi>k</mi><mo>&lt;</mo><mo>=</mo><mn>2</mn><mo separator="true">⋅</mo><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">K(2&lt;=k&lt;=2·10^{18})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>种染色方式，构造这棵树。</p>
+<p><strong>Time  : 2000 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p><s>一开始把题干里的ways翻译成道路懵了半天</s><br>
+可以先找K是怎么算的，给一棵树知道怎么求K，再反过来想应该会容易些<br>
+既然是树，理论上会有与子树之间的递归的关系<br>
+稍微画画图可以发现，<strong>一棵树的K值等于所有子树K值的乘积+1</strong><br>
+理解起来也不算难理解，染成黑色的点子节点都是黑色，所以一个节点的染色是会影响它的子树，但是两棵子树之间是互不影响的，所以先考虑根节点为白色的情况，这里采用的是所有子树K值的乘积；当根节点为黑色，只有一种情况，所以<br>
+然后找递归出口，显然1个节点的情况有2种染色方式，非黑即白；空树的染色方式可以被认为是1<br>
+求K的方法如上，然后就可以反过来构造树了<br>
+构造每一层时将K减一并进行分解<br>
+这里为了方便每次减一除二，如果能整除2就一直除下去，在该层一直添加单个节点<br>
+无法整除之后进入下一层，继续减一除二<br>
+理论时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(log_2  n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+const int N = 1e5 + 5;
+using namespace std;
+vector&lt;int&gt; a[N];	// 存储子节点，类似邻接表
+ 
+// 最开始不知道怎么构造，就先写了一个求K的代码
+// int getK(vector&lt;int&gt; t) {
+//     int res = 1;
+//     for (int i = 0; i &lt; t.size(); i++) {
+//         res *= getK(a[t[i]]);
+//     }
+//     return res + 1;
+// }
+
+int n = 1;
+void to(int i, llong k) {
+    llong tmp = k - 1;
+    while (tmp % 2 == 0) {
+        tmp /= 2;
+        a[i].push_back(++n);	//能整除则一直在本层添加节点
+    }
+    if (tmp == 1)    return;	// 空树K为1，此时说明构造结束
+    a[i].push_back(++n);		// 无法整除则继续在本层添加一个节点，并在这棵树的基础上添加
+    to(n, tmp);	
+}
+ 
+int main()
+{
+    llong k;
+    cin &gt;&gt; k;
+    to(1, k);
+    printf(&quot;%d\n&quot;, n);
+    for (int i = 0; i &lt; n; i++) {
+        for (int j = 0; j &lt; a[i].size(); j++) {
+            printf(&quot;%d %d\n&quot;, i, a[i][j]);
+        }
+    }
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#2021%E5%B1%B1%E4%B8%9C%E7%9C%81%E8%B5%9Bc">2021山东省赛C</a>
+<ul>
+<li><a href="#cat-virus"><strong>Cat Virus</strong></a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
+<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a></li>
+<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://greydoveh.github.io/post/hdu-1401/">
+              <h3 class="post-title">
+                HDU-1401-题解-搜索、双向bfs
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

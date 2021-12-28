@@ -1,0 +1,276 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论 | Gridea</title>
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论 | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="2021四川省赛E
+ 
+Don't Really Like How The Story Ends
+题目大意
+
+给图加边，使得一个可能的DFS序列刚好是从1到n
+Time  : 1000 ms
+Memory:  262144 kB
+
+解题思路..." />
+    <meta name="keywords" content="算法题解" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://greydoveh.github.io">
+  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
+  </a>
+  <h1 class="site-title">
+    Gridea
+  </h1>
+  <p class="site-description">
+    温故而知新
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论
+            </h2>
+            <div class="post-info">
+              <span>
+                2021-12-28
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
+                  # 算法题解
+                </a>
+              
+            </div>
+            
+              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/gym-103117e.jpg" alt="">
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <h1 id="2021四川省赛e">2021四川省赛E</h1>
+<font size = 3> 
+<h2 id="dont-really-like-how-the-story-ends"><strong><a href="https://vjudge.net/problem/Gym-103117E">Don't Really Like How The Story Ends</a></strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>给图加边，使得一个可能的DFS序列刚好是从1到n</p>
+<p><strong>Time  : 1000 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>第一次打正式比赛，场上E因为自己的nt行为T了好几发，这个是赛后补题<br>
+直接搜索，但是需要有一定条件<br>
+如果想要DFS序列刚好为从1到N，需要满足的条件：</p>
+<ol>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>直接相连，则访问搜索<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点存在没有访问的相邻节点且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点不与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>点相连，此时必须将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>连接到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>上</li>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点所有相邻节点都被访问了，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>可以与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>相连，也可以和从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>=&gt;<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>中路径上的任意一点相连，路径上的点都在递归栈里面，此时可以让<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点退栈，一直回到某个满足条件<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>的节点</li>
+<li>如果第3点的点退栈一直到起点1号点都没有直接相连，说明存在不连通部分，此时必须加边，此时再去搜索不连通的部分，一直到全部搜索完</li>
+</ol>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+const int N = 1e5 + 5;
+using namespace std;
+vector&lt;int&gt; mp[N];
+bool vis[N];
+int cnt;
+int n, m, nxt;
+
+void dfs(int u) {
+    nxt++;
+    for (int i = 0; i &lt; mp[u].size(); i++) {
+        int to = mp[u][i];
+        if (vis[to]) continue;
+        if (to == nxt) {	// [1]
+            vis[nxt] = true;
+            dfs(nxt);
+        } else {			// [2]
+            cnt++;
+            vis[nxt] = true;
+            dfs(nxt);
+            i--;
+        } 
+    }
+    if (u == 1) {			// [3] [4]
+        while (nxt &lt;= n) {
+            vis[nxt] = true;
+            dfs(nxt);
+            cnt++;
+        }
+    }
+}
+
+int main() {
+    ios::sync_with_stdio(false);cin.tie(0);
+    int T;	cin &gt;&gt; T;
+    while (T--) {
+        cin &gt;&gt; n &gt;&gt; m;
+        for (int i = 1; i &lt;= n; i++) {
+            mp[i].clear();
+            vis[i] = false;
+        }
+        nxt = 1;
+        cnt = 0;
+        for (int i = 0; i &lt; m; i++) {
+            int u, v;
+            cin &gt;&gt; u &gt;&gt; v;
+            if (u &lt; v)  mp[u].push_back(v);
+            if (u &gt; v)  mp[v].push_back(u);	// 一个小优化，只由编号小的节点连接到编号大的节点
+        }
+        for (int i = 1; i &lt;= n; i++) {
+            sort(mp[i].begin(), mp[i].end());	
+            // 这里进行排序，就可以保证每次访问的节点都是最小的，方便判断刚刚解题思路中说的条件
+            // 不要用堆，亲测会T（场上nt的我）
+        }
+        vis[1] = true;
+        dfs(1);
+        cout &lt;&lt; cnt &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                <ul class="markdownIt-TOC">
+<li><a href="#2021%E5%9B%9B%E5%B7%9D%E7%9C%81%E8%B5%9Be">2021四川省赛E</a>
+<ul>
+<li><a href="#dont-really-like-how-the-story-ends"><strong>Don't Really Like How The Story Ends</strong></a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
+<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a></li>
+<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://greydoveh.github.io/post/gym-103118c/">
+              <h3 class="post-title">
+                【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
