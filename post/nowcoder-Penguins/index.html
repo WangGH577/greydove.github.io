@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>【2021牛客多校2】I－Penguins 搜索、BFS | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640704428717">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+2021牛客多校2－I
+ 
+I－Penguins
+题目大意
+
+一张地图被分成左右两部分，每部分的大小都是20×2020×2020×20
+两只企鹅分别从 (19,19)(19, 19)(19,19) 和 (19,0)(19, 0)(19,0..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1640704428717" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">【2021牛客多校2】I－Penguins 搜索、BFS</h2>
+            <div class="post-date">2021-12-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/nowcoder-Penguins.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <font face = "Consolas">
+<h1 id="2021牛客多校2-i">2021牛客多校2－I</h1>
+<font size = 3> 
+<h2 id="i-penguins"><strong>I－Penguins</strong></h2>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>一张地图被分成左右两部分，每部分的大小都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>20</mn><mo>×</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">20×20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span><br>
+两只企鹅分别从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>19</mn><mo separator="true">,</mo><mn>19</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(19, 19)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">9</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">9</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>19</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(19, 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">9</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 出发，要到达 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>19</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0, 19)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">9</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0, 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span><br>
+企鹅的移动是受玩家控制的，但是两只企鹅的移动是左右镜像的<br>
+若企鹅的下一个位置是墙或者超出地图范围，则该企鹅不动，只移动另外一直企鹅（如果可以移动）<br>
+求最短路径的长度、路径、并在图中标记出来<br>
+若有多种路径，输出字典序最小的结果<br>
+<strong>Time  : 1000 ms</strong><br>
+<strong>Memory:  262144 kB</strong></p>
+</blockquote>
+<h3 id="解题思路及分析">解题思路及分析</h3>
+<blockquote>
+<p>暴搜，因为麻烦一点的搜索做的不多所以这里记录一下这道题<br>
+每个节点中存储路径，找到了直接将路径返回，然后按照路径去图里标A<br>
+另外这题WA了一发（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">8</span><span class="mord">0</span><span class="mord">%</span></span></span></span>），这里给出一组数据大家可以看看是不是自己的WA点，具体为什么回导致WA标注在代码里面了</p>
+</blockquote>
+<pre><code class="language-in">.................... ....................
+.................... ....................
+.................... ....................
+.................... ######..............
+.................... ....................
+.................... ....................
+.................... ....................
+.................... ....................
+.................... ....................
+.................... ....................
+################.... ....................
+......#...#......... ....................
+..##..#............. ....................
+..#...#............. ....................
+..#...#............. ....................
+..#...#...#......... ....................
+..#.####..#......... ....................
+..#................. ....................
+..################## ....................
+.................... ....................
+</code></pre>
+<p>标准输出如下：</p>
+<pre><code class="language-out">75
+LLLLLLLLLLLLLLLLLLUUUUUUUURRRDDDDLDDLLLRRRRRRRRRRRRRUUUUUUUUUUUUUUURRRRRRUU
+...................A A...................
+...................A A...................
+................AAAA AAAAAAA.............
+................A... ######A.............
+................A... ......A.............
+................A... ......A.............
+................A... ......A.............
+................A... ......A.............
+................A... ......A.............
+................A... ......A.............
+################A... ......A.............
+.AAAA.#...#.....A... ......A........AAAA.
+.A##A.#.........A... ......A........A..A.
+.A#.A.#.........A... ......A........A..A.
+.A#.A.#.........A... ......A........A..A.
+.A#AA.#...#.....A... ......A........AA.A.
+.A#A####..#.....A... ......A.........A.A.
+.A#AAAAAAAAAAAAAA... ......AAAAAAAAAAAAAA
+.A################## ..................A.
+.AAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAA. 
+</code></pre>
+<p>(具体为什么是这样的结果可以分析一下，主要是在第二个图里快到终点的时候拦截了一下，因为要按字典序最小所以提前绕开了，虽然右下角看上去有点怪，但是可以根据上面的路径来分析是怎么走的)</p>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+typedef long long llong;
+const int N = 1e5 + 5;
+using namespace std;
+
+string dir = &quot;DLRU&quot;;
+int dx[2][4] = {{1, 0, 0, -1}, {1, 0, 0, -1}};
+int dy[2][4] = {{0, -1, 1, 0}, {0, 1, -1, 0}};
+char mp[2][30][30];
+bool vis[30][30][30][30];
+
+struct AC {
+    int x[2], y[2];
+    string path;
+    AC(int x = 0, int y = 0, int x1 = 0, int y1 = 0, string path = &quot;&quot;) : x{x, x1}, y{y, y1}, path(path) { }
+};
+
+bool judge(int x, int y) {
+    return 0 &lt;= x &amp;&amp; x &lt; 20 &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; 20;
+}
+
+bool judge2(int x, int y, int k) {
+    return mp[k][x][y] != '#';	// 这里如果用mp[k][x][y] == '.'就WA了,因为在后面标A的时候有些'.'被标记成'A'了,导致标出的路径出错
+}
+
+string bfs() {
+    queue&lt;AC&gt; q;
+    memset(vis, false, sizeof(vis));
+    q.push(AC(19, 19, 19, 0, &quot;&quot;));
+    vis[19][19][19][0] = true;
+    while (!q.empty()) {
+        int x0 = q.front().x[0];
+        int y0 = q.front().y[0];
+        int x1 = q.front().x[1];
+        int y1 = q.front().y[1];
+        string path = q.front().path;
+        q.pop();
+        if (x0 == 0 &amp;&amp; y0 == 19 &amp;&amp; x1 == 0 &amp;&amp; y1 == 0) {
+            return path;
+        }
+        for (int i = 0; i &lt; 4; i++) {
+            int xx0 = x0 + dx[0][i];
+            int yy0 = y0 + dy[0][i];
+            int xx1 = x1 + dx[1][i];
+            int yy1 = y1 + dy[1][i];
+            bool f1 = judge(xx0, yy0) &amp;&amp; judge2(xx0, yy0, 0);
+            bool f2 = judge(xx1, yy1) &amp;&amp; judge2(xx1, yy1, 1);
+            if (!f1 &amp;&amp; !f2) {
+                continue;
+            }
+            if (!f1) {
+                xx0 = x0;   yy0 = y0;
+            } else if (!f2) {
+                xx1 = x1;   yy1 = y1;
+            }
+            if (!vis[xx0][yy0][xx1][yy1]) {
+                vis[xx0][yy0][xx1][yy1] = true;
+                q.push(AC(xx0, yy0, xx1, yy1, path + dir[i]));
+            }
+        }
+    }
+    return &quot;&quot;;
+}
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;E:/code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;E:/code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    for (int i = 0; i &lt; 20; i++) {
+        for (int k = 0; k &lt; 2; k++) {
+            for (int j = 0; j &lt; 20; j++) {
+                scanf(&quot; %c&quot;, &amp;mp[k][i][j]);
+            }
+        }
+    }
+    string ans = bfs();
+    cout &lt;&lt; ans.size() &lt;&lt; endl;
+    cout &lt;&lt; ans &lt;&lt; endl;
+    int x0 = 19;
+    int y0 = 19;
+    int x1 = 19;
+    int y1 = 0;
+    mp[0][x0][y0] = 'A';
+    mp[1][x1][y1] = 'A';
+    for (int i = 0; i &lt; ans.size(); i++) {
+        for (int j = 0; j &lt; 4; j++) {
+            if (dir[j] == ans[i]) {
+                int xx0 = x0 + dx[0][j];
+                int yy0 = y0 + dy[0][j];
+                int xx1 = x1 + dx[1][j];
+                int yy1 = y1 + dy[1][j];
+                bool f1 = judge(xx0, yy0) &amp;&amp; judge2(xx0, yy0, 0);
+                bool f2 = judge(xx1, yy1) &amp;&amp; judge2(xx1, yy1, 1);
+                if (!f1) {
+                    xx0 = x0;   yy0 = y0;
+                } else if (!f2) {
+                    xx1 = x1;   yy1 = y1;
+                }
+                mp[0][xx0][yy0] = 'A';
+                mp[1][xx1][yy1] = 'A';
+                x0 = xx0;   y0 = yy0;
+                x1 = xx1;   y1 = yy1;
+                break;
+            }
+        }
+    }
+    for (int i = 0; i &lt; 20; i++) {
+        for (int k = 0; k &lt; 2; k++) {
+            for (int j = 0; j &lt; 20; j++) {
+                cout &lt;&lt; mp[k][i][j];
+            }
+            cout &lt;&lt; ' ';
+        }
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}
+
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/gym-101972j/">
+                  <h3 class="post-title">
+                    【Gym-101972J】J.Even Numbers 数论组合数／思维、规律
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

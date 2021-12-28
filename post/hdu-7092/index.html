@@ -1,22 +1,115 @@
-<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://greydoveh.github.io</id>
-    <title>鸽子屋</title>
-    <updated>2021-12-28T15:18:36.270Z</updated>
-    <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://greydoveh.github.io"/>
-    <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
-    <subtitle>咕咕咕</subtitle>
-    <logo>https://greydoveh.github.io/images/avatar.png</logo>
-    <icon>https://greydoveh.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2021, 鸽子屋</rights>
-    <entry>
-        <title type="html"><![CDATA[【2021CCPC华为云挑战赛-1006】【HDU-7092】仓颉造数 数学]]></title>
-        <id>https://greydoveh.github.io/post/hdu-7092/</id>
-        <link href="https://greydoveh.github.io/post/hdu-7092/">
-        </link>
-        <updated>2021-12-28T15:07:44.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2021ccpc华为云挑战赛-1006-仓颉造数">2021CCPC华为云挑战赛-1006 仓颉造数</h1>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>【2021CCPC华为云挑战赛-1006】【HDU-7092】仓颉造数 数学 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640704428717">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="2021CCPC华为云挑战赛-1006 仓颉造数
+
+赛时没做出来，16:00结束当我推出大概结论的时候已经16:02了，这里还是打算把题解写一下，因为感觉官方题解概括性很强所以部分同学 （指我这个菜鸡）  可能看不懂，所以这里写一些自己的思..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1640704428717" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">【2021CCPC华为云挑战赛-1006】【HDU-7092】仓颉造数 数学</h2>
+            <div class="post-date">2021-12-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/hdu-7092.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="2021ccpc华为云挑战赛-1006-仓颉造数">2021CCPC华为云挑战赛-1006 仓颉造数</h1>
 <blockquote>
 <h2 id="赛时没做出来1600结束当我推出大概结论的时候已经1602了这里还是打算把题解写一下因为感觉官方题解概括性很强所以部分同学-指我这个菜鸡-可能看不懂所以这里写一些自己的思路">赛时没做出来，16:00结束当我推出大概结论的时候已经16:02了，这里还是打算把题解写一下，因为感觉官方题解概括性很强所以部分同学 <s>（指我这个菜鸡）</s>  可能看不懂，所以这里写一些自己的思路</h2>
 <p>另外因为HDUOJ挂了，大家看看题看看思路就好可以简单想想做法，</p>
@@ -122,1018 +215,59 @@ int main() {
     return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021牛客多校2】F－Girlfriend 计算几何]]></title>
-        <id>https://greydoveh.github.io/post/nowcoder-Girlfriend/</id>
-        <link href="https://greydoveh.github.io/post/nowcoder-Girlfriend/">
-        </link>
-        <updated>2021-12-28T15:04:32.000Z</updated>
-        <content type="html"><![CDATA[<font face = "Consolas">
-<h1 id="2021牛客多校2-f">2021牛客多校2－F</h1>
-<font size = 3> 
-<h2 id="f-girlfriend"><strong>F－Girlfriend</strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>给出四个点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mo separator="true">,</mo><mi>B</mi><mo separator="true">,</mo><mi>C</mi><mo separator="true">,</mo><mi>D</mi></mrow><annotation encoding="application/x-tex">A, B, C, D</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">A</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span></span></span></span><br>
-另有两点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>P</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">P_1, P_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>分别满足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>A</mi><msub><mi>P</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><mo>≥</mo><msub><mi>k</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi><mi>B</mi><msub><mi>P</mi><mn>1</mn></msub><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|AP_1| \geq k_1|BP_1|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault">A</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03148em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mi>C</mi><msub><mi>P</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mo>≥</mo><msub><mi>k</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi><mi>D</mi><msub><mi>P</mi><mn>2</mn></msub><mi mathvariant="normal">∣</mi></mrow><annotation encoding="application/x-tex">|CP_2| \geq k_2|DP_2|</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≥</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03148em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.02778em;">D</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord">∣</span></span></span></span><br>
-求<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>P</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">P_1, P_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>相交范围的体积<br>
-<strong>Time  : 1000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>阿波罗尼斯圆，在三维情况下成为一个球，根据这个可以直接写出球的球心坐标和半径<br>
-不知道公式的也可以现场去推公式（因为是轮换对称的，只推一个坐标就可以写出另外两个）<br>
-<s>我写的时候因为忘了结论就是现场推的但是推错好多次……</s> 这里给出结论：</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">若</mi><mi mathvariant="normal">，</mi><mi>A</mi><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>z</mi><mn>1</mn></msub><mo>)</mo><mo separator="true">,</mo><mi>B</mi><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>z</mi><mn>2</mn></msub><mo>)</mo><mi mathvariant="normal">，</mi><mi mathvariant="normal">且</mi><mi>P</mi><mi mathvariant="normal">点</mi><mi mathvariant="normal">满</mi><mi mathvariant="normal">足</mi><mi mathvariant="normal">∣</mi><mi>A</mi><mi>P</mi><mi mathvariant="normal">∣</mi><mo>=</mo><mi>k</mi><mi mathvariant="normal">∣</mi><mi>B</mi><mi>P</mi><mi mathvariant="normal">∣</mi><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">则</mi><mi>P</mi><mi mathvariant="normal">点</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">轨</mi><mi mathvariant="normal">迹</mi><mi mathvariant="normal">方</mi><mi mathvariant="normal">程</mi><mi mathvariant="normal">为</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">个</mi><mi mathvariant="normal">球</mi><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mi mathvariant="normal">球</mi><mi mathvariant="normal">心</mi><mi mathvariant="normal">坐</mi><mi mathvariant="normal">标</mi><mi mathvariant="normal">：</mi><mi>O</mi><mo>(</mo><mfrac><mrow><msup><mi>k</mi><mn>2</mn></msup><msub><mi>x</mi><mn>2</mn></msub><mo>−</mo><msub><mi>x</mi><mn>1</mn></msub></mrow><mrow><msup><mi>k</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow></mfrac><mo separator="true">,</mo><mfrac><mrow><msup><mi>k</mi><mn>2</mn></msup><msub><mi>y</mi><mn>2</mn></msub><mo>−</mo><msub><mi>y</mi><mn>1</mn></msub></mrow><mrow><msup><mi>k</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow></mfrac><mo separator="true">,</mo><mfrac><mrow><msup><mi>k</mi><mn>2</mn></msup><msub><mi>z</mi><mn>2</mn></msub><mo>−</mo><msub><mi>z</mi><mn>1</mn></msub></mrow><mrow><msup><mi>k</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn></mrow></mfrac><mo>)</mo><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">半</mi><mi mathvariant="normal">径</mi><mi mathvariant="normal">：</mi><mi>r</mi><mo>=</mo><mfrac><mrow><mi>k</mi><mi mathvariant="normal">∣</mi><mi>A</mi><mi>B</mi><mi mathvariant="normal">∣</mi></mrow><mrow><mi mathvariant="normal">∣</mi><msup><mi>k</mi><mn>2</mn></msup><mo>−</mo><mn>1</mn><mi mathvariant="normal">∣</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">若，A(x_1, y_1, z_1), B(x_2,y_2,z_2) ，且P点满足|AP| = k|BP| 　\\　\\
-则P点的轨迹方程为一个球　\\　\\     　
-球心坐标：O(\frac{k^2x_2-x_1}{k^2-1},\frac{k^2y_2-y_1}{k^2-1},\frac{k^2z_2-z_1}{k^2-1} )\\　\\  
-半径：r = \frac{k|AB|}{|k^2-1|}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord cjk_fallback">若</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault">A</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">且</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">点</span><span class="mord cjk_fallback">满</span><span class="mord cjk_fallback">足</span><span class="mord">∣</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord">∣</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord">∣</span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">则</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">点</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">轨</span><span class="mord cjk_fallback">迹</span><span class="mord cjk_fallback">方</span><span class="mord cjk_fallback">程</span><span class="mord cjk_fallback">为</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">个</span><span class="mord cjk_fallback">球</span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:2.260438em;vertical-align:-0.7693300000000001em;"></span><span class="mord cjk_fallback">　</span><span class="mord cjk_fallback">球</span><span class="mord cjk_fallback">心</span><span class="mord cjk_fallback">坐</span><span class="mord cjk_fallback">标</span><span class="mord cjk_fallback">：</span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.04398em;">z</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.04398em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.7693300000000001em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord cjk_fallback">半</span><span class="mord cjk_fallback">径</span><span class="mord cjk_fallback">：</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.363em;vertical-align:-0.936em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">∣</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.740108em;"><span style="top:-2.9890000000000003em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord">1</span><span class="mord">∣</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord">∣</span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord">∣</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.936em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>找到两个球的球心和半径后，可根据球心距与半径的关系判断两球的关系，进而求出两球相交的体积。<br>
-两球相交部分的体积可以利用积分去求，涉及到球冠等概念，可以当作结论记住，具体证明可以在其他人的博客中找到，这里只给出结论：（相交但不内含时满足）</p>
-<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">对</mi><mi mathvariant="normal">于</mi><mi mathvariant="normal">大</mi><mi mathvariant="normal">球</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">根</mi><mi mathvariant="normal">据</mi><mi mathvariant="normal">余</mi><mi mathvariant="normal">弦</mi><mi mathvariant="normal">定</mi><mi mathvariant="normal">理</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">得</mi><mspace linebreak="newline"></mspace><mi>cos</mi><mo>⁡</mo><mi>α</mi><mo>=</mo><mfrac><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>+</mo><msup><mi>d</mi><mn>2</mn></msup><mo>−</mo><msup><mi>r</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>R</mi><mi>d</mi></mrow></mfrac><mspace linebreak="newline"></mspace><mi mathvariant="normal">记</mi><mi mathvariant="normal">：</mi><msub><mi>h</mi><mn>1</mn></msub><mo>=</mo><mi>R</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>cos</mi><mo>⁡</mo><mi>α</mi><mo>)</mo><mspace linebreak="newline"></mspace><mi mathvariant="normal">积</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">得</mi><mi mathvariant="normal">球</mi><mi mathvariant="normal">冠</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">体</mi><mi mathvariant="normal">积</mi><mi mathvariant="normal">：</mi><mi>π</mi><mi>R</mi><msubsup><mi>h</mi><mn>1</mn><mn>2</mn></msubsup><mo>−</mo><mfrac><mrow><mi>π</mi><msubsup><mi>h</mi><mn>1</mn><mn>3</mn></msubsup></mrow><mn>3</mn></mfrac><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mspace linebreak="newline"></mspace><mi mathvariant="normal">　</mi><mspace linebreak="newline"></mspace><mi mathvariant="normal">同</mi><mi mathvariant="normal">理</mi><mi mathvariant="normal">对</mi><mi mathvariant="normal">于</mi><mi mathvariant="normal">小</mi><mi mathvariant="normal">球</mi><mspace linebreak="newline"></mspace><mi>cos</mi><mo>⁡</mo><mi>β</mi><mo>=</mo><mfrac><mrow><msup><mi>r</mi><mn>2</mn></msup><mo>+</mo><msup><mi>d</mi><mn>2</mn></msup><mo>−</mo><msup><mi>R</mi><mn>2</mn></msup></mrow><mrow><mn>2</mn><mi>r</mi><mi>d</mi></mrow></mfrac><mspace linebreak="newline"></mspace><mi mathvariant="normal">记</mi><mi mathvariant="normal">：</mi><msub><mi>h</mi><mn>2</mn></msub><mo>=</mo><mi>r</mi><mo>(</mo><mn>1</mn><mo>−</mo><mi>cos</mi><mo>⁡</mo><mi>β</mi><mo>)</mo><mspace linebreak="newline"></mspace><mi mathvariant="normal">积</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">得</mi><mi mathvariant="normal">球</mi><mi mathvariant="normal">冠</mi><mi mathvariant="normal">部</mi><mi mathvariant="normal">分</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">体</mi><mi mathvariant="normal">积</mi><mi mathvariant="normal">：</mi><mi>π</mi><mi>r</mi><msubsup><mi>h</mi><mn>2</mn><mn>2</mn></msubsup><mo>−</mo><mfrac><mrow><mi>π</mi><msubsup><mi>h</mi><mn>2</mn><mn>3</mn></msubsup></mrow><mn>3</mn></mfrac></mrow><annotation encoding="application/x-tex">对于大球，根据余弦定理，可得 \\
-\cos \alpha = \frac{R^2+d^2-r^2}{2Rd}  \\
-记：h_1 = R(1-\cos \alpha ) \\
-积分可得球冠部分的体积：\pi Rh_1^2- \frac{\pi h_1^3}{3}\\ 　\\ \\　\\
-同理对于小球\\
-\cos \beta = \frac{r^2+d^2-R^2}{2rd} \\
-记：h_2 = r(1-\cos \beta ) \\ 
-积分可得球冠部分的体积：\pi rh_2^2- \frac{\pi h_2^3}{3}
-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">大</span><span class="mord cjk_fallback">球</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">根</span><span class="mord cjk_fallback">据</span><span class="mord cjk_fallback">余</span><span class="mord cjk_fallback">弦</span><span class="mord cjk_fallback">定</span><span class="mord cjk_fallback">理</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">得</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord mathdefault">d</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord cjk_fallback">记</span><span class="mord cjk_fallback">：</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.0037em;">α</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1.1111079999999998em;vertical-align:-0.247em;"></span><span class="mord cjk_fallback">积</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">得</span><span class="mord cjk_fallback">球</span><span class="mord cjk_fallback">冠</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">体</span><span class="mord cjk_fallback">积</span><span class="mord cjk_fallback">：</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4911079999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">　</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">同</span><span class="mord cjk_fallback">理</span><span class="mord cjk_fallback">对</span><span class="mord cjk_fallback">于</span><span class="mord cjk_fallback">小</span><span class="mord cjk_fallback">球</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.491108em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">d</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault">d</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.00773em;">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord cjk_fallback">记</span><span class="mord cjk_fallback">：</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mopen">(</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05278em;">β</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:1.1111079999999998em;vertical-align:-0.247em;"></span><span class="mord cjk_fallback">积</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">得</span><span class="mord cjk_fallback">球</span><span class="mord cjk_fallback">冠</span><span class="mord cjk_fallback">部</span><span class="mord cjk_fallback">分</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">体</span><span class="mord cjk_fallback">积</span><span class="mord cjk_fallback">：</span><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8641079999999999em;"><span style="top:-2.4530000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.113em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:2.177108em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.4911079999999999em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">3</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">π</span><span class="mord"><span class="mord mathdefault">h</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-2.4518920000000004em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.24810799999999997em;"><span></span></span></span></span></span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
-<p>将两部分求和即为相交部分的体积。</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 500000 + 5;
-const double PI = 3.1415926535;
-using namespace std;
- 
-int x[10], y[10], z[10];
-int k11, k22;
-double x1, y_1, z1, r1;	// cmath库里有y1，牛客上会CE于是改成了y_1
-double x2, y2, z2, r2;
- 
- 
-double dis(double x1, double y_1, double z1, double x2, double y2, double z2) {
-    return (x1 - x2)*(x1 - x2) + (y_1 - y2)*(y_1 - y2) + (z1 - z2)*(z1 - z2);
-}
- 
-double getVolume(double r) {
-    return 4.0 * PI * r * r * r / 3.0;
-}
- 
-int main() {
-    #ifdef LOCAL
-        freopen(&quot;E:/code/ACM/in.in&quot;, &quot;r&quot;, stdin);
-        freopen(&quot;E:/code/ACM/out.out&quot;, &quot;w&quot;, stdout);
-    #endif
-     
-    int T;  cin &gt;&gt; T;
-    while (T--) {
-        for (int i = 0; i &lt; 4; i++) {
-            scanf(&quot;%d%d%d&quot;, &amp;x[i], &amp;y[i], &amp;z[i]);
-        }
-        scanf(&quot;%d%d&quot;, &amp;k11, &amp;k22);
-        double k1 = k11;
-        double k2 = k22;
-        x1 = (k1 * k1 * x[1] - x[0]) / (k1 * k1 - 1);
-        y_1 = (k1 * k1 * y[1] - y[0]) / (k1 * k1 - 1);
-        z1 = (k1 * k1 * z[1] - z[0]) / (k1 * k1 - 1);
-        r1 = k1 * sqrt((x[0] - x[1]) * (x[0] - x[1]) + (y[0] - y[1]) * (y[0] - y[1]) + (z[0] - z[1]) * (z[0] - z[1])) / (k1 * k1 - 1);
- 
-        x2 = (k2 * k2 * x[3] - x[2]) / (k2 * k2 - 1);
-        y2 = (k2 * k2 * y[3] - y[2]) / (k2 * k2 - 1);
-        z2 = (k2 * k2 * z[3] - z[2]) / (k2 * k2 - 1);
-        r2 = k2 * sqrt((x[3] - x[2]) * (x[3] - x[2]) + (y[3] - y[2]) * (y[3] - y[2]) + (z[3] - z[2]) * (z[3] - z[2])) / (k2 * k2 - 1);
- 
-        double dd = dis(x1, y_1, z1, x2, y2, z2);
-        double d = sqrt(dd);
- 
-        double r = min(r1, r2);
-        double R = max(r1, r2);
- 
-        if (d &gt;= r + R) {
-            printf(&quot;0.000\n&quot;);
-        } else if (d + r &lt;= R) {
-            printf(&quot;%.3f\n&quot;, getVolume(r));
-        } else {
-            double ca = (R * R + dd - r * r) / (2.0 * R * d);
-            double h1 = R * (1 - ca);
-            double cb = (r * r + dd - R * R) / (2.0 * r * d);
-            double h2 = r * (1 - cb);
-            double volume = ((3.0 * R - h1) * h1 * h1 * PI) / 3.0 + ((3.0 * r - h2) * h2 * h2 * PI) / 3.0;
-            printf(&quot;%.3f\n&quot;, volume);
-        }
-         
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021牛客多校2】I－Penguins 搜索、BFS]]></title>
-        <id>https://greydoveh.github.io/post/nowcoder-Penguins/</id>
-        <link href="https://greydoveh.github.io/post/nowcoder-Penguins/">
-        </link>
-        <updated>2021-12-28T15:02:15.000Z</updated>
-        <content type="html"><![CDATA[<font face = "Consolas">
-<h1 id="2021牛客多校2-i">2021牛客多校2－I</h1>
-<font size = 3> 
-<h2 id="i-penguins"><strong>I－Penguins</strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>一张地图被分成左右两部分，每部分的大小都是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>20</mn><mo>×</mo><mn>20</mn></mrow><annotation encoding="application/x-tex">20×20</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">×</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">0</span></span></span></span><br>
-两只企鹅分别从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>19</mn><mo separator="true">,</mo><mn>19</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(19, 19)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">9</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">9</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>19</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(19, 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mord">9</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 出发，要到达 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>19</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0, 19)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord">9</span><span class="mclose">)</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0, 0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span><br>
-企鹅的移动是受玩家控制的，但是两只企鹅的移动是左右镜像的<br>
-若企鹅的下一个位置是墙或者超出地图范围，则该企鹅不动，只移动另外一直企鹅（如果可以移动）<br>
-求最短路径的长度、路径、并在图中标记出来<br>
-若有多种路径，输出字典序最小的结果<br>
-<strong>Time  : 1000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>暴搜，因为麻烦一点的搜索做的不多所以这里记录一下这道题<br>
-每个节点中存储路径，找到了直接将路径返回，然后按照路径去图里标A<br>
-另外这题WA了一发（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>80</mn><mi mathvariant="normal">%</mi></mrow><annotation encoding="application/x-tex">80\%</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.80556em;vertical-align:-0.05556em;"></span><span class="mord">8</span><span class="mord">0</span><span class="mord">%</span></span></span></span>），这里给出一组数据大家可以看看是不是自己的WA点，具体为什么回导致WA标注在代码里面了</p>
-</blockquote>
-<pre><code class="language-in">.................... ....................
-.................... ....................
-.................... ....................
-.................... ######..............
-.................... ....................
-.................... ....................
-.................... ....................
-.................... ....................
-.................... ....................
-.................... ....................
-################.... ....................
-......#...#......... ....................
-..##..#............. ....................
-..#...#............. ....................
-..#...#............. ....................
-..#...#...#......... ....................
-..#.####..#......... ....................
-..#................. ....................
-..################## ....................
-.................... ....................
-</code></pre>
-<p>标准输出如下：</p>
-<pre><code class="language-out">75
-LLLLLLLLLLLLLLLLLLUUUUUUUURRRDDDDLDDLLLRRRRRRRRRRRRRUUUUUUUUUUUUUUURRRRRRUU
-...................A A...................
-...................A A...................
-................AAAA AAAAAAA.............
-................A... ######A.............
-................A... ......A.............
-................A... ......A.............
-................A... ......A.............
-................A... ......A.............
-................A... ......A.............
-................A... ......A.............
-################A... ......A.............
-.AAAA.#...#.....A... ......A........AAAA.
-.A##A.#.........A... ......A........A..A.
-.A#.A.#.........A... ......A........A..A.
-.A#.A.#.........A... ......A........A..A.
-.A#AA.#...#.....A... ......A........AA.A.
-.A#A####..#.....A... ......A.........A.A.
-.A#AAAAAAAAAAAAAA... ......AAAAAAAAAAAAAA
-.A################## ..................A.
-.AAAAAAAAAAAAAAAAAAA AAAAAAAAAAAAAAAAAAA. 
-</code></pre>
-<p>(具体为什么是这样的结果可以分析一下，主要是在第二个图里快到终点的时候拦截了一下，因为要按字典序最小所以提前绕开了，虽然右下角看上去有点怪，但是可以根据上面的路径来分析是怎么走的)</p>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 1e5 + 5;
-using namespace std;
 
-string dir = &quot;DLRU&quot;;
-int dx[2][4] = {{1, 0, 0, -1}, {1, 0, 0, -1}};
-int dy[2][4] = {{0, -1, 1, 0}, {0, 1, -1, 0}};
-char mp[2][30][30];
-bool vis[30][30][30][30];
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/nowcoder-Girlfriend/">
+                  <h3 class="post-title">
+                    【2021牛客多校2】F－Girlfriend 计算几何
+                  </h3>
+                </a>
+              </div>
+            
 
-struct AC {
-    int x[2], y[2];
-    string path;
-    AC(int x = 0, int y = 0, int x1 = 0, int y1 = 0, string path = &quot;&quot;) : x{x, x1}, y{y, y1}, path(path) { }
-};
+            
 
-bool judge(int x, int y) {
-    return 0 &lt;= x &amp;&amp; x &lt; 20 &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; 20;
-}
+          </div>
 
-bool judge2(int x, int y, int k) {
-    return mp[k][x][y] != '#';	// 这里如果用mp[k][x][y] == '.'就WA了,因为在后面标A的时候有些'.'被标记成'A'了,导致标出的路径出错
-}
+        </div>
+      </div>
+    </div>
 
-string bfs() {
-    queue&lt;AC&gt; q;
-    memset(vis, false, sizeof(vis));
-    q.push(AC(19, 19, 19, 0, &quot;&quot;));
-    vis[19][19][19][0] = true;
-    while (!q.empty()) {
-        int x0 = q.front().x[0];
-        int y0 = q.front().y[0];
-        int x1 = q.front().x[1];
-        int y1 = q.front().y[1];
-        string path = q.front().path;
-        q.pop();
-        if (x0 == 0 &amp;&amp; y0 == 19 &amp;&amp; x1 == 0 &amp;&amp; y1 == 0) {
-            return path;
-        }
-        for (int i = 0; i &lt; 4; i++) {
-            int xx0 = x0 + dx[0][i];
-            int yy0 = y0 + dy[0][i];
-            int xx1 = x1 + dx[1][i];
-            int yy1 = y1 + dy[1][i];
-            bool f1 = judge(xx0, yy0) &amp;&amp; judge2(xx0, yy0, 0);
-            bool f2 = judge(xx1, yy1) &amp;&amp; judge2(xx1, yy1, 1);
-            if (!f1 &amp;&amp; !f2) {
-                continue;
-            }
-            if (!f1) {
-                xx0 = x0;   yy0 = y0;
-            } else if (!f2) {
-                xx1 = x1;   yy1 = y1;
-            }
-            if (!vis[xx0][yy0][xx1][yy1]) {
-                vis[xx0][yy0][xx1][yy1] = true;
-                q.push(AC(xx0, yy0, xx1, yy1, path + dir[i]));
-            }
-        }
-    }
-    return &quot;&quot;;
-}
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-int main() {
-    #ifdef LOCAL
-        freopen(&quot;E:/code/ACM/in.in&quot;, &quot;r&quot;, stdin);
-        freopen(&quot;E:/code/ACM/out.out&quot;, &quot;w&quot;, stdout);
-    #endif
-    for (int i = 0; i &lt; 20; i++) {
-        for (int k = 0; k &lt; 2; k++) {
-            for (int j = 0; j &lt; 20; j++) {
-                scanf(&quot; %c&quot;, &amp;mp[k][i][j]);
-            }
-        }
-    }
-    string ans = bfs();
-    cout &lt;&lt; ans.size() &lt;&lt; endl;
-    cout &lt;&lt; ans &lt;&lt; endl;
-    int x0 = 19;
-    int y0 = 19;
-    int x1 = 19;
-    int y1 = 0;
-    mp[0][x0][y0] = 'A';
-    mp[1][x1][y1] = 'A';
-    for (int i = 0; i &lt; ans.size(); i++) {
-        for (int j = 0; j &lt; 4; j++) {
-            if (dir[j] == ans[i]) {
-                int xx0 = x0 + dx[0][j];
-                int yy0 = y0 + dy[0][j];
-                int xx1 = x1 + dx[1][j];
-                int yy1 = y1 + dy[1][j];
-                bool f1 = judge(xx0, yy0) &amp;&amp; judge2(xx0, yy0, 0);
-                bool f2 = judge(xx1, yy1) &amp;&amp; judge2(xx1, yy1, 1);
-                if (!f1) {
-                    xx0 = x0;   yy0 = y0;
-                } else if (!f2) {
-                    xx1 = x1;   yy1 = y1;
-                }
-                mp[0][xx0][yy0] = 'A';
-                mp[1][xx1][yy1] = 'A';
-                x0 = xx0;   y0 = yy0;
-                x1 = xx1;   y1 = yy1;
-                break;
-            }
-        }
-    }
-    for (int i = 0; i &lt; 20; i++) {
-        for (int k = 0; k &lt; 2; k++) {
-            for (int j = 0; j &lt; 20; j++) {
-                cout &lt;&lt; mp[k][i][j];
-            }
-            cout &lt;&lt; ' ';
-        }
-        cout &lt;&lt; endl;
-    }
-    return 0;
-}
+AOS.init();
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【Gym-101972J】J.Even Numbers 数论组合数／思维、规律]]></title>
-        <id>https://greydoveh.github.io/post/gym-101972j/</id>
-        <link href="https://greydoveh.github.io/post/gym-101972j/">
-        </link>
-        <updated>2021-12-28T14:52:53.000Z</updated>
-        <content type="html"><![CDATA[<font face = "Consolas">
-<h1 id="gym-101972j">Gym-101972J</h1>
-<font size = 3> 
-<h2 id="even-numbers"><strong><a href="https://vjudge.net/problem/Gym-101972J">Even Numbers</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>给定一个二元函数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>a</mi><mi>l</mi><mi>c</mi><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">calc(i, j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span><br>
-<img src="https://vj.csgrandeur.cn/6fa622d2b46eb4b49ff20e3ba7a3fef8?v=1640703227" alt="calc(i, j)" loading="lazy"><br>
-当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">i=n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>时，计算当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn><mo>≤</mo><mi>m</mi><mo>≤</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">0 \leq m \leq n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>时，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>c</mi><mi>a</mi><mi>l</mi><mi>c</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">calc(n, m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>有多少个偶数</p>
-<p><strong>Time  : 1000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>对杨辉三角、组合数比较熟悉的可以一眼看出来给的公式就是杨辉三角也就是组合数<br>
-不熟悉的打一下表或者手算几行也能看出来，但是由于n最大为1e18所以不能直接算<br>
-对于组合数有一个结论：<strong>当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi mathvariant="normal">&amp;</mi><mi>m</mi><mo>=</mo><mo>=</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">n \&amp; m == m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">n</span><span class="mord">&amp;</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">m</span></span></span></span>时<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msubsup><mi>C</mi><mi>n</mi><mi>m</mi></msubsup></mrow><annotation encoding="application/x-tex">C_n^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.93033em;vertical-align:-0.247em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-2.4530000000000003em;margin-left:-0.07153em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.247em;"><span></span></span></span></span></span></span></span></span></span>为奇数</strong>，有了这个结论这道题直接就可以做了<br>
-另外不知道结论的也可以直接推规律，<s>我就是直接硬推出来的</s>，下面给出推的过程<br>
-首先第一步是对2取余打表，最开始是统计的偶数发现没什么规律，然后发现统计奇数更有规律性，每一行的奇数个数均为2的幂次<br>
-然后去寻找规律，最先发现的就是对于2的幂次的行奇数个数均为2（首尾的两个1），奇数行的奇数个数为前一行的二倍。此时还没发现什么规律，然后继续观察，发现对于6、48这些行均为4，而6=2+4，48=32+16，于是猜想和二进制有关系，打表把每行的二进制输出，发现关键信息：<strong>第i行的奇数个数等于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>k</mi></msup></mrow><annotation encoding="application/x-tex">2^k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.849108em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.849108em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span></span></span></span></span></span></span>，其中k为i的二进制中1的个数</strong>。从偶数个数可以求出奇数个数，至此找到规律，即可顺利AC</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-typedef long double ldouble;
-using namespace std;
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-llong n;
+</script>
 
-int main() {
-    #ifdef LOCAL
-        freopen(&quot;in.in&quot;, &quot;r&quot;, stdin);
-        freopen(&quot;out.out&quot;, &quot;w&quot;, stdout);
-    #endif
 
-    int T;	cin &gt;&gt; T;
-    while (T--) {
-        cin &gt;&gt; n;
-        llong tmp = n, cnt = 1;
-        while (tmp) {
-            if (tmp &amp; 1) {
-                cnt &lt;&lt;= 1;
-            }
-            tmp &gt;&gt;= 1;
-        }
-        cout &lt;&lt; n + 1 - cnt &lt;&lt; endl;
-    }
-    return 0;
-}
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【Gym-101972G】G.Minimax 动态规划]]></title>
-        <id>https://greydoveh.github.io/post/gym-101972g/</id>
-        <link href="https://greydoveh.github.io/post/gym-101972g/">
-        </link>
-        <updated>2021-12-28T12:20:20.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="gym-101972g">Gym-101972G</h1>
-<font size = 3> 
-<h2 id="minimax"><strong><a href="https://vjudge.net/problem/Gym-101972G">Minimax</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>定义一个矩阵的beauty值为矩阵中的最大元素<br>
-给出一个m*n的矩阵，从中删除一行一列，将矩阵分成四个象限，每个象限有一个beauty值，问怎样分能够使得四个象限beauty值得最大与最小值之差最小，求这个最小值。</p>
-<p><strong>Time  : 2500 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>从四个方向开始DP，记录四个方向子矩阵的beauty值，然后枚举每一行每一列，更新最小值</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-typedef long double ldouble;
-using namespace std;
 
-const int N = 500 + 10;
-int n, m;
-int a[N][N];
-int lu[N][N], ru[N][N], ld[N][N], rd[N][N];
 
-int main() {
-    #ifdef LOCAL
-        freopen(&quot;in.in&quot;, &quot;r&quot;, stdin);
-        freopen(&quot;out.out&quot;, &quot;w&quot;, stdout);
-    #endif
 
-    int T;	scanf(&quot;%d&quot;, &amp;T);
-    while (T--) {
-        scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = 1; j &lt;= m; j++) {
-                scanf(&quot;%d&quot;, &amp;a[i][j]);
-            }
-        }
-        for (int i = 0; i &lt;= n; i++) {
-            lu[i][0] = ru[i][0] = ld[i][0] = rd[i][0] = 0;
-            lu[i][m + 1] = ru[i][m + 1] = ld[i][m + 1] = rd[i][m + 1] = 0;
-        }
-        for (int j = 0; j &lt;= m; j++) {
-            lu[0][j] = ru[0][j] = ld[0][j] = rd[0][j] = 0;
-            lu[n + 1][j] = ru[n + 1][j] = ld[n + 1][j] = rd[n + 1][j] = 0;
-        }
-        // lu
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = 1; j &lt;= m; j++) {
-                lu[i][j] = max(a[i][j], max(lu[i][j - 1], lu[i - 1][j]));
-            }
-        }
-        // ru
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = m; j &gt; 0; j--) {
-                ru[i][j] = max(a[i][j], max(ru[i][j + 1], ru[i - 1][j]));
-            }
-        }
-        // ld
-        for (int i = n; i &gt; 0; i--) {
-            for (int j = 1; j &lt;= m; j++) {
-                ld[i][j] = max(a[i][j], max(ld[i][j - 1], ld[i + 1][j]));
-            }
-        }
-        // rd
-        for (int i = n; i &gt; 0; i--) {
-            for (int j = m; j &gt; 0; j--) {
-                rd[i][j] = max(a[i][j], max(rd[i][j + 1], rd[i + 1][j]));
-            }
-        }
-        int ans = 1e9 + 10;
-        for (int i = 2; i &lt; n; i++) {
-            for (int j = 2; j &lt; m; j++) {
-                int mx = max(lu[i - 1][j - 1], max(ru[i - 1][j + 1], max(ld[i + 1][j - 1], rd[i + 1][j + 1])));
-                int mi = min(lu[i - 1][j - 1], min(ru[i - 1][j + 1], min(ld[i + 1][j - 1], rd[i + 1][j + 1])));
-                ans = min(ans, mx - mi);
-            }
-        }
-        printf(&quot;%d\n&quot;, ans);
-    }
 
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论]]></title>
-        <id>https://greydoveh.github.io/post/gym-103117e/</id>
-        <link href="https://greydoveh.github.io/post/gym-103117e/">
-        </link>
-        <updated>2021-12-28T12:17:01.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2021四川省赛e">2021四川省赛E</h1>
-<font size = 3> 
-<h2 id="dont-really-like-how-the-story-ends"><strong><a href="https://vjudge.net/problem/Gym-103117E">Don't Really Like How The Story Ends</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>给图加边，使得一个可能的DFS序列刚好是从1到n</p>
-<p><strong>Time  : 1000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>第一次打正式比赛，场上E因为自己的nt行为T了好几发，这个是赛后补题<br>
-直接搜索，但是需要有一定条件<br>
-如果想要DFS序列刚好为从1到N，需要满足的条件：</p>
-<ol>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>直接相连，则访问搜索<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点存在没有访问的相邻节点且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点不与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>点相连，此时必须将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>连接到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>上</li>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点所有相邻节点都被访问了，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>可以与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>相连，也可以和从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>=&gt;<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>中路径上的任意一点相连，路径上的点都在递归栈里面，此时可以让<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点退栈，一直回到某个满足条件<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>的节点</li>
-<li>如果第3点的点退栈一直到起点1号点都没有直接相连，说明存在不连通部分，此时必须加边，此时再去搜索不连通的部分，一直到全部搜索完</li>
-</ol>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 1e5 + 5;
-using namespace std;
-vector&lt;int&gt; mp[N];
-bool vis[N];
-int cnt;
-int n, m, nxt;
-
-void dfs(int u) {
-    nxt++;
-    for (int i = 0; i &lt; mp[u].size(); i++) {
-        int to = mp[u][i];
-        if (vis[to]) continue;
-        if (to == nxt) {	// [1]
-            vis[nxt] = true;
-            dfs(nxt);
-        } else {			// [2]
-            cnt++;
-            vis[nxt] = true;
-            dfs(nxt);
-            i--;
-        } 
-    }
-    if (u == 1) {			// [3] [4]
-        while (nxt &lt;= n) {
-            vis[nxt] = true;
-            dfs(nxt);
-            cnt++;
-        }
-    }
-}
-
-int main() {
-    ios::sync_with_stdio(false);cin.tie(0);
-    int T;	cin &gt;&gt; T;
-    while (T--) {
-        cin &gt;&gt; n &gt;&gt; m;
-        for (int i = 1; i &lt;= n; i++) {
-            mp[i].clear();
-            vis[i] = false;
-        }
-        nxt = 1;
-        cnt = 0;
-        for (int i = 0; i &lt; m; i++) {
-            int u, v;
-            cin &gt;&gt; u &gt;&gt; v;
-            if (u &lt; v)  mp[u].push_back(v);
-            if (u &gt; v)  mp[v].push_back(u);	// 一个小优化，只由编号小的节点连接到编号大的节点
-        }
-        for (int i = 1; i &lt;= n; i++) {
-            sort(mp[i].begin(), mp[i].end());	
-            // 这里进行排序，就可以保证每次访问的节点都是最小的，方便判断刚刚解题思路中说的条件
-            // 不要用堆，亲测会T（场上nt的我）
-        }
-        vis[1] = true;
-        dfs(1);
-        cout &lt;&lt; cnt &lt;&lt; endl;
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造]]></title>
-        <id>https://greydoveh.github.io/post/gym-103118c/</id>
-        <link href="https://greydoveh.github.io/post/gym-103118c/">
-        </link>
-        <updated>2021-12-28T12:12:36.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2021山东省赛c">2021山东省赛C</h1>
-<font size = 3> 
-<h2 id="cat-virus"><strong><a href="https://vjudge.net/problem/Gym-103118C">Cat Virus</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>一棵树，节点有黑色和白色，黑色节点的所有子节点都为黑色<br>
-一棵树有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>(</mo><mn>2</mn><mo>&lt;</mo><mo>=</mo><mi>k</mi><mo>&lt;</mo><mo>=</mo><mn>2</mn><mo separator="true">⋅</mo><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">K(2&lt;=k&lt;=2·10^{18})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>种染色方式，构造这棵树。</p>
-<p><strong>Time  : 2000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p><s>一开始把题干里的ways翻译成道路懵了半天</s><br>
-可以先找K是怎么算的，给一棵树知道怎么求K，再反过来想应该会容易些<br>
-既然是树，理论上会有与子树之间的递归的关系<br>
-稍微画画图可以发现，<strong>一棵树的K值等于所有子树K值的乘积+1</strong><br>
-理解起来也不算难理解，染成黑色的点子节点都是黑色，所以一个节点的染色是会影响它的子树，但是两棵子树之间是互不影响的，所以先考虑根节点为白色的情况，这里采用的是所有子树K值的乘积；当根节点为黑色，只有一种情况，所以<br>
-然后找递归出口，显然1个节点的情况有2种染色方式，非黑即白；空树的染色方式可以被认为是1<br>
-求K的方法如上，然后就可以反过来构造树了<br>
-构造每一层时将K减一并进行分解<br>
-这里为了方便每次减一除二，如果能整除2就一直除下去，在该层一直添加单个节点<br>
-无法整除之后进入下一层，继续减一除二<br>
-理论时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(log_2  n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 1e5 + 5;
-using namespace std;
-vector&lt;int&gt; a[N];	// 存储子节点，类似邻接表
- 
-// 最开始不知道怎么构造，就先写了一个求K的代码
-// int getK(vector&lt;int&gt; t) {
-//     int res = 1;
-//     for (int i = 0; i &lt; t.size(); i++) {
-//         res *= getK(a[t[i]]);
-//     }
-//     return res + 1;
-// }
-
-int n = 1;
-void to(int i, llong k) {
-    llong tmp = k - 1;
-    while (tmp % 2 == 0) {
-        tmp /= 2;
-        a[i].push_back(++n);	//能整除则一直在本层添加节点
-    }
-    if (tmp == 1)    return;	// 空树K为1，此时说明构造结束
-    a[i].push_back(++n);		// 无法整除则继续在本层添加一个节点，并在这棵树的基础上添加
-    to(n, tmp);	
-}
- 
-int main()
-{
-    llong k;
-    cin &gt;&gt; k;
-    to(1, k);
-    printf(&quot;%d\n&quot;, n);
-    for (int i = 0; i &lt; n; i++) {
-        for (int j = 0; j &lt; a[i].size(); j++) {
-            printf(&quot;%d %d\n&quot;, i, a[i][j]);
-        }
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[HDU-1401-题解-搜索、双向bfs]]></title>
-        <id>https://greydoveh.github.io/post/hdu-1401/</id>
-        <link href="https://greydoveh.github.io/post/hdu-1401/">
-        </link>
-        <updated>2021-12-28T12:01:12.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="hdu-1401-题解">HDU 1401 题解</h1>
-<font size = 3> 
-<h2 id="solitaire"><strong><a href="https://vjudge.net/problem/HDU-1401">Solitaire</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>每个棋子可以跳向上下左右四个方向的格子<br>
-如果格子上有棋子，可以跳过该棋子（最多跳一个）<br>
-并且保证不跳出边界<br>
-给出两个状态，每个状态包含四个棋子的坐标<br>
-问4步之内能否从第一个状态到达第二一个状态 <br><br>
-<strong>Time: 1000 ms</strong><br>
-<strong>Memory: 32768 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>对每个棋子四个方向进行bfs<br>
-由于过程是可逆的，故可以进行双向搜索<br>
-访问标记每个状态时，可以把状态的4个坐标转成一个8位数来标记<br>
-原来unordered_map自定义键值类型需要自己写哈希函数……算了，转8位数标记一样的</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">//#include &lt;bits/stdc++.h&gt;
-#include &lt;cstdio&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-#include &lt;algorithm&gt;
-#include &lt;cstring&gt;
-using namespace std;
-
-struct Pos
-{
-    int x, y;
-};
-
-struct State
-{
-    Pos pos[4];
-    int step;
-};
-
-bool cmp(Pos a, Pos b)
-{
-    return (a.x == b.x) ? (a.y &lt; b.y) : (a.x &lt; b.x);
-}
-
-// unordered_map&lt;State, bool&gt; vis1, vis2;
-unordered_map&lt;int, bool&gt; vis1, vis2;
-int mp[10][10];
-int dx[] = { 1, 0, -1, 0 };
-int dy[] = { 0, 1, 0, -1 };
-bool ans;
-
-bool judge(int x, int y)    // 判断是否在边界内
-{
-    return (1 &lt;= x &amp;&amp; x &lt;= 8 &amp;&amp; 1 &lt;= y &amp;&amp; y &lt;= 8);
-}
-
-int to_num(State now)   // 转成8位数
-{
-    int res = 0;
-    for (int i = 0; i &lt; 4; i++)
-    {
-        res = res * 100 + now.pos[i].x * 10 + now.pos[i].y;
-    }
-    return res;
-}
-
-bool bfs(State s1, State s2)
-{
-    queue&lt;State&gt; q1, q2;
-    State now, next;
-    s1.step = 0;
-    s2.step = 0;
-    q1.push(s1);
-    q2.push(s2);
-    vis1[to_num(s1)] = true;
-    vis2[to_num(s2)] = true;
-    while ((!q1.empty()) || (!q2.empty()))
-    {
-        if (!q1.empty())
-        {
-            now = q1.front();
-            q1.pop();
-            memset(mp, 0, sizeof(mp));
-            for (int k = 0; k &lt; 4; k++)
-            {
-                mp[now.pos[k].x][now.pos[k].y] = 1;
-            }
-            if (now.step == 4)
-            {
-                continue;
-            }
-            if (vis2[to_num(now)])
-            {
-                return true;
-            }
-            for (int i = 0; i &lt; 4; i++) // 枚举棋子
-            {
-                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
-                {
-                    next = now;
-                    next.pos[i].x = next.pos[i].x + dx[j];
-                    next.pos[i].y = next.pos[i].y + dy[j];
-                    next.step = now.step + 1;
-                    if (!judge(next.pos[i].x, next.pos[i].y))
-                    {
-                        continue;
-                    }
-                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
-                    {
-                        next.pos[i].x = next.pos[i].x + dx[j];
-                        next.pos[i].y = next.pos[i].y + dy[j];
-                    }
-                    if (!judge(next.pos[i].x, next.pos[i].y))
-                    {
-                        continue;
-                    }
-                    sort(next.pos, next.pos + 4, cmp);
-                    int goal = to_num(next);
-                    if (vis2[goal])
-                    {
-                        return true;
-                    }
-                    if (!vis1[goal])
-                    {
-                        vis1[goal] = true;
-                        q1.push(next);
-                    }
-                }
-            }
-        }
-        if (!q2.empty())
-        {
-            now = q2.front();
-            q2.pop();
-            memset(mp, 0, sizeof(mp));
-            for (int k = 0; k &lt; 4; k++)
-            {
-                mp[now.pos[k].x][now.pos[k].y] = 1;
-            }
-
-            if (now.step == 4)
-            {
-                continue;
-            }
-            if (vis1[to_num(now)])
-            {
-                return true;
-            }
-            for (int i = 0; i &lt; 4; i++) // 枚举棋子
-            {
-                for (int j = 0; j &lt; 4; j++) // 枚举几个方向
-                {
-                    next = now;
-                    next.pos[i].x = next.pos[i].x + dx[j];
-                    next.pos[i].y = next.pos[i].y + dy[j];
-                    next.step = now.step + 1;
-                    if (!judge(next.pos[i].x, next.pos[i].y))
-                    {
-                        continue;
-                    }
-                    if (mp[next.pos[i].x][next.pos[i].y] == 1)  // 是否需要跳过棋子
-                    {
-                        next.pos[i].x = next.pos[i].x + dx[j];
-                        next.pos[i].y = next.pos[i].y + dy[j];
-                    }
-                    if (!judge(next.pos[i].x, next.pos[i].y))
-                    {
-                        continue;
-                    }
-                    sort(next.pos, next.pos + 4, cmp);
-                    int goal = to_num(next);
-                    if (vis1[goal])
-                    {
-                        return true;
-                    }
-                    if (!vis2[goal])
-                    {
-                        vis2[goal] = true;
-                        q2.push(next);
-                    }
-                }
-            }
-        }
-    }
-    return false;
-}
-
-int main()
-{
-    State start, last;
-    while (~scanf(&quot;%d%d&quot;, &amp;start.pos[0].x, &amp;start.pos[0].y))
-    {
-        vis1.clear();
-        vis2.clear();
-        for (int i = 1; i &lt; 4; i++)
-        {
-            scanf(&quot;%d%d&quot;, &amp;start.pos[i].x, &amp;start.pos[i].y);
-        }
-        for (int i = 0; i &lt; 4; i++)
-        {
-            scanf(&quot;%d%d&quot;, &amp;last.pos[i].x, &amp;last.pos[i].y);
-        }  
-        // 每次排好序，否则可能会出现重复遍历
-        sort(start.pos, start.pos + 4, cmp);  
-        sort(last.pos, last.pos + 4, cmp);
-        ans = bfs(start, last);
-        printf(ans ? &quot;YES\n&quot; : &quot;NO\n&quot;);
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CodeForces-1095C-题解-思维、二进制]]></title>
-        <id>https://greydoveh.github.io/post/codeforces-1095c/</id>
-        <link href="https://greydoveh.github.io/post/codeforces-1095c/">
-        </link>
-        <updated>2021-12-28T11:39:52.000Z</updated>
-        <content type="html"><![CDATA[<font face = "Consolas">
-<h1 id="codeforces_1095c-题解">CodeForces_1095C 题解</h1>
-<font size = 3> 
-<h2 id="powers-of-two"><strong><a href="https://vjudge.net/problem/CodeForces-1095C">Powers Of Two</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>输入<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>，将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>表示成 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span> 个 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msup><mn>2</mn><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">2^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.664392em;vertical-align:0em;"></span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span></span></span></span> 之和 <br><br>
-<strong>Time: 4000 ms</strong><br>
-<strong>Memory: 262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>先将n分解成二的整数次幂之和，方法是和 1 2 4 8 等做 &amp; 位运算<br>
-再依次把最大数分解成两个数，判断个数与k的关系<br>
-用优先队列维护</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-int main()
-{
-    vector&lt;int&gt; p2, ans;
-    for (int i = 0; (1 &lt;&lt; i) &lt; 1e9; i++)
-    {
-        p2.push_back(1 &lt;&lt; i);
-    }
-    int n, k;
-    priority_queue&lt;int&gt; b;
-    cin &gt;&gt; n &gt;&gt; k;
-    for (int i = 0; i &lt; p2.size(); i++)
-    {
-        int bi = n &amp; p2[i];
-        if (bi)
-        {
-            b.push(bi);
-        }
-    }
-    while (b.size() &lt; k)
-    {
-        int x = b.top();
-        b.pop();
-        b.push(x/2);
-        b.push(x/2);
-    }
-    if (b.size() &gt; k)
-    {
-        cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
-    }
-    else
-    {
-        int sum = 0;
-        while (!b.empty())
-        {
-            ans.push_back(b.top());
-            sum += b.top();
-            b.pop();
-        }
-        if (sum == n)
-        {
-            cout &lt;&lt; &quot;YES&quot; &lt;&lt; endl;
-            for (int i = 0; i &lt; ans.size(); i++)
-            {
-                cout &lt;&lt; ans[i] &lt;&lt; ' ';
-            }
-            cout &lt;&lt; endl;
-        }
-        else 
-        {
-            cout &lt;&lt; &quot;NO&quot; &lt;&lt; endl;
-        }
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[CodeForces-1382B-题解-思维、博弈]]></title>
-        <id>https://greydoveh.github.io/post/codeforces-1382b/</id>
-        <link href="https://greydoveh.github.io/post/codeforces-1382b/">
-        </link>
-        <updated>2021-12-28T11:38:38.000Z</updated>
-        <content type="html"><![CDATA[<font face = "Consolas">
-<h1 id="codeforces_1382b-题解">CodeForces_1382B 题解</h1>
-<font size = 3> 
-<h2 id="sequential-nim"><strong><a href="https://vjudge.net/problem/CodeForces-1382B">Sequential Nim</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>堆石子，每堆<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个<br>
-两人按顺序从第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>∼</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">1 \sim n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>堆取出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>∼</mo><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">1 \sim a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>个石子<br>
-最先取完的人获胜，若每个人都采取最优方案，求赢家 <br><br>
-<strong>Time: 1000 ms</strong><br>
-<strong>Memory: 262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>博弈论<br>
-<br></p>
-<p>结论：</p>
-<ol>
-<li>当a序列都为1时，若n为奇数，先手必赢，否则后手必赢</li>
-<li>当a序列不都为1时，偶数个前缀1后手必赢，奇数个前缀1先手必赢<br>
-<br></li>
-</ol>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>是最特殊的元素，如果当前堆只有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个石子，那么玩家别无选择，下一个玩家从新的一堆开始，如果下一堆石子个数在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个以上，那么玩家可以选择拿走<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">a_i - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.73333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>个，剩余1个继续让刚刚的玩家处于劣势 <br></p>
-<ol>
-<li>如果没有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，那么先手是必赢的，因为只要重复上述过程，直到最后一堆自己取完就可以赢了</li>
-<li>如果只有前缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，且为偶数堆，经过偶数轮操作，当<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>被取完后，此时玩家1仍处于先手，剩余部分没有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>，回到了第一种状态，先手赢；如果前缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>为偶数堆，取完前缀1后玩家2处于先手，即后手赢；</li>
-<li>考虑后缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. 实际上后缀1的奇偶并不影响结果，看一组例子</li>
-</ol>
-<ul>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>3</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo><msup><mo><mo>→</mo></mo><mn>2</mn></msup><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[3, 1, 1] \overset{2}{\rightarrow} [1, 1, 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.367978em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.117978em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5668699999999998em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span><br>
-接只有1的奇数情况，先手赢<br></li>
-<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>3</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo><msup><mo><mo>→</mo></mo><mn>3</mn></msup><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[3, 1, 1, 1] \overset{3}{\rightarrow} [1, 1, 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.367978em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">3</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel"><span class="mop op-limits"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:1.117978em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span><span class="mop">→</span></span></span><span style="top:-3.5668699999999998em;margin-left:0em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">3</span></span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span><br>
-同上</li>
-</ul>
-<p>由此可知，后缀<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>不会影响结果故可以忽略后缀的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span><br><br>
-4. 考虑中间的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>. 实际上中间的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>同样不会影响结果，由第3种情况可以知道，第一个拿到非<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>石子的人可以控制自己后面拿到哪一堆，同样，他可以控制自己是否拿到中间最后一堆是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>的石子，也就可以决定自己的输赢<br>
-如果不能理解自己可以举几组石子试试，注意拿石子之后尽量归到上面几种子问题的情况<br></p>
-<br>
-综上述推理，不难得到上面的结论
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-
-int main()
-{
-    int T;
-    int n, a[100005];
-    scanf(&quot;%d&quot;, &amp;T);
-    while (T--)
-    {
-        scanf(&quot;%d&quot;, &amp;n);
-        for (int i = 0; i &lt; n; i++)
-        {
-            scanf(&quot;%d&quot;, &amp;a[i]);
-        }
-        int cnt = 0;
-        for (int i = 0; i &lt; n; i++)
-        {
-            if (a[i] == 1)
-            {
-                cnt++;
-            }
-            else 
-            {
-                break;
-            }
-        }
-        if (cnt == n)   cnt++;  
-        // 由于是否都为1的情况和前缀1的情况相反,故这里给cnt++,统一输出格式
-        printf(cnt &amp; 1 ? &quot;Second\n&quot; : &quot;First\n&quot;);
-    }
-    return 0;
-}
-
-</code></pre>
-]]></content>
-    </entry>
-</feed>
+  </body>
+</html>
