@@ -1,13 +1,20 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CodeForces-1095C-题解-思维、二进制 | Gridea</title>
-<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+    <meta charset="utf-8" >
+
+<title>CodeForces-1095C-题解-思维、二进制 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697803467">
 <link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="CodeForces-1095C-题解-思维、二进制 | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
@@ -24,88 +31,90 @@ Memory: 262144 kB
 解题思路及分析
 ..." />
     <meta name="keywords" content="算法题解" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://greydoveh.github.io">
-  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
-  </a>
-  <h1 class="site-title">
-    Gridea
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1640697803467" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
       
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              CodeForces-1095C-题解-思维、二进制
-            </h2>
-            <div class="post-info">
-              <span>
-                2021-12-28
-              </span>
-              <span>
-                2 min read
-              </span>
-              
-                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
-                  # 算法题解
-                </a>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">CodeForces-1095C-题解-思维、二进制</h2>
+            <div class="post-date">2021-12-28</div>
             
-              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/codeforces-1095c.jpg" alt="">
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/codeforces-1095c.jpg')">
+              </div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <font face = "Consolas">
+            <div class="post-content" v-pre>
+              <font face = "Consolas">
 <h1 id="codeforces_1095c-题解">CodeForces_1095C 题解</h1>
 <font size = 3> 
 <h2 id="powers-of-two"><strong><a href="https://vjudge.net/problem/CodeForces-1095C">Powers Of Two</a></strong></h2>
@@ -181,89 +190,58 @@ int main()
 }
 </code></pre>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#codeforces_1095c-%E9%A2%98%E8%A7%A3">CodeForces_1095C 题解</a>
-<ul>
-<li><a href="#powers-of-two"><strong>[Powers Of Two][I]</strong></a>
-<ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
-<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a></li>
-<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/codeforces-1382b/">
+                  <h3 class="post-title">
+                    CodeForces-1382B-题解-思维、博弈
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://greydoveh.github.io/post/codeforces-1382b/">
-              <h3 class="post-title">
-                CodeForces-1382B-题解-思维、博弈
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+        </div>
       </div>
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+</script>
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
   </body>
 </html>

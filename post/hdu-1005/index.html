@@ -1,13 +1,20 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>HDU-1005-题解-思维/矩阵快速幂 | Gridea</title>
-<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697615093">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+    <meta charset="utf-8" >
+
+<title>HDU-1005-题解-思维/矩阵快速幂 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1640697803467">
 <link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="HDU-1005-题解-思维/矩阵快速幂 | Gridea - Atom Feed" href="https://greydoveh.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
 
 
@@ -22,88 +29,90 @@ HDU提交不了了，大家看看题吧就当娱乐一下
 f(1) = f(2) = 1
 f(n) = (a * f(n - 1) + b ..." />
     <meta name="keywords" content="算法题解" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://greydoveh.github.io">
-  <img class="avatar" src="https://greydoveh.github.io/images/avatar.png?v=1640697615093" alt="">
-  </a>
-  <h1 class="site-title">
-    Gridea
-  </h1>
-  <p class="site-description">
-    温故而知新
-  </p>
-  <div class="menu-container">
-    
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1640697803467" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
       
-        <a href="/" class="menu">
-          首页
-        </a>
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
       
-    
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
       
-        <a href="/archives" class="menu">
-          归档
-        </a>
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
       
-    
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
       
-        <a href="/tags" class="menu">
-          标签
-        </a>
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
       
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+    </div>
   </div>
-  <div class="social-container">
-    
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
       
-    
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
   </div>
 </div>
 
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              HDU-1005-题解-思维/矩阵快速幂
-            </h2>
-            <div class="post-info">
-              <span>
-                2021-12-28
-              </span>
-              <span>
-                7 min read
-              </span>
-              
-                <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="post-tag">
-                  # 算法题解
-                </a>
-              
-            </div>
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">HDU-1005-题解-思维/矩阵快速幂</h2>
+            <div class="post-date">2021-12-28</div>
             
-              <img class="post-feature-image" src="https://greydoveh.github.io/post-images/hdu-1005.jpg" alt="">
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/hdu-1005.jpg')">
+              </div>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p>博客迁移</p>
+            <div class="post-content" v-pre>
+              <p>博客迁移</p>
 <h1 id="hdu-1005-题解">HDU 1005 题解</h1>
 <font size = 3> 
 <h2 id="number-sequence"><strong><a href="https://vjudge.net/problem/HDU-1005">Number Sequence</a></strong></h2>
@@ -239,102 +248,58 @@ int main()
 <p>由于黑盒测试局限性，出现有小问题但是AC了的代码是非常正常的。另外我从网上去查了一下该题的题解，发现很多代码都有问题。这道题其实数据非常水，甚至在循环节50左右就都没有进行必要的检查。</p>
 <p>毕竟也是水题，其实没必要强求那么多。也不是去杠出题人和部分题解代码，不过追求完全正确答案总是正确的，探讨相关问题也有利于开拓思维。</p>
 
-              </div>
-              <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li><a href="#hdu-1005-%E9%A2%98%E8%A7%A3">HDU 1005 题解</a>
-<ul>
-<li><a href="#number-sequence"><strong>[Number Sequence][1]</strong></a>
-<ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E5%A4%A7%E6%84%8F">题目大意</a></li>
-<li><a href="#%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF%E5%8F%8A%E5%88%86%E6%9E%90">解题思路及分析</a>
-<ul>
-<li><a href="#%E5%87%A0%E7%BB%84%E7%89%B9%E6%AE%8A%E5%8F%96%E5%80%BC-br">几组特殊取值 <br></a></li>
-</ul>
-</li>
-<li><a href="#ac%E4%BB%A3%E7%A0%81">AC代码</a></li>
-</ul>
-</li>
-<li><a href="#%E9%A2%98%E7%9B%AE%E5%8F%8D%E6%80%9D%E5%8F%8A%E5%90%8E%E7%BB%AD">题目反思及后续</a>
-<ul>
-<li><a href="#%E5%86%8D%E8%B0%88-hdu-1005-number-sequence">再谈 HDU 1005   Number Sequence</a></li>
-<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%8F%91%E7%8E%B0">问题的发现</a></li>
-</ul>
-</li>
-<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%88%86%E6%9E%90">问题的分析</a></li>
-<li><a href="#%E5%88%86%E6%9E%90%E5%87%BA%E7%8E%B0%E9%94%99%E8%AF%AF%E7%9A%84%E5%8E%9F%E5%9B%A0">分析出现错误的原因</a></li>
-<li><a href="#%E9%97%AE%E9%A2%98%E7%9A%84%E5%8F%8D%E6%80%9D">问题的反思</a></li>
-</ul>
-</li>
-</ul>
-
-              </div>
             </div>
-          </article>
-        </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/hello-gridea/">
+                  <h3 class="post-title">
+                    Hello Gridea
+                  </h3>
+                </a>
+              </div>
+            
 
-        
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://greydoveh.github.io/post/hello-gridea/">
-              <h3 class="post-title">
-                Hello Gridea
-              </h3>
-            </a>
+            
+
           </div>
-        
 
-        
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
-</div>
-
+        </div>
       </div>
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+AOS.init();
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+</script>
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
 
-    </script>
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
   </body>
 </html>
