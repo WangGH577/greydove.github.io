@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1642764700367">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1642765624906">
 <link rel="stylesheet" href="http://localhost:4000/styles/main.css">
 
 
@@ -37,7 +37,7 @@ f(n) = (a * f(n - 1) + b ..." />
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="http://localhost:4000">
-        <img src="http://localhost:4000/images/avatar.png?v=1642764700367" class="site-logo">
+        <img src="http://localhost:4000/images/avatar.png?v=1642765624906" class="site-logo">
         <h1 class="site-title">鸽子屋</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -131,7 +131,8 @@ f(n) = (a * f(n - 1) + b * f(n - 2)) % 7 <br><br><br>
 </blockquote>
 <h3 id="解题思路及分析">解题思路及分析</h3>
 <blockquote>
-<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>&lt;</mo><mo>=</mo><mi>n</mi><mo>&lt;</mo><mo>=</mo><mn>100</mn><mo separator="true">,</mo><mn>000</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">1 &lt;= n &lt;= 100,000,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span> <br><br>
+<p>题解是初学的时候写的，后来才发现这个是矩阵快速幂的板子，这里就懒得写了，说一下当时的思路<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn><mo>&lt;</mo><mo>=</mo><mi>n</mi><mo>&lt;</mo><mo>=</mo><mn>100</mn><mo separator="true">,</mo><mn>000</mn><mo separator="true">,</mo><mn>000</mn></mrow><annotation encoding="application/x-tex">1 &lt;= n &lt;= 100,000,000</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68354em;vertical-align:-0.0391em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mord">0</span><span class="mord">0</span></span></span></span> <br><br>
 直接开数组会MLE 不开数组用三个数迭代模拟会TLE <br><br>
 规律题 因为后一项只与前两项有关，所以只要数组中有连续两项在前面出现过，后面就会重复数列前面的值，即周期数列 <br><br>
 将相邻两个数组成一个二位数，只需要比较这个两位数是否出现过即可，由于每位有7种可能，共可以组成49个数字，即一个周期的最大值为50<br><br>
@@ -141,7 +142,6 @@ f(n) = (a * f(n - 1) + b * f(n - 2)) % 7 <br><br><br>
 2. (a + b) % 7 = 0    从第三项都是0   
 3. a + b = 8    从第一项都是1 
 </code></pre>
-<p>题解是初学的时候写的，后来才发现这个是矩阵快速幂的板子，这里就懒得写了</p>
 </blockquote>
 <h3 id="ac代码">AC代码</h3>
 <pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
