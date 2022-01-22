@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>http://localhost:4000</id>
+    <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
     <updated>2022-01-21T11:47:21.201Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="http://localhost:4000"/>
-    <link rel="self" href="http://localhost:4000/atom.xml"/>
+    <link rel="alternate" href="https://greydoveh.github.io"/>
+    <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
     <subtitle>咕咕咕</subtitle>
-    <logo>http://localhost:4000/images/avatar.png</logo>
-    <icon>http://localhost:4000/favicon.ico</icon>
+    <logo>https://greydoveh.github.io/images/avatar.png</logo>
+    <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
     <entry>
         <title type="html"><![CDATA[win11 右键菜单切换]]></title>
-        <id>http://localhost:4000/post/win11/</id>
-        <link href="http://localhost:4000/post/win11/">
+        <id>https://greydoveh.github.io/post/win11/</id>
+        <link href="https://greydoveh.github.io/post/win11/">
         </link>
         <updated>2022-01-05T06:41:50.000Z</updated>
         <content type="html"><![CDATA[<p>打开cmd，输入以下命令</p>
@@ -33,8 +33,8 @@
     </entry>
     <entry>
         <title type="html"><![CDATA[【2021CCPC华为云挑战赛-1006】【HDU-7092】仓颉造数 数学]]></title>
-        <id>http://localhost:4000/post/hdu-7092/</id>
-        <link href="http://localhost:4000/post/hdu-7092/">
+        <id>https://greydoveh.github.io/post/hdu-7092/</id>
+        <link href="https://greydoveh.github.io/post/hdu-7092/">
         </link>
         <updated>2021-12-28T15:07:44.000Z</updated>
         <content type="html"><![CDATA[<h1 id="2021ccpc华为云挑战赛-1006-仓颉造数">2021CCPC华为云挑战赛-1006 仓颉造数</h1>
@@ -147,8 +147,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【2021牛客多校2】F－Girlfriend 计算几何]]></title>
-        <id>http://localhost:4000/post/nowcoder-Girlfriend/</id>
-        <link href="http://localhost:4000/post/nowcoder-Girlfriend/">
+        <id>https://greydoveh.github.io/post/nowcoder-Girlfriend/</id>
+        <link href="https://greydoveh.github.io/post/nowcoder-Girlfriend/">
         </link>
         <updated>2021-12-28T15:04:32.000Z</updated>
         <content type="html"><![CDATA[<font face = "Consolas">
@@ -258,8 +258,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【2021牛客多校2】I－Penguins 搜索、BFS]]></title>
-        <id>http://localhost:4000/post/nowcoder-Penguins/</id>
-        <link href="http://localhost:4000/post/nowcoder-Penguins/">
+        <id>https://greydoveh.github.io/post/nowcoder-Penguins/</id>
+        <link href="https://greydoveh.github.io/post/nowcoder-Penguins/">
         </link>
         <updated>2021-12-28T15:02:15.000Z</updated>
         <content type="html"><![CDATA[<font face = "Consolas">
@@ -454,8 +454,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【Gym-101972J】J.Even Numbers 数论组合数／思维、规律]]></title>
-        <id>http://localhost:4000/post/gym-101972j/</id>
-        <link href="http://localhost:4000/post/gym-101972j/">
+        <id>https://greydoveh.github.io/post/gym-101972j/</id>
+        <link href="https://greydoveh.github.io/post/gym-101972j/">
         </link>
         <updated>2021-12-28T14:52:53.000Z</updated>
         <content type="html"><![CDATA[<font face = "Consolas">
@@ -513,8 +513,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【Gym-101972G】G.Minimax 动态规划]]></title>
-        <id>http://localhost:4000/post/gym-101972g/</id>
-        <link href="http://localhost:4000/post/gym-101972g/">
+        <id>https://greydoveh.github.io/post/gym-101972g/</id>
+        <link href="https://greydoveh.github.io/post/gym-101972g/">
         </link>
         <updated>2021-12-28T12:20:20.000Z</updated>
         <content type="html"><![CDATA[<h1 id="gym-101972g">Gym-101972G</h1>
@@ -606,8 +606,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论]]></title>
-        <id>http://localhost:4000/post/gym-103117e/</id>
-        <link href="http://localhost:4000/post/gym-103117e/">
+        <id>https://greydoveh.github.io/post/gym-103117e/</id>
+        <link href="https://greydoveh.github.io/post/gym-103117e/">
         </link>
         <updated>2021-12-28T12:17:01.000Z</updated>
         <content type="html"><![CDATA[<h1 id="2021四川省赛e">2021四川省赛E</h1>
@@ -698,8 +698,8 @@ int main() {
     </entry>
     <entry>
         <title type="html"><![CDATA[【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造]]></title>
-        <id>http://localhost:4000/post/gym-103118c/</id>
-        <link href="http://localhost:4000/post/gym-103118c/">
+        <id>https://greydoveh.github.io/post/gym-103118c/</id>
+        <link href="https://greydoveh.github.io/post/gym-103118c/">
         </link>
         <updated>2021-12-28T12:12:36.000Z</updated>
         <content type="html"><![CDATA[<h1 id="2021山东省赛c">2021山东省赛C</h1>
@@ -772,8 +772,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[HDU-1401-题解-搜索、双向bfs]]></title>
-        <id>http://localhost:4000/post/hdu-1401/</id>
-        <link href="http://localhost:4000/post/hdu-1401/">
+        <id>https://greydoveh.github.io/post/hdu-1401/</id>
+        <link href="https://greydoveh.github.io/post/hdu-1401/">
         </link>
         <updated>2021-12-28T12:01:12.000Z</updated>
         <content type="html"><![CDATA[<h1 id="hdu-1401-题解">HDU 1401 题解</h1>
@@ -992,8 +992,8 @@ int main()
     </entry>
     <entry>
         <title type="html"><![CDATA[CodeForces-1095C-题解-思维、二进制]]></title>
-        <id>http://localhost:4000/post/codeforces-1095c/</id>
-        <link href="http://localhost:4000/post/codeforces-1095c/">
+        <id>https://greydoveh.github.io/post/codeforces-1095c/</id>
+        <link href="https://greydoveh.github.io/post/codeforces-1095c/">
         </link>
         <updated>2021-12-28T11:39:52.000Z</updated>
         <content type="html"><![CDATA[<font face = "Consolas">
