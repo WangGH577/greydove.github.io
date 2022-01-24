@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>CodeForces-914B-题解-思维、博弈 | 鸽子屋</title>
+<title>C#方法修饰符 new和override的区别 | 鸽子屋</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,17 +18,29 @@
 
 
 
-    <meta name="description" content="博客迁移
-CodeForces 914B 题解
- 
-Conan and Agasa play a Card Game
-题目大意
+    <meta name="description" content="C#方法修饰符 new和override的区别
 
-两个人玩游戏
-每次选一张牌拿走，同时拿走小于这张牌的所有牌
-拿走最后一张牌的获胜
-每个人采取最优方案，输出获胜..." />
-    <meta name="keywords" content="算法题解" />
+
+
+关键字 方法修饰符
+功能
+
+
+
+
+new
+方法的覆盖
+
+
+override
+方法的重写
+
+
+
+在使用父类引用指向子类对象时可以看出区别，下面给出例子：
+new
+using System;..." />
+    <meta name="keywords" content="CSharp" />
   </head>
   <body>
     <div id="app" class="main">
@@ -109,85 +121,101 @@ Conan and Agasa play a Card Game
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">CodeForces-914B-题解-思维、博弈</h2>
-            <div class="post-date">2021-12-28</div>
+            <h2 class="post-title">C#方法修饰符 new和override的区别</h2>
+            <div class="post-date">2022-01-24</div>
             
-              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/codeforces-914b.jpg')">
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-new-override.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>博客迁移</p>
-<h1 id="codeforces-914b-题解">CodeForces 914B 题解</h1>
-<font size = 3> 
-<h2 id="conan-and-agasa-play-a-card-game"><strong><a href="https://vjudge.net/problem/CodeForces-914B">Conan and Agasa play a Card Game</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>两个人玩游戏<br>
-每次选一张牌拿走，同时拿走小于这张牌的所有牌<br>
-拿走最后一张牌的获胜<br>
-每个人采取最优方案，输出获胜的人 <br><br>
-<strong>Time: 2000 ms</strong><br>
-<strong>Memory: 262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>博弈论 <br><br>
-递归的去思考这个问题<br>
-先是最简单的情况</p>
-<ol>
-<li><code>样例</code>最大牌有1个 ---&gt; <font color = "blue">先手必赢</font> （直接拿走最大牌）</li>
-<li><code>样例</code>只有一种牌 且有偶数个 ---&gt; <font color = "blue">后手必赢 </font></li>
-<li>最大牌有奇数个，先手拿走一张最大牌，后手变成情况2的先手 ---&gt; <font color = "blue">先手必赢 </font></li>
-<li>最大牌有偶数个，拿完其他牌变成情况2，故考虑次大牌<br>
-而次大牌重复上述讨论的情况，故把小于最大牌的情况统一考虑</li>
-<li>所有牌都有偶数个，递归可得到情况2 ---&gt;  <font color = "blue">后手必赢</font></li>
-<li>最大牌有偶数个，其余牌只有一种有奇数个，先手拿走奇数牌的一张得到情况5 ---&gt; <font color = "blue">先手必赢</font></li>
-<li>最大牌有偶数个，其余牌有多种有奇数个，先手拿走奇数牌中最大牌的一张，得到情况5---&gt; <font color = "blue">先手必赢</font></li>
-</ol>
-<p>综上考虑，存在奇数个数的牌即先手赢，都是偶数个则后手赢<br>
-只需统计每种牌的个数</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-int cnt[100005], a[100005];
+              <h1 id="c方法修饰符-new和override的区别">C#方法修饰符 new和override的区别</h1>
+<table>
+<thead>
+<tr>
+<th>关键字 方法修饰符</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>new</td>
+<td>方法的覆盖</td>
+</tr>
+<tr>
+<td>override</td>
+<td>方法的重写</td>
+</tr>
+</tbody>
+</table>
+<p>在使用父类引用指向子类对象时可以看出区别，下面给出例子：</p>
+<h3 id="new">new</h3>
+<pre><code class="language-csharp">using System;
 
-int main()
-{
-    int n, maxa = 0, win = 0;
-    cin &gt;&gt; n;
-    for (int i = 0; i &lt; n; i++)
-    {
-        cin &gt;&gt; a[i];
-        cnt[a[i]]++;
-        if (a[i] &gt; maxa) 
-        {
-            maxa = a[i];
+namespace Test {
+    class Program {
+        static void Main(string[] args) {
+            Enemy e = new Boss();
+            e.Move();
         }
     }
-    for (int i = 0; i &lt;= maxa; i++)
-    {
-        if (cnt[i] &amp; 1)
-        {
-            cout &lt;&lt; &quot;Conan&quot; &lt;&lt; endl;
-            win = 1;
-            break;
+
+    class Enemy {
+        public void Move() {
+            System.Console.WriteLine(&quot;move&quot;);
         }
     }
-    if (!win)
-    {
-        cout &lt;&lt; &quot;Agasa&quot; &lt;&lt; endl;
+
+    class Boss : Enemy {
+        public new void Move() {
+            System.Console.WriteLine(&quot;boss move&quot;);
+        }
     }
-    return 0;
 }
+
 </code></pre>
+<p>输出</p>
+<blockquote>
+<p>move</p>
+</blockquote>
+<h3 id="override">override</h3>
+<pre><code class="language-csharp">using System;
+
+namespace Test {
+    class Program {
+        static void Main(string[] args) {
+            Enemy e = new Boss();
+            e.Move();
+        }
+    }
+
+    class Enemy {
+        public virtual void Move() {    // override继承的父类的方法成员需要标记为 virtual、abstract 或 override，这里使用virtual
+            System.Console.WriteLine(&quot;move&quot;);
+        }
+    }
+
+    class Boss : Enemy {
+        public override void Move() {
+            System.Console.WriteLine(&quot;boss move&quot;);
+        }
+    }
+}
+
+</code></pre>
+<p>输出</p>
+<blockquote>
+<p>boss move</p>
+</blockquote>
+<p>可以看到：<br>
+<code>new</code>是覆盖了父类的方法，如果是父类的引用指向子类的对象，<code>Move()</code>方法调用的是父类的方法；<br>
+<code>override</code>是重写了方法，如果是父类的引用指向子类的对象，<code>Move()</code>方法调用的是子类的方法。</p>
 
             </div>
             
               <div class="tag-container">
                 
-                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
-                    算法题解
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
                   </a>
                 
               </div>
@@ -195,9 +223,9 @@ int main()
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://greydoveh.github.io/post/codeforces-1234c/">
+                <a href="https://greydoveh.github.io/post/win11/">
                   <h3 class="post-title">
-                    CodeForces-1234C-题解-思维、模拟
+                    win11 右键菜单切换
                   </h3>
                 </a>
               </div>
