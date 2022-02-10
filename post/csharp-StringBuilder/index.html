@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>LeetCode.1249 移除无效的括号 &amp; C# 可变字符串  | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1644495953448">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="LeetCode.1249 移除无效的括号
+C# 可变字符串
+C#中常用的字符串string是字符串常量类似于Java，通过+=等获得的新字符串会生成新的字符串，而不是直接在原来的字符串上修改，所以执行效率会比较慢。如果要使用可变字符串，可..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1644495953448" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">LeetCode.1249 移除无效的括号 &amp; C# 可变字符串 </h2>
+            <div class="post-date">2022-02-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/csharp-StringBuilder.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="leetcode1249-移除无效的括号">LeetCode.1249 移除无效的括号</h1>
+<h1 id="c-可变字符串">C# 可变字符串</h1>
+<p>C#中常用的字符串string是字符串常量类似于Java，通过+=等获得的新字符串会生成新的字符串，而不是直接在原来的字符串上修改，所以执行效率会比较慢。如果要使用可变字符串，可以使用StringBuilder类，也可以使用List代替字符串，然后转为字符串，下面为LeetCode一道例题。</p>
+<p><a href="https://leetcode-cn.com/problems/minimum-remove-to-make-valid-parentheses/">1249. 移除无效的括号</a></p>
+<h2 id="思路">思路</h2>
+<p>有效括号经典问题，由于是只有一种括号，所以可以不使用栈而是用计数变量来代替。<br>
+过程中其他的字符均添加到新的字符串中，括号进行额外判断，根据是否合法决定是否要添加到字符串中。<br>
+如果最后计数变量不为零，则倒序删除若干个左括号。<br>
+也可以通过对括号的对数进行计数，再进行一次添加到新字符串。</p>
+<h2 id="代码">代码</h2>
+<ol>
+<li>使用StringBuilder类</li>
+</ol>
+<pre><code class="language-csharp">public class Solution {
+    public string MinRemoveToMakeValid(string s) {
+        StringBuilder tmp = new StringBuilder(&quot;&quot;);
+        int cnt = 0, cnt2 = 0;
+        for (int i = 0; i &lt; s.Length; i++) {
+            if (s[i] == '(') {
+                if (cnt &gt;= 0) {
+                    cnt++;
+                    tmp.Append(s[i]);
+                }
+            } else if (s[i] == ')') {
+                if (cnt &gt; 0) {
+                    cnt--;
+                    tmp.Append(s[i]);
+                    cnt2++;
+                }
+            } else {
+                tmp.Append(s[i]);
+            }
+        }
+        if (cnt == 0) {
+            return tmp.ToString();
+        }
+        StringBuilder ans = new StringBuilder(&quot;&quot;);
+        for (int i = 0; i &lt; tmp.Length; i++) {
+            if (cnt2 == 0 &amp;&amp; tmp[i] == '(') {
+                continue;
+            }
+            ans.Append(tmp[i]);
+            if (tmp[i] == '(') {
+                cnt2--;
+                cnt--;
+            } else if (tmp[i] == ')') {
+                cnt--;
+            } 
+        }
+        // while (cnt &gt; 0) {
+        //     cnt--;
+        //     ans = ans.Remove(ans.LastIndexOf('('), 1);
+        // }
+        return ans.ToString();
+    }
+}
+</code></pre>
+<ol start="2">
+<li>使用List类代替字符串</li>
+</ol>
+<pre><code class="language-csharp">public class Solution {
+    public string MinRemoveToMakeValid(string s) {
+        List&lt;char&gt; tmp = new List&lt;char&gt;();
+        int cnt = 0, cnt2 = 0;
+        for (int i = 0; i &lt; s.Length; i++) {
+            if (s[i] == '(') {
+                if (cnt &gt;= 0) {
+                    cnt++;
+                    tmp.Add(s[i]);
+                }
+            } else if (s[i] == ')') {
+                if (cnt &gt; 0) {
+                    cnt--;
+                    tmp.Add(s[i]);
+                    cnt2++;
+                }
+            } else {
+                tmp.Add(s[i]);
+            }
+        }
+        if (cnt == 0) {
+            return new string(tmp.ToArray());
+        }
+        List&lt;char&gt; ans = new List&lt;char&gt;();
+        for (int i = 0; i &lt; tmp.Count; i++) {
+            if (cnt2 == 0 &amp;&amp; tmp[i] == '(') {
+                continue;
+            }
+            ans.Add(tmp[i]);
+            if (tmp[i] == '(') {
+                cnt2--;
+                cnt--;
+            } else if (tmp[i] == ')') {
+                cnt--;
+            } 
+        }
+        // while (cnt &gt; 0) {
+        //     cnt--;
+        //     ans = ans.Remove(ans.LastIndexOf('('), 1);
+        // }
+        return new string(ans.ToArray());
+    }
+}
+</code></pre>
+<ol start="3">
+<li>直接使用string类，效率极低</li>
+</ol>
+<pre><code class="language-csharp">public class Solution {
+    public string MinRemoveToMakeValid(string s) {
+        string ans = &quot;&quot;;
+        int cnt = 0;
+        for (int i = 0; i &lt; s.Length; i++) {
+            if (s[i] == '(') {
+                if (cnt &gt;= 0) {
+                    cnt++;
+                    ans += s[i];
+                }
+            } else if (s[i] == ')') {
+                if (cnt &gt; 0) {
+                    cnt--;
+                    ans += s[i];
+                }
+            } else {
+                ans += s[i];
+            }
+        }
+        // 亲测，对于string类，使用删除字符不会超时但效率极低，使用重新添加会超时
+        while (cnt &gt; 0) {
+            cnt--;
+            ans = ans.Remove(ans.LastIndexOf('('), 1);
+        }
+        return ans;
+    }
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-new-override/">
+                  <h3 class="post-title">
+                    C#方法修饰符 new和override的区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
