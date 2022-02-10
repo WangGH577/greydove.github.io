@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-02-10T12:27:47.926Z</updated>
+    <updated>2022-02-10T12:52:01.972Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -10,6 +10,121 @@
     <logo>https://greydoveh.github.io/images/avatar.png</logo>
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
+    <entry>
+        <title type="html"><![CDATA[LeetCode.1001 网格照明 题解]]></title>
+        <id>https://greydoveh.github.io/post/leetcode-1001/</id>
+        <link href="https://greydoveh.github.io/post/leetcode-1001/">
+        </link>
+        <updated>2022-02-10T12:48:07.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="leetcode1001-网格照明">LeetCode.1001 网格照明</h1>
+<h3 id="思路">思路</h3>
+<blockquote>
+<p>哈希/字典</p>
+</blockquote>
+<p>对于每个灯，记录这个灯的位置，在x行y列，对行和列分别记录，并记录两条对角线的灯的个数<br>
+对于每次查询，先看在这一行和这一列是否存在灯，然后查询对角线<br>
+对每一行/列，只需检查这一行/列有无灯即可，这里即判断SortedSet/HashSet中是否有元素<br>
+对于对角线，两条对角线的特点为和/差为定值，可以通过和差来判断该对角线上有无灯</p>
+<p>删除时，对包括自身在内的周围9个位置检测是否有灯，对四个字典中的灯进行删除<br>
+对于行/列，删除时只需删除对应的元素即可，只要插入时有判重就没有问题<br>
+对于对角线处理可能有些麻烦，这里的处理方法是添加时不是判断是否有灯而是对对角线上的灯进行计数，而删除时是在删除行/列的基础上进行的，因为对行/列的字典可以检测到具体的位置，若检测到该位置有灯，则对其两条对角线上删除一个灯即可</p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    public bool judge(int x, int y, int n) {
+        return 0 &lt;= x &amp;&amp; x &lt; n &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; n;
+    }
+    public int[] GridIllumination(int n, int[][] lamps, int[][] queries) {
+        Dictionary&lt;int, SortedSet&lt;int&gt;&gt; onx = new Dictionary&lt;int, SortedSet&lt;int&gt;&gt;();
+        Dictionary&lt;int, SortedSet&lt;int&gt;&gt; ony = new Dictionary&lt;int, SortedSet&lt;int&gt;&gt;();
+        Dictionary&lt;int, int&gt; plus = new Dictionary&lt;int, int&gt;();
+        Dictionary&lt;int, int&gt; sub = new Dictionary&lt;int, int&gt;(); 
+        for (int i = 0; i &lt; lamps.Length; i++) {
+            bool have = false;
+            int x = lamps[i][0], y = lamps[i][1];
+            if (!onx.ContainsKey(x)) {
+                SortedSet&lt;int&gt; set = new SortedSet&lt;int&gt;();
+                set.Add(y);
+                onx.Add(x, set);
+            } else {
+                if (!onx[x].Contains(y)) {
+                    onx[x].Add(y);
+                } else {
+                    have = true;
+                }
+            }
+            if (!ony.ContainsKey(y)) {
+                SortedSet&lt;int&gt; set = new SortedSet&lt;int&gt;();
+                set.Add(x);
+                ony.Add(y, set);
+            } else {
+                if (!ony[y].Contains(x)) {
+                    ony[y].Add(x);
+                } else {
+                    have = true;
+                }
+            }
+            if (plus.ContainsKey(x + y)) {
+                if (!have)  plus[x + y]++;
+            } else {
+                plus.Add(x + y, 1);
+            }
+            if (sub.ContainsKey(x - y)) {
+                if (!have)  sub[x - y]++;
+            } else {
+                sub.Add(x - y, 1);
+            }
+        }
+        
+        int[] ans = new int[queries.Length];
+        for (int i = 0; i &lt; queries.Length; i++) {
+            int x = queries[i][0], y = queries[i][1];
+            ans[i] = 0;
+            if (onx.ContainsKey(x) &amp;&amp; onx[x].Count != 0) {
+                ans[i] = 1;
+            } else if (ony.ContainsKey(y) &amp;&amp; ony[y].Count != 0) {
+                ans[i] = 1;
+            } else if (plus.ContainsKey(x + y) &amp;&amp; plus[x + y] != 0) {
+                ans[i] = 1;
+            } else if (sub.ContainsKey(x - y) &amp;&amp; sub[x - y] != 0) {
+                ans [i] = 1;
+            }
+
+            for (int j = x - 1; j &lt;= x + 1; j++) {
+                for (int k = y - 1; k &lt;= y + 1; k++) {
+                    if (!judge(j, k, n))    continue;
+                    if (onx.ContainsKey(j) &amp;&amp; onx[j].Contains(k)) {
+                        onx[j].Remove(k);
+                        if (onx[j].Count == 0) {
+                            onx.Remove(j);
+                        }
+                        if (plus.ContainsKey(j + k)) {
+                            plus[j + k]--;
+                            if (plus[j + k] == 0) {
+                                plus.Remove(j + k);
+                            }
+                        }
+                        if (sub.ContainsKey(j - k)) {
+                            sub[j - k]--;
+                            if (sub[j - k] == 0) {
+                                sub.Remove(j - k);
+                            }
+                        }
+                    }
+                    if (ony.ContainsKey(k) &amp;&amp; ony[k].Contains(j)) {
+                        ony[k].Remove(j);
+                        if (ony[k].Count == 0) {
+                            ony.Remove(k);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode.1249 移除无效的括号 & C# 可变字符串 ]]></title>
         <id>https://greydoveh.github.io/post/csharp-StringBuilder/</id>
@@ -922,80 +1037,6 @@ int main() {
         vis[1] = true;
         dfs(1);
         cout &lt;&lt; cnt &lt;&lt; endl;
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021山东省赛】Gym-103118 C.Cat Virus 思维、构造]]></title>
-        <id>https://greydoveh.github.io/post/gym-103118c/</id>
-        <link href="https://greydoveh.github.io/post/gym-103118c/">
-        </link>
-        <updated>2021-12-28T12:12:36.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2021山东省赛c">2021山东省赛C</h1>
-<font size = 3> 
-<h2 id="cat-virus"><strong><a href="https://vjudge.net/problem/Gym-103118C">Cat Virus</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>一棵树，节点有黑色和白色，黑色节点的所有子节点都为黑色<br>
-一棵树有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>K</mi><mo>(</mo><mn>2</mn><mo>&lt;</mo><mo>=</mo><mi>k</mi><mo>&lt;</mo><mo>=</mo><mn>2</mn><mo separator="true">⋅</mo><mn>1</mn><msup><mn>0</mn><mn>18</mn></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">K(2&lt;=k&lt;=2·10^{18})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">K</span><span class="mopen">(</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.73354em;vertical-align:-0.0391em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord">2</span><span class="mpunct">⋅</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">1</span><span class="mord mtight">8</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>种染色方式，构造这棵树。</p>
-<p><strong>Time  : 2000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p><s>一开始把题干里的ways翻译成道路懵了半天</s><br>
-可以先找K是怎么算的，给一棵树知道怎么求K，再反过来想应该会容易些<br>
-既然是树，理论上会有与子树之间的递归的关系<br>
-稍微画画图可以发现，<strong>一棵树的K值等于所有子树K值的乘积+1</strong><br>
-理解起来也不算难理解，染成黑色的点子节点都是黑色，所以一个节点的染色是会影响它的子树，但是两棵子树之间是互不影响的，所以先考虑根节点为白色的情况，这里采用的是所有子树K值的乘积；当根节点为黑色，只有一种情况，所以<br>
-然后找递归出口，显然1个节点的情况有2种染色方式，非黑即白；空树的染色方式可以被认为是1<br>
-求K的方法如上，然后就可以反过来构造树了<br>
-构造每一层时将K减一并进行分解<br>
-这里为了方便每次减一除二，如果能整除2就一直除下去，在该层一直添加单个节点<br>
-无法整除之后进入下一层，继续减一除二<br>
-理论时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(log_2  n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span></p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 1e5 + 5;
-using namespace std;
-vector&lt;int&gt; a[N];	// 存储子节点，类似邻接表
- 
-// 最开始不知道怎么构造，就先写了一个求K的代码
-// int getK(vector&lt;int&gt; t) {
-//     int res = 1;
-//     for (int i = 0; i &lt; t.size(); i++) {
-//         res *= getK(a[t[i]]);
-//     }
-//     return res + 1;
-// }
-
-int n = 1;
-void to(int i, llong k) {
-    llong tmp = k - 1;
-    while (tmp % 2 == 0) {
-        tmp /= 2;
-        a[i].push_back(++n);	//能整除则一直在本层添加节点
-    }
-    if (tmp == 1)    return;	// 空树K为1，此时说明构造结束
-    a[i].push_back(++n);		// 无法整除则继续在本层添加一个节点，并在这棵树的基础上添加
-    to(n, tmp);	
-}
- 
-int main()
-{
-    llong k;
-    cin &gt;&gt; k;
-    to(1, k);
-    printf(&quot;%d\n&quot;, n);
-    for (int i = 0; i &lt; n; i++) {
-        for (int j = 0; j &lt; a[i].size(); j++) {
-            printf(&quot;%d %d\n&quot;, i, a[i][j]);
-        }
     }
     return 0;
 }

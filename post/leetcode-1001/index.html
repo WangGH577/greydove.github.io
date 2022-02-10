@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>LeetCode.1001 网格照明 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1644497513937">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="LeetCode.1001 网格照明
+思路
+
+哈希/字典
+
+对于每个灯，记录这个灯的位置，在x行y列，对行和列分别记录，并记录两条对角线的灯的个数
+对于每次查询，先看在这一行和这一列是否存在灯，然后查询对角线
+对每一行/列，只需检查这一行/..." />
+    <meta name="keywords" content="" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1644497513937" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">LeetCode.1001 网格照明 题解</h2>
+            <div class="post-date">2022-02-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/leetcode-1001.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="leetcode1001-网格照明">LeetCode.1001 网格照明</h1>
+<h3 id="思路">思路</h3>
+<blockquote>
+<p>哈希/字典</p>
+</blockquote>
+<p>对于每个灯，记录这个灯的位置，在x行y列，对行和列分别记录，并记录两条对角线的灯的个数<br>
+对于每次查询，先看在这一行和这一列是否存在灯，然后查询对角线<br>
+对每一行/列，只需检查这一行/列有无灯即可，这里即判断SortedSet/HashSet中是否有元素<br>
+对于对角线，两条对角线的特点为和/差为定值，可以通过和差来判断该对角线上有无灯</p>
+<p>删除时，对包括自身在内的周围9个位置检测是否有灯，对四个字典中的灯进行删除<br>
+对于行/列，删除时只需删除对应的元素即可，只要插入时有判重就没有问题<br>
+对于对角线处理可能有些麻烦，这里的处理方法是添加时不是判断是否有灯而是对对角线上的灯进行计数，而删除时是在删除行/列的基础上进行的，因为对行/列的字典可以检测到具体的位置，若检测到该位置有灯，则对其两条对角线上删除一个灯即可</p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    public bool judge(int x, int y, int n) {
+        return 0 &lt;= x &amp;&amp; x &lt; n &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; n;
+    }
+    public int[] GridIllumination(int n, int[][] lamps, int[][] queries) {
+        Dictionary&lt;int, SortedSet&lt;int&gt;&gt; onx = new Dictionary&lt;int, SortedSet&lt;int&gt;&gt;();
+        Dictionary&lt;int, SortedSet&lt;int&gt;&gt; ony = new Dictionary&lt;int, SortedSet&lt;int&gt;&gt;();
+        Dictionary&lt;int, int&gt; plus = new Dictionary&lt;int, int&gt;();
+        Dictionary&lt;int, int&gt; sub = new Dictionary&lt;int, int&gt;(); 
+        for (int i = 0; i &lt; lamps.Length; i++) {
+            bool have = false;
+            int x = lamps[i][0], y = lamps[i][1];
+            if (!onx.ContainsKey(x)) {
+                SortedSet&lt;int&gt; set = new SortedSet&lt;int&gt;();
+                set.Add(y);
+                onx.Add(x, set);
+            } else {
+                if (!onx[x].Contains(y)) {
+                    onx[x].Add(y);
+                } else {
+                    have = true;
+                }
+            }
+            if (!ony.ContainsKey(y)) {
+                SortedSet&lt;int&gt; set = new SortedSet&lt;int&gt;();
+                set.Add(x);
+                ony.Add(y, set);
+            } else {
+                if (!ony[y].Contains(x)) {
+                    ony[y].Add(x);
+                } else {
+                    have = true;
+                }
+            }
+            if (plus.ContainsKey(x + y)) {
+                if (!have)  plus[x + y]++;
+            } else {
+                plus.Add(x + y, 1);
+            }
+            if (sub.ContainsKey(x - y)) {
+                if (!have)  sub[x - y]++;
+            } else {
+                sub.Add(x - y, 1);
+            }
+        }
+        
+        int[] ans = new int[queries.Length];
+        for (int i = 0; i &lt; queries.Length; i++) {
+            int x = queries[i][0], y = queries[i][1];
+            ans[i] = 0;
+            if (onx.ContainsKey(x) &amp;&amp; onx[x].Count != 0) {
+                ans[i] = 1;
+            } else if (ony.ContainsKey(y) &amp;&amp; ony[y].Count != 0) {
+                ans[i] = 1;
+            } else if (plus.ContainsKey(x + y) &amp;&amp; plus[x + y] != 0) {
+                ans[i] = 1;
+            } else if (sub.ContainsKey(x - y) &amp;&amp; sub[x - y] != 0) {
+                ans [i] = 1;
+            }
+
+            for (int j = x - 1; j &lt;= x + 1; j++) {
+                for (int k = y - 1; k &lt;= y + 1; k++) {
+                    if (!judge(j, k, n))    continue;
+                    if (onx.ContainsKey(j) &amp;&amp; onx[j].Contains(k)) {
+                        onx[j].Remove(k);
+                        if (onx[j].Count == 0) {
+                            onx.Remove(j);
+                        }
+                        if (plus.ContainsKey(j + k)) {
+                            plus[j + k]--;
+                            if (plus[j + k] == 0) {
+                                plus.Remove(j + k);
+                            }
+                        }
+                        if (sub.ContainsKey(j - k)) {
+                            sub[j - k]--;
+                            if (sub[j - k] == 0) {
+                                sub.Remove(j - k);
+                            }
+                        }
+                    }
+                    if (ony.ContainsKey(k) &amp;&amp; ony[k].Contains(j)) {
+                        ony[k].Remove(j);
+                        if (ony[k].Count == 0) {
+                            ony.Remove(k);
+                        }
+                    }
+                }
+            }
+        }
+        return ans;
+    }
+}
+</code></pre>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/csharp-StringBuilder/">
+                  <h3 class="post-title">
+                    LeetCode.1249 移除无效的括号 &amp; C# 可变字符串 
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
