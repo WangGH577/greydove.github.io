@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1644497513937">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1644677349020">
 <link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
 
 
@@ -26,7 +26,7 @@
 对于每个灯，记录这个灯的位置，在x行y列，对行和列分别记录，并记录两条对角线的灯的个数
 对于每次查询，先看在这一行和这一列是否存在灯，然后查询对角线
 对每一行/列，只需检查这一行/..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="CSharp,算法题解" />
   </head>
   <body>
     <div id="app" class="main">
@@ -35,7 +35,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://greydoveh.github.io">
-        <img src="https://greydoveh.github.io/images/avatar.png?v=1644497513937" class="site-logo">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1644677349020" class="site-logo">
         <h1 class="site-title">鸽子屋</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -128,7 +128,7 @@
 对于对角线处理可能有些麻烦，这里的处理方法是添加时不是判断是否有灯而是对对角线上的灯进行计数，而删除时是在删除行/列的基础上进行的，因为对行/列的字典可以检测到具体的位置，若检测到该位置有灯，则对其两条对角线上删除一个灯即可</p>
 <h3 id="代码">代码</h3>
 <pre><code class="language-csharp">public class Solution {
-    public bool judge(int x, int y, int n) {
+    public bool Judge(int x, int y, int n) {
         return 0 &lt;= x &amp;&amp; x &lt; n &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; n;
     }
     public int[] GridIllumination(int n, int[][] lamps, int[][] queries) {
@@ -223,6 +223,18 @@
 </code></pre>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
             
             
               <div class="next-post">

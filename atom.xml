@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-02-10T12:52:01.972Z</updated>
+    <updated>2022-02-12T14:49:48.019Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -10,6 +10,79 @@
     <logo>https://greydoveh.github.io/images/avatar.png</logo>
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
+    <entry>
+        <title type="html"><![CDATA[LeetCode.935 骑士拨号器]]></title>
+        <id>https://greydoveh.github.io/post/leetcode-935/</id>
+        <link href="https://greydoveh.github.io/post/leetcode-935/">
+        </link>
+        <updated>2022-02-12T14:44:12.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="leetcode935-骑士拨号器">LeetCode.935 骑士拨号器</h1>
+<h3 id="思路">思路</h3>
+<blockquote>
+<p>动态规划</p>
+</blockquote>
+<p>骑士每一步跳都会在号码后面增加一个新的数字，就会产生一个新的号码。<br>
+由于跳的方式是固定的，所以从某个数字可以跳到的其他数字也是固定的。</p>
+<blockquote>
+<p>0 -&gt; 4, 6;<br>
+1 -&gt; 6, 8;<br>
+2 -&gt; 7, 9;<br>
+3 -&gt; 4, 8;<br>
+4 -&gt; 3, 9, 0;<br>
+5 -&gt; null;<br>
+6 -&gt; 1, 7, 0;<br>
+7 -&gt; 2, 6;<br>
+8 -&gt; 1, 3;<br>
+9 -&gt; 2, 4;</p>
+</blockquote>
+<p>在这个基础上容易知道，要产生一个n位的号码，只需看第n-1位的数字是多少，然后根据这一位数字能够走到的位置k，得到可以得到k个新的号码。</p>
+<p>所以，可以得到状态转移方程<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo><mo>=</mo><msub><mo>∑</mo><mrow><mi>j</mi><mo>−</mo><mo>&gt;</mo><mi>k</mi></mrow></msub><mi>f</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(n, k) = \sum_{j-&gt;k} f(n - 1, j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.185818em;vertical-align:-0.43581800000000004em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.18639799999999984em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mtight">−</span><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span><br>
+其中f(n, k)代表长度为n尾号为k的号码的个数，在长度为n−1和n之间，如果骑士能够从j跳到k，则能够为生成尾号为k的号码提供1点贡献；如果有m个尾号为j的骑士，则能为生成尾号为k的号码提供m点贡献；若有不同的号码都能到k，则它们都能提供对应的贡献。</p>
+<p>举个例子，因为6能到达1, 7, 0三个点，所以通过16这个号码，可以产生161, 167, 160三个号码；同理，因为从0, 1, 7三个点可以到达6，所以XXX6可以由XX0, XX1, XX7三个号码产生。通过统计XX0, XX1, XX7的个数进行求和，则可以得到这么多个XXX6。如果对长度为nn所有尾号进行计数，则可以得到长度为nn的号码的个数。</p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    const int MOD = (int)1e9 + 7;
+    int[,] cnt;
+    public int KnightDialer(int n) {
+        cnt = new int[2, 10];
+        int[][] list = new int[10][] {
+            new int[2]{4, 6},
+            new int[2]{6, 8},
+            new int[2]{7, 9},
+            new int[2]{4, 8},
+            new int[3]{3, 9, 0},
+            new int[0]{},
+            new int[3]{1, 7, 0},
+            new int[2]{2, 6},
+            new int[2]{1, 3},
+            new int[2]{2, 4},
+        };
+        for (int i = 0; i &lt; 10; i++) {
+            cnt[0, i] = 1;
+        }
+        int pre = 0, now = 1;
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 0; j &lt; 10; j++) {
+                cnt[now, j] = 0;
+            }
+            for (int j = 0; j &lt; 10; j++) {
+                for (int k = 0; k &lt; list[j].Length; k++) {
+                    cnt[now, list[j][k]] = ((cnt[now, list[j][k]] % MOD) + (cnt[pre, j] % MOD)) % MOD;
+                }
+            }
+            (now, pre) = (pre, now);
+        }
+        long res = 0;
+        for (int j = 0; j &lt; 10; j++) {
+            res = ((res % MOD) + (cnt[pre, j] % MOD)) % MOD;
+        }
+        return (int)(res % MOD);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[LeetCode.1001 网格照明 题解]]></title>
         <id>https://greydoveh.github.io/post/leetcode-1001/</id>
@@ -30,7 +103,7 @@
 对于对角线处理可能有些麻烦，这里的处理方法是添加时不是判断是否有灯而是对对角线上的灯进行计数，而删除时是在删除行/列的基础上进行的，因为对行/列的字典可以检测到具体的位置，若检测到该位置有灯，则对其两条对角线上删除一个灯即可</p>
 <h3 id="代码">代码</h3>
 <pre><code class="language-csharp">public class Solution {
-    public bool judge(int x, int y, int n) {
+    public bool Judge(int x, int y, int n) {
         return 0 &lt;= x &amp;&amp; x &lt; n &amp;&amp; 0 &lt;= y &amp;&amp; y &lt; n;
     }
     public int[] GridIllumination(int n, int[][] lamps, int[][] queries) {
@@ -946,98 +1019,6 @@ int main() {
         printf(&quot;%d\n&quot;, ans);
     }
 
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【2021四川省赛】Gym-103117 E.Don‘t Really Like How The Story Ends 图论]]></title>
-        <id>https://greydoveh.github.io/post/gym-103117e/</id>
-        <link href="https://greydoveh.github.io/post/gym-103117e/">
-        </link>
-        <updated>2021-12-28T12:17:01.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="2021四川省赛e">2021四川省赛E</h1>
-<font size = 3> 
-<h2 id="dont-really-like-how-the-story-ends"><strong><a href="https://vjudge.net/problem/Gym-103117E">Don't Really Like How The Story Ends</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>给图加边，使得一个可能的DFS序列刚好是从1到n</p>
-<p><strong>Time  : 1000 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>第一次打正式比赛，场上E因为自己的nt行为T了好几发，这个是赛后补题<br>
-直接搜索，但是需要有一定条件<br>
-如果想要DFS序列刚好为从1到N，需要满足的条件：</p>
-<ol>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>直接相连，则访问搜索<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></li>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点存在没有访问的相邻节点且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点不与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>点相连，此时必须将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>连接到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>上</li>
-<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点所有相邻节点都被访问了，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">v+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>可以与<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>相连，也可以和从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>=&gt;<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>中路径上的任意一点相连，路径上的点都在递归栈里面，此时可以让<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>v</mi></mrow><annotation encoding="application/x-tex">v</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span></span></span></span>点退栈，一直回到某个满足条件<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>的节点</li>
-<li>如果第3点的点退栈一直到起点1号点都没有直接相连，说明存在不连通部分，此时必须加边，此时再去搜索不连通的部分，一直到全部搜索完</li>
-</ol>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-const int N = 1e5 + 5;
-using namespace std;
-vector&lt;int&gt; mp[N];
-bool vis[N];
-int cnt;
-int n, m, nxt;
-
-void dfs(int u) {
-    nxt++;
-    for (int i = 0; i &lt; mp[u].size(); i++) {
-        int to = mp[u][i];
-        if (vis[to]) continue;
-        if (to == nxt) {	// [1]
-            vis[nxt] = true;
-            dfs(nxt);
-        } else {			// [2]
-            cnt++;
-            vis[nxt] = true;
-            dfs(nxt);
-            i--;
-        } 
-    }
-    if (u == 1) {			// [3] [4]
-        while (nxt &lt;= n) {
-            vis[nxt] = true;
-            dfs(nxt);
-            cnt++;
-        }
-    }
-}
-
-int main() {
-    ios::sync_with_stdio(false);cin.tie(0);
-    int T;	cin &gt;&gt; T;
-    while (T--) {
-        cin &gt;&gt; n &gt;&gt; m;
-        for (int i = 1; i &lt;= n; i++) {
-            mp[i].clear();
-            vis[i] = false;
-        }
-        nxt = 1;
-        cnt = 0;
-        for (int i = 0; i &lt; m; i++) {
-            int u, v;
-            cin &gt;&gt; u &gt;&gt; v;
-            if (u &lt; v)  mp[u].push_back(v);
-            if (u &gt; v)  mp[v].push_back(u);	// 一个小优化，只由编号小的节点连接到编号大的节点
-        }
-        for (int i = 1; i &lt;= n; i++) {
-            sort(mp[i].begin(), mp[i].end());	
-            // 这里进行排序，就可以保证每次访问的节点都是最小的，方便判断刚刚解题思路中说的条件
-            // 不要用堆，亲测会T（场上nt的我）
-        }
-        vis[1] = true;
-        dfs(1);
-        cout &lt;&lt; cnt &lt;&lt; endl;
-    }
     return 0;
 }
 </code></pre>

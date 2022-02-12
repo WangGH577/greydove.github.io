@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>LeetCode.935 骑士拨号器 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1644677349020">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="LeetCode.935 骑士拨号器
+思路
+
+动态规划
+
+骑士每一步跳都会在号码后面增加一个新的数字，就会产生一个新的号码。
+由于跳的方式是固定的，所以从某个数字可以跳到的其他数字也是固定的。
+
+0 -&gt; 4, 6;
+1 -&gt; ..." />
+    <meta name="keywords" content="CSharp,算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1644677349020" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">LeetCode.935 骑士拨号器</h2>
+            <div class="post-date">2022-02-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/leetcode-935.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="leetcode935-骑士拨号器">LeetCode.935 骑士拨号器</h1>
+<h3 id="思路">思路</h3>
+<blockquote>
+<p>动态规划</p>
+</blockquote>
+<p>骑士每一步跳都会在号码后面增加一个新的数字，就会产生一个新的号码。<br>
+由于跳的方式是固定的，所以从某个数字可以跳到的其他数字也是固定的。</p>
+<blockquote>
+<p>0 -&gt; 4, 6;<br>
+1 -&gt; 6, 8;<br>
+2 -&gt; 7, 9;<br>
+3 -&gt; 4, 8;<br>
+4 -&gt; 3, 9, 0;<br>
+5 -&gt; null;<br>
+6 -&gt; 1, 7, 0;<br>
+7 -&gt; 2, 6;<br>
+8 -&gt; 1, 3;<br>
+9 -&gt; 2, 4;</p>
+</blockquote>
+<p>在这个基础上容易知道，要产生一个n位的号码，只需看第n-1位的数字是多少，然后根据这一位数字能够走到的位置k，得到可以得到k个新的号码。</p>
+<p>所以，可以得到状态转移方程<br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo><mo>=</mo><msub><mo>∑</mo><mrow><mi>j</mi><mo>−</mo><mo>&gt;</mo><mi>k</mi></mrow></msub><mi>f</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(n, k) = \sum_{j-&gt;k} f(n - 1, j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.185818em;vertical-align:-0.43581800000000004em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.18639799999999984em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mtight">−</span><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span><br>
+其中f(n, k)代表长度为n尾号为k的号码的个数，在长度为n−1和n之间，如果骑士能够从j跳到k，则能够为生成尾号为k的号码提供1点贡献；如果有m个尾号为j的骑士，则能为生成尾号为k的号码提供m点贡献；若有不同的号码都能到k，则它们都能提供对应的贡献。</p>
+<p>举个例子，因为6能到达1, 7, 0三个点，所以通过16这个号码，可以产生161, 167, 160三个号码；同理，因为从0, 1, 7三个点可以到达6，所以XXX6可以由XX0, XX1, XX7三个号码产生。通过统计XX0, XX1, XX7的个数进行求和，则可以得到这么多个XXX6。如果对长度为nn所有尾号进行计数，则可以得到长度为nn的号码的个数。</p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    const int MOD = (int)1e9 + 7;
+    int[,] cnt;
+    public int KnightDialer(int n) {
+        cnt = new int[2, 10];
+        int[][] list = new int[10][] {
+            new int[2]{4, 6},
+            new int[2]{6, 8},
+            new int[2]{7, 9},
+            new int[2]{4, 8},
+            new int[3]{3, 9, 0},
+            new int[0]{},
+            new int[3]{1, 7, 0},
+            new int[2]{2, 6},
+            new int[2]{1, 3},
+            new int[2]{2, 4},
+        };
+        for (int i = 0; i &lt; 10; i++) {
+            cnt[0, i] = 1;
+        }
+        int pre = 0, now = 1;
+        for (int i = 1; i &lt; n; i++) {
+            for (int j = 0; j &lt; 10; j++) {
+                cnt[now, j] = 0;
+            }
+            for (int j = 0; j &lt; 10; j++) {
+                for (int k = 0; k &lt; list[j].Length; k++) {
+                    cnt[now, list[j][k]] = ((cnt[now, list[j][k]] % MOD) + (cnt[pre, j] % MOD)) % MOD;
+                }
+            }
+            (now, pre) = (pre, now);
+        }
+        long res = 0;
+        for (int j = 0; j &lt; 10; j++) {
+            res = ((res % MOD) + (cnt[pre, j] % MOD)) % MOD;
+        }
+        return (int)(res % MOD);
+    }
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/leetcode-1001/">
+                  <h3 class="post-title">
+                    LeetCode.1001 网格照明 题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
