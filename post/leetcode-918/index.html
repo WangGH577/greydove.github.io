@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>CodeForces-914B-题解-思维、博弈 | 鸽子屋</title>
+<title>LeetCode 918.环形数组的最大和 | 鸽子屋</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,17 +18,14 @@
 
 
 
-    <meta name="description" content="博客迁移
-CodeForces 914B 题解
- 
-Conan and Agasa play a Card Game
-题目大意
-
-两个人玩游戏
-每次选一张牌拿走，同时拿走小于这张牌的所有牌
-拿走最后一张牌的获胜
-每个人采取最优方案，输出获胜..." />
-    <meta name="keywords" content="算法题解" />
+    <meta name="description" content="LeetCode 918.环形数组的最大和
+题目链接
+思路
+思路和LeetCode 53.最大子数组和类似
+在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是不跨越原点的最大值
+然后再求一个跨越原点的最大值
+这个思路和上面的..." />
+    <meta name="keywords" content="CSharp,算法题解" />
   </head>
   <body>
     <div id="app" class="main">
@@ -109,82 +106,63 @@ Conan and Agasa play a Card Game
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">CodeForces-914B-题解-思维、博弈</h2>
-            <div class="post-date">2021-12-28</div>
+            <h2 class="post-title">LeetCode 918.环形数组的最大和</h2>
+            <div class="post-date">2022-02-16</div>
             
-              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/codeforces-914b.jpg')">
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/leetcode-918.jpg')">
               </div>
             
             <div class="post-content" v-pre>
-              <p>博客迁移</p>
-<h1 id="codeforces-914b-题解">CodeForces 914B 题解</h1>
-<font size = 3> 
-<h2 id="conan-and-agasa-play-a-card-game"><strong><a href="https://vjudge.net/problem/CodeForces-914B">Conan and Agasa play a Card Game</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
+              <h1 id="leetcode-918环形数组的最大和">LeetCode 918.环形数组的最大和</h1>
+<p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">题目链接</a></p>
+<h3 id="思路">思路</h3>
+<p>思路和<a href="https://leetcode-cn.com/problems/maximum-subarray/">LeetCode 53.最大子数组和</a>类似<br>
+在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是<strong>不跨越原点的最大值</strong><br>
+然后再求一个<strong>跨越原点的最大值</strong><br>
+这个思路和上面的反过来，先求中间一段<strong>最小子数组和</strong>ans2，然后用<strong>总和减去该最小子数组和</strong>，得到的即是<strong>跨越两边的最大值</strong>sum[n] - ans2<br>
+最后<strong>两者取最大值</strong>返回max(ans1, sum[n] - ans2);</p>
 <blockquote>
-<p>两个人玩游戏<br>
-每次选一张牌拿走，同时拿走小于这张牌的所有牌<br>
-拿走最后一张牌的获胜<br>
-每个人采取最优方案，输出获胜的人 <br><br>
-<strong>Time: 2000 ms</strong><br>
-<strong>Memory: 262144 kB</strong></p>
+<p>注意一个特殊情况，当整个数组全为负数的时候，最小子数组和为整个数组的和，会导致返回的值为0，此时取得是一个空的子数组，但是题目要求要的是一个<strong>非空</strong>子数组的和，所以要判断一下左右边界</p>
 </blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>博弈论 <br><br>
-递归的去思考这个问题<br>
-先是最简单的情况</p>
-<ol>
-<li><code>样例</code>最大牌有1个 ---&gt; <font color = "blue">先手必赢</font> （直接拿走最大牌）</li>
-<li><code>样例</code>只有一种牌 且有偶数个 ---&gt; <font color = "blue">后手必赢 </font></li>
-<li>最大牌有奇数个，先手拿走一张最大牌，后手变成情况2的先手 ---&gt; <font color = "blue">先手必赢 </font></li>
-<li>最大牌有偶数个，拿完其他牌变成情况2，故考虑次大牌<br>
-而次大牌重复上述讨论的情况，故把小于最大牌的情况统一考虑</li>
-<li>所有牌都有偶数个，递归可得到情况2 ---&gt;  <font color = "blue">后手必赢</font></li>
-<li>最大牌有偶数个，其余牌只有一种有奇数个，先手拿走奇数牌的一张得到情况5 ---&gt; <font color = "blue">先手必赢</font></li>
-<li>最大牌有偶数个，其余牌有多种有奇数个，先手拿走奇数牌中最大牌的一张，得到情况5---&gt; <font color = "blue">先手必赢</font></li>
-</ol>
-<p>综上考虑，存在奇数个数的牌即先手赢，都是偶数个则后手赢<br>
-只需统计每种牌的个数</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-using namespace std;
-int cnt[100005], a[100005];
-
-int main()
-{
-    int n, maxa = 0, win = 0;
-    cin &gt;&gt; n;
-    for (int i = 0; i &lt; n; i++)
-    {
-        cin &gt;&gt; a[i];
-        cnt[a[i]]++;
-        if (a[i] &gt; maxa) 
-        {
-            maxa = a[i];
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    public int MaxSubarraySumCircular(int[] nums) {
+        int[] sum = new int [nums.Length + 1];
+        for (int i = 1; i &lt; sum.Length; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
         }
-    }
-    for (int i = 0; i &lt;= maxa; i++)
-    {
-        if (cnt[i] &amp; 1)
-        {
-            cout &lt;&lt; &quot;Conan&quot; &lt;&lt; endl;
-            win = 1;
-            break;
+        int min = sum[0], ans1 = int.MinValue;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            ans1 = Math.Max(ans1, sum[i] - min);
+            min = Math.Min(sum[i], min);
         }
+        int max = sum[0], ans2 = int.MaxValue, l = 0, r = 0, maxIndex = 0;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            if (ans2 &gt; sum[i] - max) {
+                r = i;
+                l = maxIndex;
+                ans2 = sum[i] - max;
+            }
+            if (sum[i] &gt; max) {
+                max = sum[i];
+                maxIndex = i;
+            }
+        }
+        if (l == 0 &amp;&amp; r == sum.Length - 1) {
+            return ans1;
+        }
+        return Math.Max(ans1, sum[sum.Length - 1] - ans2);
     }
-    if (!win)
-    {
-        cout &lt;&lt; &quot;Agasa&quot; &lt;&lt; endl;
-    }
-    return 0;
 }
 </code></pre>
 
             </div>
             
               <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
                 
                   <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
                     算法题解
@@ -195,9 +173,9 @@ int main()
             
               <div class="next-post">
                 <div class="next">下一篇</div>
-                <a href="https://greydoveh.github.io/post/codeforces-1234c/">
+                <a href="https://greydoveh.github.io/post/leetcode-935/">
                   <h3 class="post-title">
-                    CodeForces-1234C-题解-思维、模拟
+                    LeetCode.935 骑士拨号器
                   </h3>
                 </a>
               </div>

@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-02-12T14:49:48.019Z</updated>
+    <updated>2022-02-16T03:58:37.200Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -11,12 +11,63 @@
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
     <entry>
+        <title type="html"><![CDATA[LeetCode 918.环形数组的最大和]]></title>
+        <id>https://greydoveh.github.io/post/leetcode-918/</id>
+        <link href="https://greydoveh.github.io/post/leetcode-918/">
+        </link>
+        <updated>2022-02-16T03:50:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="leetcode-918环形数组的最大和">LeetCode 918.环形数组的最大和</h1>
+<p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">题目链接</a></p>
+<h3 id="思路">思路</h3>
+<p>思路和<a href="https://leetcode-cn.com/problems/maximum-subarray/">LeetCode 53.最大子数组和</a>类似<br>
+在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是<strong>不跨越原点的最大值</strong><br>
+然后再求一个<strong>跨越原点的最大值</strong><br>
+这个思路和上面的反过来，先求中间一段<strong>最小子数组和</strong>ans2，然后用<strong>总和减去该最小子数组和</strong>，得到的即是<strong>跨越两边的最大值</strong>sum[n] - ans2<br>
+最后<strong>两者取最大值</strong>返回max(ans1, sum[n] - ans2);</p>
+<blockquote>
+<p>注意一个特殊情况，当整个数组全为负数的时候，最小子数组和为整个数组的和，会导致返回的值为0，此时取得是一个空的子数组，但是题目要求要的是一个<strong>非空</strong>子数组的和，所以要判断一下左右边界</p>
+</blockquote>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    public int MaxSubarraySumCircular(int[] nums) {
+        int[] sum = new int [nums.Length + 1];
+        for (int i = 1; i &lt; sum.Length; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
+        }
+        int min = sum[0], ans1 = int.MinValue;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            ans1 = Math.Max(ans1, sum[i] - min);
+            min = Math.Min(sum[i], min);
+        }
+        int max = sum[0], ans2 = int.MaxValue, l = 0, r = 0, maxIndex = 0;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            if (ans2 &gt; sum[i] - max) {
+                r = i;
+                l = maxIndex;
+                ans2 = sum[i] - max;
+            }
+            if (sum[i] &gt; max) {
+                max = sum[i];
+                maxIndex = i;
+            }
+        }
+        if (l == 0 &amp;&amp; r == sum.Length - 1) {
+            return ans1;
+        }
+        return Math.Max(ans1, sum[sum.Length - 1] - ans2);
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[LeetCode.935 骑士拨号器]]></title>
         <id>https://greydoveh.github.io/post/leetcode-935/</id>
         <link href="https://greydoveh.github.io/post/leetcode-935/">
         </link>
         <updated>2022-02-12T14:44:12.000Z</updated>
         <content type="html"><![CDATA[<h1 id="leetcode935-骑士拨号器">LeetCode.935 骑士拨号器</h1>
+<p><a href="https://leetcode-cn.com/problems/knight-dialer/">题目链接</a></p>
 <h3 id="思路">思路</h3>
 <blockquote>
 <p>动态规划</p>
@@ -90,6 +141,7 @@
         </link>
         <updated>2022-02-10T12:48:07.000Z</updated>
         <content type="html"><![CDATA[<h1 id="leetcode1001-网格照明">LeetCode.1001 网格照明</h1>
+<p><a href="https://leetcode-cn.com/problems/grid-illumination/">题目链接</a></p>
 <h3 id="思路">思路</h3>
 <blockquote>
 <p>哈希/字典</p>
@@ -448,7 +500,9 @@ namespace Test {
 </li>
 </ol>
 <hr>
-<p>转载自微信公众号 <strong>windows全球汇</strong></p>
+<p>转载自微信公众号 <strong>windows全球汇</strong><br>
+原文章中还有其他的方法<br>
+文章链接：<a href="https://mp.weixin.qq.com/s/1UJdevitJuNpdc1UwGkiYw">https://mp.weixin.qq.com/s/1UJdevitJuNpdc1UwGkiYw</a></p>
 ]]></content>
     </entry>
     <entry>
@@ -928,99 +982,6 @@ int main() {
     return 0;
 }
 
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[【Gym-101972G】G.Minimax 动态规划]]></title>
-        <id>https://greydoveh.github.io/post/gym-101972g/</id>
-        <link href="https://greydoveh.github.io/post/gym-101972g/">
-        </link>
-        <updated>2021-12-28T12:20:20.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="gym-101972g">Gym-101972G</h1>
-<font size = 3> 
-<h2 id="minimax"><strong><a href="https://vjudge.net/problem/Gym-101972G">Minimax</a></strong></h2>
-<h3 id="题目大意">题目大意</h3>
-<blockquote>
-<p>定义一个矩阵的beauty值为矩阵中的最大元素<br>
-给出一个m*n的矩阵，从中删除一行一列，将矩阵分成四个象限，每个象限有一个beauty值，问怎样分能够使得四个象限beauty值得最大与最小值之差最小，求这个最小值。</p>
-<p><strong>Time  : 2500 ms</strong><br>
-<strong>Memory:  262144 kB</strong></p>
-</blockquote>
-<h3 id="解题思路及分析">解题思路及分析</h3>
-<blockquote>
-<p>从四个方向开始DP，记录四个方向子矩阵的beauty值，然后枚举每一行每一列，更新最小值</p>
-</blockquote>
-<h3 id="ac代码">AC代码</h3>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-typedef long long llong;
-typedef long double ldouble;
-using namespace std;
-
-const int N = 500 + 10;
-int n, m;
-int a[N][N];
-int lu[N][N], ru[N][N], ld[N][N], rd[N][N];
-
-int main() {
-    #ifdef LOCAL
-        freopen(&quot;in.in&quot;, &quot;r&quot;, stdin);
-        freopen(&quot;out.out&quot;, &quot;w&quot;, stdout);
-    #endif
-
-    int T;	scanf(&quot;%d&quot;, &amp;T);
-    while (T--) {
-        scanf(&quot;%d%d&quot;, &amp;n, &amp;m);
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = 1; j &lt;= m; j++) {
-                scanf(&quot;%d&quot;, &amp;a[i][j]);
-            }
-        }
-        for (int i = 0; i &lt;= n; i++) {
-            lu[i][0] = ru[i][0] = ld[i][0] = rd[i][0] = 0;
-            lu[i][m + 1] = ru[i][m + 1] = ld[i][m + 1] = rd[i][m + 1] = 0;
-        }
-        for (int j = 0; j &lt;= m; j++) {
-            lu[0][j] = ru[0][j] = ld[0][j] = rd[0][j] = 0;
-            lu[n + 1][j] = ru[n + 1][j] = ld[n + 1][j] = rd[n + 1][j] = 0;
-        }
-        // lu
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = 1; j &lt;= m; j++) {
-                lu[i][j] = max(a[i][j], max(lu[i][j - 1], lu[i - 1][j]));
-            }
-        }
-        // ru
-        for (int i = 1; i &lt;= n; i++) {
-            for (int j = m; j &gt; 0; j--) {
-                ru[i][j] = max(a[i][j], max(ru[i][j + 1], ru[i - 1][j]));
-            }
-        }
-        // ld
-        for (int i = n; i &gt; 0; i--) {
-            for (int j = 1; j &lt;= m; j++) {
-                ld[i][j] = max(a[i][j], max(ld[i][j - 1], ld[i + 1][j]));
-            }
-        }
-        // rd
-        for (int i = n; i &gt; 0; i--) {
-            for (int j = m; j &gt; 0; j--) {
-                rd[i][j] = max(a[i][j], max(rd[i][j + 1], rd[i + 1][j]));
-            }
-        }
-        int ans = 1e9 + 10;
-        for (int i = 2; i &lt; n; i++) {
-            for (int j = 2; j &lt; m; j++) {
-                int mx = max(lu[i - 1][j - 1], max(ru[i - 1][j + 1], max(ld[i + 1][j - 1], rd[i + 1][j + 1])));
-                int mi = min(lu[i - 1][j - 1], min(ru[i - 1][j + 1], min(ld[i + 1][j - 1], rd[i + 1][j + 1])));
-                ans = min(ans, mx - mi);
-            }
-        }
-        printf(&quot;%d\n&quot;, ans);
-    }
-
-    return 0;
-}
 </code></pre>
 ]]></content>
     </entry>
