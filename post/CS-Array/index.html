@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 数组 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647182020585">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="C#数组
+
+
+数组是对象
+
+属性 Rank：
+
+对于矩形数组，返回秩/维度，
+对于交错数组，返回1
+
+
+属性 Length：
+
+对于矩形数组，返回数组总长度（可以使用方法GetLength获取每一维的长度，参数从0开始代表最高维）
+对于交错..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647182020585" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 数组</h2>
+            <div class="post-date">2022-03-07</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Array.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="c数组">C#数组</h1>
+<ul>
+<li>
+<p>数组是对象</p>
+<ul>
+<li>属性 Rank：
+<ul>
+<li>对于矩形数组，返回秩/维度，</li>
+<li>对于交错数组，返回1</li>
+</ul>
+</li>
+<li>属性 Length：
+<ul>
+<li>对于矩形数组，返回数组总长度（可以使用方法GetLength获取每一维的长度，参数从0开始代表最高维）</li>
+<li>对于交错数组，返回最高维的维度长度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>基本概念</p>
+<ul>
+<li>元素</li>
+<li>秩/维度</li>
+<li>维度长度：这一维的长度</li>
+<li>数组长度：所有维度的长度之和</li>
+</ul>
+</li>
+<li>
+<p>多维数组</p>
+<ul>
+<li>矩阵数组
+<ul>
+<li>每行（以二维数组为例）的长度都一样</li>
+<li>使用同一组中括号，用逗号（被称为秩说明符）隔开不同维度的长度/索引</li>
+</ul>
+</li>
+<li>交错数组
+<ul>
+<li>数组的每个元素都是独立的数组</li>
+<li>每行（以二维数组为例）长度可以不同</li>
+<li>每一维都是用一个方括号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>一维数组和矩形数组</p>
+<ul>
+<li>一维数组
+<ul>
+<li>声明： <code>int[] a;</code></li>
+<li>实例化：<code>int[] a = new int[10];</code></li>
+<li>初始化：<code>int[] a = new int[] {1, 2, 3};</code></li>
+<li>省略new：<code>int[] a = {1, 2, 3};</code></li>
+</ul>
+</li>
+<li>矩形数组
+<ul>
+<li>声明：<code>int[,] b;</code></li>
+<li>实例化：<code>int[,] b = new int[3, 4];</code></li>
+<li>初始化：<code>int[,] b = new int[,] { {1, 2}, {3, 4} };</code></li>
+<li>省略new：<code>int[,] b = { {1, 2}, {3, 4} };</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>交错数组</p>
+<ul>
+<li>数组的数组</li>
+<li>实例化时，只允许指定最高维的长度
+<ul>
+<li><code>int[][] a = new int [3][];</code>是可以的</li>
+<li><code>int[][] a = new int [3][4];</code>是不允许的</li>
+</ul>
+</li>
+<li>初始化时，每一行都要new</li>
+<li>交错数组的某一维可以是矩形数组</li>
+</ul>
+</li>
+<li>
+<p>比较交错数组和矩形数组</p>
+<ul>
+<li>交错数组
+<ul>
+<li>多个数组对象</li>
+<li>更复杂</li>
+<li>有对一维数组的优化</li>
+<li>foreach按层遍历</li>
+</ul>
+</li>
+<li>矩形数组
+<ul>
+<li>一个数组对象</li>
+<li>较简单</li>
+<li>没有优化</li>
+<li>foreach遍历所有元素</li>
+</ul>
+</li>
+<li>在CIL中，一维数组有特点的指令用于性能优化，矩形数组没有这些指令，并且不在相同级别进行优化。</li>
+<li>因此，有时使用一维数组（可以被优化）的交错数组比矩形数组（不能被优化）更有效率</li>
+<li>另一方面，矩形数组的编程复杂度要小很多，因此它会被作为一个单元而不是数组的数组</li>
+</ul>
+</li>
+<li>
+<p>数组协变</p>
+<ul>
+<li>类似于Java中上转型对象</li>
+<li>即对于父类引用的数组，每个元素对应的引用实际指向子类</li>
+</ul>
+</li>
+<li>
+<p>数组继承自System.Array类的属性方法</p>
+<ul>
+<li>属性
+<ul>
+<li>Rank： 实例属性，获取总维度数</li>
+<li>Length：实例属性，获取数组中所有维度的元素总和</li>
+</ul>
+</li>
+<li>方法
+<ul>
+<li>GetLength：实例方法，返回指定维度长度</li>
+<li>Clear：静态方法，将某一范围内的元素值设置为0或null</li>
+<li>Sort：静态方法，在一维数组中对数组进行排序</li>
+<li>BinarySearch：静态方法，使用二分搜索一维数组中的值</li>
+<li>Clone：实例方法，进行数组的浅复制</li>
+<li>IndexOf：静态方法，返回一维数组中遇到的第一个值</li>
+<li>Reverse：静态方法，反转数组某一范围的元素</li>
+<li>GetUpperBound：实例方法，获取指定维度的上界（<strong>不同于C++中的STL</strong>）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-sth/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 杂
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 枚举 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647182020585">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="C#枚举
+
+
+值类型
+
+
+设置底层类型和显式值
+
+
+enum Enum : ulong {	// 类似继承的方式设置底层类型，默认为int
+    Green,			// 0
+    Yellow = 10, 	// 10
+    Red,..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647182020585" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 枚举</h2>
+            <div class="post-date">2022-03-07</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Enum.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="c枚举">C#枚举</h1>
+<ul>
+<li>
+<p>值类型</p>
+</li>
+<li>
+<p>设置底层类型和显式值</p>
+<ul>
+<li>
+<pre><code class="language-csharp">enum Enum : ulong {	// 类似继承的方式设置底层类型，默认为int
+    Green,			// 0
+    Yellow = 10, 	// 10
+    Red, 			// 11
+}
+</code></pre>
+</li>
+<li>
+<p>每个枚举类型都有一个底层值，默认为int，第一个成员默认为0，后面比前面多1</p>
+</li>
+<li>
+<p>如果给其中某个成员赋值，则再后面没有显式赋值的成员会继续在前面的基础上+1</p>
+</li>
+<li>
+<p>如果显式值过大超出了int的范围，可以设置底层类型为long或者ulong，底层类型可以是任何整数类型</p>
+</li>
+<li>
+<p>关联到成员名称的值不需要是独特的，如可以允许多个成员使用同样的值</p>
+</li>
+<li>
+<p>也可以使用该枚举类型中的成员给其他成员赋值</p>
+</li>
+</ul>
+</li>
+<li>
+<p>位标志</p>
+<ul>
+<li>
+<p>标志变量的压缩，把多个标志变量压缩到同一个变量里表示，<em>类似C++中的 bitset？</em></p>
+</li>
+<li>
+<p>可以通过或运算<code>|</code>来标志多个位</p>
+</li>
+<li>
+<p>可以通过HasFlag判断该位是否被标记，如果是多个位可以对要判断的位相或</p>
+</li>
+<li>
+<p>也可以通过&amp;来判断标记</p>
+</li>
+<li>
+<pre><code class="language-csharp">[Flags]	// Flags特性
+enum FlagsEnum {
+    first = 0x01,
+    second = 0x02,
+    third = 0x04,
+    forth = 0x08
+}
+    FlagsEnum flags = FlagsEnum.second | FlagsEnum.third;
+    bool f1 = flags.HasFlag(FlagsEnum.second);
+    bool f2 = flags.HasFlag(FlagsEnum.first | FlagsEnum.third);	// 注意逻辑，虽然后面是两个条件的相或，但是HasFlag本身是和与逻辑对应的，所以是两个标志位都检查的
+    bool f3 = ((flags &amp; FlagsEnum.forth) == FlagsEnum.forth);
+</code></pre>
+</li>
+<li>
+<p>Flags特性</p>
+<ul>
+<li>虽然不改变计算结果，但是提供了一些方便的特性</li>
+<li>首先是通知编译器、对象浏览器等，该枚举可以按位标志进行组合</li>
+<li>其次是格式化输出
+<ul>
+<li>我们知道对于枚举类型，直接输出和ToString()均为返回字符串</li>
+<li>但是对于上面代码中的flags这种经过或运算的值，如果不加Flags特性时输出为计算后的整数，因为在调用ToString时没有找到值为12对应的枚举成员的字符串，所以会输出整数12</li>
+<li>加上Flags特性后，会将12对应两个分开的位标志成员，输出为两个字符串并用逗号和空格隔开</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>补充</p>
+<ul>
+<li>
+<p>枚举只有单一的成员类型：声明的成员常量</p>
+</li>
+<li>
+<p>不同枚举类型之间不能比较大小</p>
+</li>
+<li>
+<p>枚举类型可以枚举</p>
+<ul>
+<li>
+<pre><code class="language-csharp">enum MyEnum {
+    first, second, third
+}
+for (MyEnum e = MyEnum.first; e &lt;= MyEnum.third; e++) {
+    System.Console.WriteLine(e);
+}
+</code></pre>
+</li>
+<li>
+<p>但是注意上面这段代码，如果在枚举声明时有赋值操作，则在遍历时会有中间没有声明的整数被枚举到</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Enum类型还包含一些静态方法，如GetNames、GetName、IsDefine等，多数都有泛型与非泛型两种使用方式，但是泛型的版本，如果有第二个参数的话必须是枚举，非泛型版本可以使用整数或字符串</p>
+<ul>
+<li>
+<p>GetNames：参数为枚举的类型（Type），返回所有成员名称的字符串数组，泛型版本无参数</p>
+</li>
+<li>
+<pre><code class="language-csharp">string[] myEnums = Enum.GetNames(typeof(MyEnum));	// 也可以使用Enum.GetNames&lt;MyEnum&gt;()
+foreach (var myEnum in myEnums) {
+    System.Console.WriteLine(myEnum);
+}
+</code></pre>
+</li>
+<li>
+<p>GetName：参数为枚举的类型（Type）和整数，返回成员名称的字符串，如果不存在则返回null</p>
+</li>
+<li>
+<p>IsDefined：参数为枚举的类型（Type）和整数或字符串，如果在枚举中定义了该项则返回true</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Array/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 数组
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
