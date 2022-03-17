@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 转换 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647522032746">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="转换
+
+转换
+
+转换是接受一个类型的值并使用它作为另一个类型的等价值的过程
+转换后的值应该和源值一样的，但其类型为目标类型
+
+
+隐式转换
+
+零扩充：目标多出来的最高为都以0填充
+符号扩充：额外的高位用源表达式的符号位填充
+
+
+显式转换和强制..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647522032746" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 转换</h2>
+            <div class="post-date">2022-03-15</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Convert.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="转换">转换</h1>
+<ol>
+<li>转换
+<ul>
+<li>转换是接受一个类型的值并使用它作为另一个类型的等价值的过程</li>
+<li>转换后的值应该和源值一样的，但其类型为目标类型</li>
+</ul>
+</li>
+<li>隐式转换
+<ul>
+<li>零扩充：目标多出来的最高为都以0填充</li>
+<li>符号扩充：额外的高位用源表达式的符号位填充</li>
+</ul>
+</li>
+<li>显式转换和强制转换</li>
+<li>转换的类型
+<ul>
+<li>转换
+<ul>
+<li>预定义的
+<ul>
+<li>数字
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+<li>引用
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+<li>拆箱/装箱</li>
+</ul>
+</li>
+<li>用户自定义的
+<ul>
+<li>隐式</li>
+<li>显式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>除了标准转换，还可以为自定义类型定义隐式转换和显式转换
+<ul>
+<li>还有一个预定义的转换类型，叫做<strong>装箱</strong>，可以将任意类型转换为
+<ul>
+<li>object类型</li>
+<li>System.ValueType类型</li>
+</ul>
+</li>
+<li>拆箱可以将一个装箱的值转换为原始类型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>数字的转换
+<ul>
+<li>隐式数字转换
+<ul>
+<li>如下关系存在隐式转换
+<ul>
+<li>byte：ushort、short</li>
+<li>sbyte：short</li>
+<li>char：ushort</li>
+<li>ushort：uint、int</li>
+<li>short：int</li>
+<li>uint：ulong、long</li>
+<li>int：long</li>
+<li>ulong：float、decimal</li>
+<li>long：float、decimal</li>
+<li>float：double</li>
+<li>double</li>
+<li>decimal</li>
+</ul>
+</li>
+<li>把上图看成有向图的邻接表，如果从A到B存在路径，则A可以隐式转换为B</li>
+</ul>
+</li>
+<li>溢出检测上下文
+<ul>
+<li>C#提供了运行时检测结果移除的能力，通过<strong>checked</strong>和<strong>unchecked</strong>运算符实现</li>
+<li>代码片段是否被检查称作溢出检测上下文
+<ul>
+<li>如果指定一个表达式或代码为checked，CLR会在转换产生<strong>溢出时抛出OverflowException</strong>异常</li>
+<li>如果代码不是checked，转换会继续而不管是否产生溢出</li>
+</ul>
+</li>
+<li>默认的溢出检测上下文是不检查</li>
+<li>checked和unchecked运算符
+<ul>
+<li>表达式放在圆括号内并且不能是一个方法
+<ul>
+<li>checked(表达式)</li>
+<li>unchecked(表达式)</li>
+</ul>
+</li>
+<li>在unchecked上下文中会忽略溢出</li>
+<li>在checked上下文中如果发生溢出会抛出OverflowException异常</li>
+</ul>
+</li>
+<li>checked和unchecked语句
+<ul>
+<li>运算符用于表达式，而语句执行相同的功能，但是控制的是一段代码中的所有转换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>显式数字转换
+<ul>
+<li>对于显式类型转换可能会发生数据丢失，知道<strong>数据发生丢失时会如何处理</strong>很重要</li>
+<li>checked情况下溢出会抛出异常，下面介绍的是unchecked或者无修饰的不检查的情况</li>
+<li>S：源类型，T：目标类型</li>
+<li>整数类型到整数类型
+<ul>
+<li>S比T长？丢弃S中额外的最高位：符号扩展或零扩展S到T的长度</li>
+</ul>
+</li>
+<li>float或double到整数类型
+<ul>
+<li>舍掉小数截断为最接近的整数</li>
+<li>如果截断后不在T的范围内，属于C#的未定义行为，可以使用checked修饰并处理异常</li>
+</ul>
+</li>
+<li>decimal到整数
+<ul>
+<li>如果结果不在T的范围内，则抛出OverflowException异常</li>
+</ul>
+</li>
+<li>double到float
+<ul>
+<li>被舍入到最接近的float值</li>
+<li>如果值太小不能用float表示，则设置为+0或-0</li>
+<li>如果值太大不能用float表示，则设置为+INF或-INF</li>
+</ul>
+</li>
+<li>float或double到decimal
+<ul>
+<li>如果值太小不能使用decimal表示则设置为0</li>
+<li>如果值太大则会抛出溢出异常</li>
+</ul>
+</li>
+<li>decimal到float或double
+<ul>
+<li>总会成功，但是可能损失精度</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>引用转换
+<ul>
+<li>由引用保存的那部分信息是它执行的数据类型</li>
+<li>引用转换接受源引用并返回一个指向堆中同一位置的引用，但是把引用标记为其他的类型</li>
+<li>父类引用可以指向子类的对象
+<ul>
+<li>如果是父类引用指向子类对象，它看不到子类扩展父类的部分，即便是public</li>
+<li>如果是子类重写的父类的方法，则用父类引用调用方法时调用的是子类重写的方法</li>
+<li>但是如果子类是使用new屏蔽的方法，父类调用时依然是调用父类本身的方法</li>
+</ul>
+</li>
+<li>隐式引用转换
+<ul>
+<li>任何引用类型可以隐式转换为object类型</li>
+<li>任何类型可以隐式转换到它继承的接口</li>
+<li>类可以隐式转换到
+<ul>
+<li>它继承链中的任何类</li>
+<li>它实现的任何接口</li>
+</ul>
+</li>
+<li>委托可以隐式转换成以下.NET BCL类和接口
+<ul>
+<li>System.Delegate、System.MulticastDelegate</li>
+<li>System.ICloneable、System.Runtime.Serialization.ISerializable</li>
+</ul>
+</li>
+<li>ArrayS数组，其中元素是Ts类型，可以隐式转换成
+<ul>
+<li>以下.NET BCL类和接口
+<ul>
+<li>System.Array</li>
+<li>System.ICloneable</li>
+<li>System.IList</li>
+<li>System.ICollection</li>
+<li>System.IEnumerable</li>
+</ul>
+</li>
+<li>另一个数组ArrayT，其中元素类型Tt需要满足以下所有条件
+<ul>
+<li>两个数组有一样的维度</li>
+<li>元素类型Ts和Tt都是引用类型</li>
+<li>Ts和Tt直接存在隐式转换</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>显式引用转换
+<ul>
+<li>显式转换包括
+<ul>
+<li>从object到任何引用类型</li>
+<li>从基类型到继承它的类型</li>
+</ul>
+</li>
+<li>倒转上述隐式转换的方向，可以使用显式引用转换</li>
+<li>编译器允许引用在内存中不存在的类型，但是运行到强制转换时会抛出InvalidCastException异常</li>
+<li>有效的显式引用转换
+<ul>
+<li>显式转换没必要。
+<ul>
+<li>存在隐式转换时，显式转换是有效的，但是和隐式转换执行相同的内容</li>
+</ul>
+</li>
+<li>源引用是null。
+<ul>
+<li>null可以转换成引用类型，在运行到转换时虽然不会抛出InvalidCastException异常</li>
+<li>但是后面如果试图访问会抛出NullReferenceException异常</li>
+</ul>
+</li>
+<li>由源引用执行的实际数据可以被安全的进行隐式转换
+<ul>
+<li>如B是A的子类，一个A类引用实际指向B类对象，则把它转换为B类引用时是有效的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>装箱转换
+<ul>
+<li>装箱概述
+<ul>
+<li>包括值类型在内的所有C#类型都派生自object类型</li>
+<li>值类型是轻量高效的类型，默认情况下堆上不包括它们的对象组件</li>
+<li>如果需要使用对象组件，可以使用<strong>装箱</strong>（<em>boxing</em>）</li>
+<li>装箱是一种隐式转换，它接收值类型的值，根据这个值在堆上创建一个完整的引用类型的对象并返回引用</li>
+<li>
+<pre><code class="language-csharp">int i = 10;
+object oi = i;
+</code></pre>
+</li>
+</ul>
+</li>
+<li>装箱是创建副本
+<ul>
+<li>在装箱后该值有两份副本，原始值类型和引用类型副本，每一个都可以独立操作</li>
+</ul>
+</li>
+<li>装箱转换
+<ul>
+<li>任何值类型都可以被隐式转换为object类型、System.ValueType、InterfaveT（前提是实现了T接口）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>拆箱转换
+<ul>
+<li><strong>拆箱</strong>（<em>unboxing</em>）是把装箱后的对象转换回值类型的过程</li>
+<li>拆箱是显式转换</li>
+<li>系统把值拆箱成T类型时执行了如下步骤：
+<ul>
+<li>它检查到要拆箱的对象实际是T的装箱值</li>
+<li>它把对象的值复制到变量</li>
+</ul>
+</li>
+<li>尝试将一个值拆箱为非原始类型时会抛出一个InvalidCastException异常</li>
+</ul>
+</li>
+<li>用户自定义转换
+<ul>
+<li>用户可以为类和结构定义显式和隐式转换</li>
+<li>
+<pre><code class="language-csharp">public static implicit/explicit operator TargetType (SourceType Identifier) {
+    // ... 
+    return ObjectOfTargetType;
+}
+</code></pre>
+</li>
+<li>implicit是隐式转换，explicit是显式转换</li>
+<li>用户自定义转换的约束
+<ul>
+<li>只可以为类或结构定义用户自定义转换</li>
+<li>不能重定义标准隐式转换或显式转换</li>
+<li>对于S和T如下命题为真
+<ul>
+<li>S和T是不同类型</li>
+<li>S和T不能通过继承关联，也就是S不能继承自T，T也不能继承自S</li>
+<li>S和T都不能是接口类型或者object类型</li>
+<li>转换运算符必须是S或T的成员</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>评估用户自定义转换
+<ul>
+<li>目前讨论的自定义转换都是在单步内直接把源类型转换为目标类型</li>
+<li>但是用户自定义转换在完整转换最多可以有3个步骤
+<ul>
+<li>预备标准转换</li>
+<li>用户自定义转换</li>
+<li>后续标准转换</li>
+</ul>
+</li>
+<li>这个链中不可能有一个以上的用户自定义类型转换</li>
+</ul>
+</li>
+<li>多步用户自定义转换的示例
+<ul>
+<li>Employee继承自Person，所以从Employee到Person存在标准转换</li>
+<li>Person中包含一个int类型的age字段，从int到float有标准转换</li>
+<li>Person中定义了从Person到int类中的隐式转换，返回age</li>
+<li>Employee =&gt; Person =&gt; int =&gt; float</li>
+<li>第一步为预备标准转换，第二步为用户自定义转换，第三步后续标准转换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>is运算符
+<ul>
+<li>源表达式 is 目标类型，返回bool</li>
+<li>如果源表达式可以通过以下方式成功转换为目标类型，运算符返回true
+<ul>
+<li>引用转换</li>
+<li>装箱转换</li>
+<li>拆箱转换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>as运算符
+<ul>
+<li>类似于强转，只是不抛异常，转换失败会返回null</li>
+<li>源表达式 as 目标类型，返回引用</li>
+<li>由于as运算符返回引用表达式，它可以用作赋值表达式的源</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Interface/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 接口
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

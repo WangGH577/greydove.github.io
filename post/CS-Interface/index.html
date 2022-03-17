@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 接口 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647522032746">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="接口
+
+接口使用示例（IComparable）
+
+Array.Sort可以排序预定义类型的数组，对自定义类型排序会抛出异常
+可以实现IComparable接口中的CompareTo方法后再使用排序
+IComparable接口声明在BCL中，..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647522032746" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 接口</h2>
+            <div class="post-date">2022-03-14</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Interface.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="接口">接口</h1>
+<ol>
+<li>接口使用示例（IComparable）
+<ul>
+<li>Array.Sort可以排序预定义类型的数组，对自定义类型排序会抛出异常</li>
+<li>可以实现IComparable接口中的CompareTo方法后再使用排序</li>
+<li>IComparable接口声明在BCL中，包含唯一的方法CompareTo</li>
+<li>
+<pre><code class="language-csharp">public interface IComparable {	// interface为接口定义的关键字
+    int CompareTo(object obj);	// this &gt; obj返回+，&lt;-，=0
+}
+</code></pre>
+</li>
+<li>实现接口
+<ul>
+<li>在基类列表后面列出接口名称</li>
+<li>必须为接口的每一个成员提供实现</li>
+</ul>
+</li>
+<li>要使用Sort，如果仅声明CompareTo方法是不够的，还需要实现IComparable接口</li>
+</ul>
+</li>
+<li>声明接口
+<ul>
+<li>重要事项
+<ul>
+<li>接口声明不能包含以下成员：
+<ul>
+<li>数据成员</li>
+<li>静态成员</li>
+</ul>
+</li>
+<li>接口声明只能包含如下类型的非静态成员函数的声明：
+<ul>
+<li>方法</li>
+<li>属性</li>
+<li>事件</li>
+<li>索引器</li>
+</ul>
+</li>
+<li>这些函数成员的声明不能包含任何实现代码，而在每一个成员声明的主体后使用分号</li>
+<li>按照惯例，接口名称必须以大写的I开始</li>
+<li>类似于分部类，接口也可以分隔成分部接口声明</li>
+</ul>
+</li>
+<li>接口的访问性和接口成员的访问性
+<ul>
+<li>接口声明可以有任何的访问修饰符public、protected、internal或private</li>
+<li>接口成员是隐式public的，不允许有任何访问修饰符包括public</li>
+<li><strong>在类实现接口的方法的时候要显式写出public</strong></li>
+<li>在类通过<strong>显式接口成员实现</strong>（即后面介绍的<code>接口名.方法名</code>）的时候不能写public</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>实现接口
+<ul>
+<li>重要事项
+<ul>
+<li>它必须实现接口的所有成员</li>
+<li>如果类从基类继承并实现了接口，基类列表中的基类名称必须放在接口之前</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>接口是引用类型
+<ul>
+<li>不能通过类对象的成员访问接口，但是可以把对象强转为接口类型来获取指向接口的引用</li>
+<li>可以通过点号调用接口的方法</li>
+</ul>
+</li>
+<li>接口和as运算符
+<ul>
+<li>如果类对象没有实现接口，强转会抛异常</li>
+<li>使用as运算符可以避免这个问题
+<ul>
+<li>如果实现了接口则返回接口的引用</li>
+<li>没有实现接口则返回null而不是抛异常</li>
+</ul>
+</li>
+<li>类对象引用 as 接口名</li>
+</ul>
+</li>
+<li>实现多个接口
+<ul>
+<li>类可以实现任意数量的接口</li>
+<li>基类与接口、接口与接口之间用逗号分隔</li>
+</ul>
+</li>
+<li>实现具有重复成员的接口
+<ul>
+<li>如果一个类实现了多个接口并且其中一些接口有相同签名和返回类型的成员
+<ul>
+<li>那么类可以实现单个成员来满足所有包含重复成员的接口</li>
+</ul>
+</li>
+<li>如果参数列表不同
+<ul>
+<li>可以都实现，作为方法重载</li>
+</ul>
+</li>
+<li>如果参数列表相同但是返回类型不同
+<ul>
+<li>会报错，只能使用后面要讲的显式接口成员实现</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多个接口的引用
+<ul>
+<li>对象引用可以强转为接口的引用，如果实现了多个接口，可以获取每个接口的独立引用</li>
+</ul>
+</li>
+<li>派生成员作为实现
+<ul>
+<li>实现接口的类可以从它的基类继承实现的代码，即便基类没有实现该接口</li>
+</ul>
+</li>
+<li>显式接口成员实现
+<ul>
+<li>单个类可以实现多个接口需要的成员，如6、7部分</li>
+<li>也可以通过<strong>显式接口成员实现</strong>的方式为每一个接口分离实现，与显式接口成员实现相对的叫做<strong>类级别实现</strong></li>
+<li>使用<strong>限定接口名称</strong>来声明，由<code>接口名称.成员名称</code>来实现</li>
+<li>可以对多个接口中的重复成员提供不同的实现</li>
+<li>类级别实现与显式接口成员实现（此处简称接口实现）的区别
+<ul>
+<li>类级别实现，方法是属于类的，而接口实现是属于接口的</li>
+<li>类级别实现中，接口方法会指向类级别实现，而接口实现是包含了自己的代码</li>
+<li>通过类级别实现，可以通过对象引用调用，可以在类内部直接调用，也可以通过接口引用去调用；而接口实现只能通过接口引用去调用</li>
+<li>
+<pre><code class="language-csharp">public interface II {
+    int Fun();
+}
+
+class Test : II {
+    int II.Fun() {  return 123; }
+    public int Fun() {  return 456; }
+}
+
+        Test t = new Test();
+        System.Console.WriteLine(t.Fun());	// 类级别实现，输出456
+        II i = t as II;
+        System.Console.WriteLine(i.Fun());	// 显式接口成员实现，输出123
+</code></pre>
+</li>
+</ul>
+</li>
+<li>如果有显式接口成员实现，类级别是允许的，但不是必须的，有以下三种实现场景
+<ul>
+<li>类级别实现</li>
+<li>显式接口成员实现</li>
+<li>类级别和显式接口成员实现</li>
+</ul>
+</li>
+<li>访问显式接口成员<strong>只能</strong>通过接口引用访问</li>
+</ul>
+</li>
+<li>接口可以继承接口
+<ul>
+<li>接口本身可以从一个或多个接口继承</li>
+<li>接口可以多继承
+<ul>
+<li>接口本身可以继承其他接口</li>
+<li>结果接口包含它声明的所有接口和所有基接口的成员</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Delegate-Lambda-Event/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 委托、匿名方法、事件
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

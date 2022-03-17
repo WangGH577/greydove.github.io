@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 泛型 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647522032746">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="泛型
+
+泛型概述
+
+提供了一种让多个类型共享一组代码的方式，允许声明类型参数化的代码，可以用不同的类型进行实例化
+泛型类型不是类型，是类型的模板
+五种泛型（注意前四个是类型，方法是成员）
+
+类
+结构
+接口
+委托
+方法
+
+
+在类名后面放置&l..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647522032746" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 泛型</h2>
+            <div class="post-date">2022-03-17</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Generic.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="泛型">泛型</h1>
+<ol>
+<li>泛型概述
+<ul>
+<li>提供了一种让多个类型共享一组代码的方式，允许声明类型参数化的代码，可以用不同的类型进行实例化</li>
+<li>泛型类型不是类型，是类型的模板</li>
+<li>五种泛型（注意前四个是类型，方法是成员）
+<ul>
+<li>类</li>
+<li>结构</li>
+<li>接口</li>
+<li>委托</li>
+<li>方法</li>
+</ul>
+</li>
+<li>在类名后面放置<code>&lt;T&gt;</code>，然后在类中使用类型占位符<code>T</code>替换掉原本的类型，结果就是泛型类声明</li>
+</ul>
+</li>
+<li>泛型类
+<ul>
+<li>声明类和创建类的实例</li>
+<li>泛型不是类而是类的模板，所以必须先从它们构建实际的类类型</li>
+<li>步骤
+<ul>
+<li>在某些类型上使用占位符来声明一个类</li>
+<li>为占位符提供<strong>真实类型</strong>，这样就有了真实类的定义，该类型称为<strong>构造类型</strong></li>
+<li>创建构造类型的实例</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>声明泛型类
+<ul>
+<li>在类型后面放置一组尖括号</li>
+<li>尖括号中用逗号分隔的占位符字符串来表示希望提供的类型，这叫做<strong>类型参数</strong></li>
+<li>在泛型类声明中使用类型参数来表示应该替代的类型</li>
+</ul>
+</li>
+<li>创建构造类型
+<ul>
+<li>告诉编译器能使用哪些真实类型来替代类型参数，编译器获得真实类型并创建构造类型用来创造真实类对象的模板</li>
+<li>要替代类型参数的真是类型叫做<strong>类型实参</strong></li>
+</ul>
+</li>
+<li>创建变量和实例
+<ul>
+<li>非泛型
+<ul>
+<li>源代码大小：更大，需要为每一中类编写一个新的实现</li>
+<li>可执行大小：无论每一个版本都会被使用，都会在编译的版本中出现</li>
+<li>写的难易度：易于书写，因为它更具体</li>
+<li>维护的难易度：更容易出问题，因为所有的修改需要用到</li>
+</ul>
+</li>
+<li>泛型
+<ul>
+<li>源代码大小：更小，不管构造类型数量有多少，只需要一个实现</li>
+<li>可执行大小：可执行文件中只会出现有构造类型的类型</li>
+<li>写的难易度：比较难写，因为它更抽象</li>
+<li>维护的难易度：易于维护，因为它只需要修改一个地方</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>类型参数的约束
+<ul>
+<li>所有的对象最终从object继承，泛型类只能确定这些参数类型实现了object的成员，如果代码尝试使用其他成员，编译器会产生一个错误信息</li>
+<li>要让泛型变得更有用，需要提供额外信息让编译器知道参数可以接受哪些类型来产生构造类型</li>
+<li>符合约束的类型参数叫做<strong>未绑定的类型参数</strong></li>
+<li>where子句：约束使用where子句列出
+<ul>
+<li>每一个有约束的类型参数都有自己的where子句</li>
+<li>如果形参有多个约束，它们的where子句使用逗号分隔</li>
+<li>语法：<code>where TypeParam : constraint1, constraint2, ...</code></li>
+</ul>
+</li>
+<li>有关where子句的要点：
+<ul>
+<li>它们在类型参数列表关闭的尖括号之后列出</li>
+<li>它们不使用逗号或其他符号分隔</li>
+<li>它们可以以任何次序列出</li>
+<li>where是上下文关键字，所以可以在其他上下文中使用，即<em>在其他地方可以用where作为变量名等</em></li>
+<li>
+<pre><code class="language-csharp">class MyClass&lt;T1, T2, T3&gt; where T2 : Customer where T3 : IComparable {
+    // ...
+}
+// 一个 where子句 只能写一个类型，但是可以有多条限制，顺序有要求下面讲
+// 多个 where子句 之间，不用分隔符，顺序任意
+</code></pre>
+</li>
+</ul>
+</li>
+<li>约束类型
+<ul>
+<li>类名：只有这个类型的类或子类才能作类型实参</li>
+<li>class：任何引用类型，包括类、数组、委托和接口都可以用作类型实参</li>
+<li>struct：任何值类型可以用作实参</li>
+<li>接口名：只有这个接口或实现这个接口的类型才能用作类型实参</li>
+<li>new()：任何带有无参公共构造函数的类型都可以用作实参，这叫做<strong>构造函数约束</strong></li>
+</ul>
+</li>
+<li>约束的次序
+<ul>
+<li>最多只能有一个主约束（类名、class、struct），如果有则必须放在第一位</li>
+<li>可以有任意多的接口名约束</li>
+<li>如果有构造函数约束，则必须放在最后</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>泛型方法
+<ul>
+<li>与其他泛型不一样，泛型方法是成员不是类型，可以在非泛型类中声明</li>
+<li>声明泛型方法
+<ul>
+<li>方法名称之后和方法参数列表之前放置类型参数列表</li>
+<li>在方法参数列表后放置可选的约束子句</li>
+<li>返回值可以是泛型类型</li>
+</ul>
+</li>
+<li>调用泛型方法
+<ul>
+<li>提供类型实参</li>
+</ul>
+</li>
+<li>推断类型
+<ul>
+<li>有时可以从方法参数中推断出泛型方法的类型形参用到的类型</li>
+<li>如对于方法<code>public void MyMethod&lt;T&gt; (T myVal) { ... }</code></li>
+<li>实际调用时可以写<code>MyMethod&lt;int&gt;(5)</code>，也可以省略方法形参直接写<code>MyMethod(5)</code></li>
+<li>除了相同类型时，其他有用到T的也可以推断，如类型参数是<code>T</code>但参数是<code>T[]</code></li>
+</ul>
+</li>
+<li>扩展方法和泛型类
+<ul>
+<li>扩展方法（静态方法，第一个参数使用this修饰）可以和泛型类结合使用</li>
+<li>泛型类的扩展方法
+<ul>
+<li>必须声明为static</li>
+<li>必须是静态类成员</li>
+<li>第一个参数必须有关键字this</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>泛型结构
+<ul>
+<li>泛型结构的规则和条件与泛型类是一样的</li>
+</ul>
+</li>
+<li>泛型委托
+<ul>
+<li>在委托类型名称和委托参数列表之间加上尖括号放置类型参数列表</li>
+<li>在方法参数列表后面添加约束子句</li>
+</ul>
+</li>
+<li>泛型接口
+<ul>
+<li>声明类似泛型类</li>
+<li>实现接口的时候可以用泛型类的类型参数作为泛型接口的类型实参
+<ul>
+<li>
+<pre><code class="language-csharp">interface IB&lt;T&gt; {
+    // ...
+}
+class A&lt;S&gt; : IB&lt;S&gt; {
+    // ...
+}
+</code></pre>
+</li>
+<li>可以在非泛型类中实现泛型接口</li>
+<li>实现不同类型参数的泛型接口是不同的接口，如<code>A</code>可以同时实现<code>IB&lt;string&gt;</code>和<code>IB&lt;int&gt;</code>，但实现具体类型不能再使用泛型，如<code>A&lt;S&gt;</code>实现不能同时实现<code>IB&lt;int&gt;</code>和<code>IB&lt;S&gt;</code>，因为当S为int时存在潜在的冲突，但是泛型接口的名字不会和非泛型接口冲突</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>协变和逆变
+<ul>
+<li>可变性
+<ul>
+<li>协变、逆变、不变</li>
+</ul>
+</li>
+<li>协变
+<ul>
+<li>原则上父类引用可以指向子类对象，但是对于泛型委托来说，如果一个泛型委托的类型参数只作为输出值，他只能指向相同类型参数的委托类型，而不能指向类型参数为子类的委托类型，即下面的代码会报错</li>
+<li>
+<pre><code class="language-csharp">class Animal { }
+class Dog : Animal { }
+delegate T Factory&lt;T&gt;();
+class Program {
+    static Dog MakeDog() {	return new Dog();	}
+    static void Main() {
+        Factory&lt;Dog&gt; dogMaker = MakeDog;
+        Factory&lt;Animal&gt; animalMaker = dogMaker;	// 报错，因为两个委托之间不存在继承关系
+    }
+}
+</code></pre>
+</li>
+<li>如果派生类只用于输出值，这种结构化的委托有效性之间的常数关系叫做<strong>协变</strong></li>
+<li>为了让编译器知道这是我们的期望，则需要用<code>out</code>关键字标记委托声明中的类型参数</li>
+<li>即将上面的代码修改为<code>delegate T Factory&lt;out T&gt;();</code>即可通过编译</li>
+</ul>
+</li>
+<li>逆变
+<ul>
+<li>与上面的例子类似</li>
+<li>期望传入基类时允许传入派生对象的特性叫<strong>逆变</strong></li>
+<li>
+<pre><code class="language-csharp">class Animal {  public int t = 10;   }
+class Dog : Animal { }
+delegate void Act&lt;in T&gt;(T t);
+class Program {
+    static void ActOnAnimal(Animal a) {
+        System.Console.WriteLine(a.t);
+    }
+    static void Main() {
+        Act&lt;Animal&gt; act = ActOnAnimal;
+        Act&lt;Dog&gt;    dog = act;
+        dog(new Dog());
+    }
+}
+</code></pre>
+</li>
+<li>in为逆变关键字</li>
+<li>如果类型参数只用作委托方法的输入参数，可以添加逆变关键字in，让两种不兼容但是理论上可行的类型可以成功赋值</li>
+</ul>
+</li>
+<li>协变与逆变
+<ul>
+<li>协变
+<ul>
+<li><code>F&lt;out T&gt;()</code>类型的委托，类型变量是父类</li>
+<li>实际构建委托时，使用子类的类型变量进行声明</li>
+<li>在调用的时候，方法返回指向子类对象的引用</li>
+</ul>
+</li>
+<li>逆变
+<ul>
+<li><code>F&lt;in T&gt;(T t)</code>类型的委托，类型参数是子类</li>
+<li>实际构造委托时，使用父类类型进行声明</li>
+<li>在调用的时候，方法传入子类的变量，参数的父类引用指向子类对象</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>接口的协变与逆变
+<ul>
+<li>接口除了应用到委托上，还可以应用到接口上</li>
+<li>在泛型接口声明的时候，在泛型类型前加上协变/逆变关键字</li>
+</ul>
+</li>
+<li>如果是返回类型和委托不匹配的方法去给委托赋值时，不需要添加out关键字，编译器会自动识别</li>
+<li>但是如果刚刚的方法已经创建了委托并用该委托去给其他委托赋值时，就需要添加out关键字</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Convert/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 转换
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
