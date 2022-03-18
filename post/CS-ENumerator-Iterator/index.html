@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 枚举器和迭代器 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1647595717684">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="枚举器和迭代器
+
+枚举器、可枚举类型
+
+数组可以按需提供一个叫做枚举器的对象
+枚举器可以依次返回请求的数组中的元素
+获取一个对象枚举器的方法是调用GetEnumerator方法，实现该方法的类型称为可枚举类型
+foreach结构设计用来和可..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1647595717684" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 枚举器和迭代器</h2>
+            <div class="post-date">2022-03-18</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-ENumerator-Iterator.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="枚举器和迭代器">枚举器和迭代器</h1>
+<ol>
+<li>枚举器、可枚举类型
+<ul>
+<li>数组可以按需提供一个叫做枚举器的对象</li>
+<li>枚举器可以依次返回请求的数组中的元素</li>
+<li>获取一个对象枚举器的方法是调用<code>GetEnumerator</code>方法，实现该方法的类型称为<strong>可枚举类型</strong></li>
+<li><code>foreach</code>结构设计用来和可枚举类型一起使用，只要遍历对象是可枚举类型，就会执行：
+<ul>
+<li>调用<code>GetEnumerator</code>方法获取对象的枚举器</li>
+<li>从枚举器中请求每一项并且把它作为迭代变量，代码可以读取该变量但是不可改变</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>IEnumerator</code>接口
+<ul>
+<li>实现了<code>IEnumerator</code>接口的枚举器包含三个函数成员：<code>current</code>，<code>MoveNext</code>, <code>Reset</code></li>
+<li><code>Current</code>返回当前位置的属性
+<ul>
+<li>只读</li>
+<li>返回<code>object</code>类型的引用，所以可以返回任何类型</li>
+</ul>
+</li>
+<li><code>MoveNext</code>把枚举器前进到集合中的下一项，并返回新位置是否有效
+<ul>
+<li>初始位置在第一项之前，所以使用<code>Current</code>前必须至少调用一次<code>MoveNext</code></li>
+</ul>
+</li>
+<li><code>Reset</code>重置枚举器的位置</li>
+<li>利用枚举器模仿foreach循环遍历集合中的项</li>
+<li>
+<pre><code class="language-csharp">int[] MyArray = {1, 2, 3, 4, 5};
+IEnumerator ie = MyArray.GetEnumerator();
+while (ie.MoveNext()) {
+    System.Console.WriteLine((int)ie.Current);
+}
+</code></pre>
+</li>
+<li>编写foreach时，C#编译器会生成与上述代码逻辑十分类似CIL形式的代码</li>
+</ul>
+</li>
+<li><code>IEnumerable</code>接口
+<ul>
+<li><code>IEnumerable</code>接口只有一个成员：<code>GetEnumerator</code>方法，返回对象的枚举器</li>
+</ul>
+</li>
+<li>使用<code>IEnumerator</code>接口和<code>IEnumerable</code>接口
+<ul>
+<li>可枚举类型实现<code>IEnumerable</code>接口，实现方法<code>GetEnumerator</code>方法，返回值为另一个枚举器对象</li>
+<li>枚举器对象实现<code>IEnumerator</code>接口，实现方法<code>MoveNext</code>、<code>Reset</code>以及属性<code>Current</code></li>
+</ul>
+</li>
+<li>泛型枚举接口
+<ul>
+<li>非泛型接口形式
+<ul>
+<li><code>IEnumerable</code>接口的<code>GetEnumerator</code>方法返回实现<code>IEnumerator</code>枚举器类的实例</li>
+<li>实现<code>IEnumerator</code>的类实现了<code>Current</code>属性，它返回<code>object</code>引用，使用需要强转为实际类型</li>
+<li>实现不是类型安全的，在手动强转时可能会发生异常</li>
+</ul>
+</li>
+<li>泛型接口
+<ul>
+<li><code>IEnumerable&lt;T&gt;</code>接口的<code>GetEnumerator</code>方法返回<code>IEnumerator&lt;T&gt;</code>的枚举器类的实例</li>
+<li>实现<code>IEnumerator&lt;T&gt;</code>的类实现的<code>Current</code>类型返回实际类型的的对象</li>
+<li>返回实际类型的引用，是类型安全的，如果要自己创建可枚举类，应该实现这些泛型接口</li>
+</ul>
+</li>
+<li><strong>注意</strong>
+<ul>
+<li>泛型接口也实现了非泛型接口，<em>目的貌似是强制向下兼容</em>，因为在C#2.0版本以前没有泛型</li>
+<li>因此需要提供泛型与非泛型两个版本的方法实现</li>
+<li>由于泛型接口和非泛型接口的方法/属性同名同参数列表但是返回类型不同（<code>Current</code>和<code>GetGetEnumerator</code>）</li>
+<li>所以需要使用<em>显式接口成员实现</em>，返回类型一致的如<code>MoveNext</code>、<code>Reset</code>只需要提供一份实现即可</li>
+<li>另外<code>IEnumerator&lt;T&gt;</code>泛型版本还实现了<code>IDisposable</code>接口，所以还需要手动实现<code>Dispose</code>方法释放资源</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>迭代器
+<ul>
+<li>C#从2.0版本开始提供了更简单的创建枚举器和可枚举类型的方法。实际上，编译器将为我们创建它们，这种结构叫做<strong>迭代器</strong></li>
+<li>迭代器块
+<ul>
+<li>有一个或多个yield语句的代码块</li>
+<li>迭代器块与其他语句块不同，其他块包含的语句被当作是命令式的。也就是说，先执行代码的第一个语句，然后执行后面的语句，最后控制离开块</li>
+<li>另一方面，迭代器块不是需要在同一时间执行的一串命令式命令，而是描述了希望编译器为我们创建的枚举器类的行为，迭代器块中的代码描述了如何枚举元素</li>
+<li>两个特殊语句
+<ul>
+<li>yield return语句指定了序列中返回的下一项</li>
+<li>yield break语句指定在序列中没用其他项</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用迭代器来创建枚举器和可枚举类型
+<ul>
+<li>
+<pre><code class="language-csharp">class Test {
+    int[] arr = {1, 2, 3, 4, 5};
+    public IEnumerator&lt;int&gt; GetEnumerator() {
+        return TestEnumerator();
+    }
+    IEnumerator&lt;int&gt; TestEnumerator() {
+        for (int i = 0; i &lt; arr.Length; i++) {
+            yield return arr[i];
+        }
+    }
+}
+</code></pre>
+</li>
+<li>不需要实现<code>IEnumerator</code>接口，<code>TestEnumerator</code>返回值即为枚举器</li>
+</ul>
+</li>
+<li>使用迭代器创建可枚举类型
+<ul>
+<li>
+<pre><code class="language-csharp">class Test {
+    int[] arr = {1, 2, 3, 4, 5};
+    public IEnumerator&lt;int&gt; GetEnumerator() {
+        return TestEnumerator().GetEnumerator();
+    }
+    IEnumerable&lt;int&gt; TestEnumerator() {
+        for (int i = 0; i &lt; arr.Length; i++) {
+            yield return arr[i];
+        }
+    }
+}
+</code></pre>
+</li>
+<li>不需要实现<code>IEnumerable</code>接口，<code>TestEnumerator</code>返回值即为可枚举类型，同时<code>Test</code>类本身也是可枚举类型</li>
+<li>在使用<code>foreach</code>遍历时可以使用类对象，也可以使用类枚举器方法<code>TestEnumerator()</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>常见迭代器模式
+<ul>
+<li>实现返回枚举器的迭代器时，必须通过实现<code>GetEnumerator</code>来让类可枚举，它返回由迭代器返回的枚举器</li>
+<li>如果实现迭代器返回可枚举类型
+<ul>
+<li>可以实现<code>GetEnumerator</code>让类可枚举，让它调用迭代器方法以获取自动生成的实现<code>IEnumerable</code>的类实例，然后可枚举类型对象返回由<code>GetEnumerator</code>创建的枚举器</li>
+<li>也可以不实现<code>GetEnumerator</code>，此时类本身不可枚举，但迭代器返回的是可枚举类，可以直接调用迭代器方法</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>产生多个可枚举类型
+<ul>
+<li>同一个类可以产生多个可枚举类型，只需要实现多个迭代器方法，这些方法返回可枚举类型，然后通过迭代器去获得可枚举类型，可以不实现<code>GetEnumerator</code></li>
+<li>同理，一个类可以产生多个枚举器，但由于让类可枚举必须实现<code>GetEnumerator</code>方法，具体返回哪个迭代器的枚举器，可以通过一个布尔变量来进行选择</li>
+</ul>
+</li>
+<li>将迭代器作为属性
+<ul>
+<li>使用类似迭代器方法，只不过把迭代器块作为属性的get访问器来声明</li>
+</ul>
+</li>
+<li>注意事项
+<ul>
+<li>迭代器需要<code>System.Collections.Generic</code>命名空间</li>
+<li>使用迭代器时会由编译器产生枚举器，但这个枚举器中<strong>没有实现Reset方法</strong>，调用时会抛出`System.NotSupportedException异常</li>
+</ul>
+</li>
+<li>迭代器实质
+<ul>
+<li>由编译器生成的枚举器类是包含四个状态的<strong>状态机</strong>
+<ul>
+<li><strong>Before</strong>：首次调用<code>MoveNext</code>的初始状态</li>
+<li><strong>Running</strong>：调用<code>MoveNext</code>后进入这个状态。在这个状态中，枚举器检测并设置下一项的位置。在遇到<code>yield return</code>、<code>yield break</code>或在迭代器体结束时，退出状态</li>
+<li><strong>Suspended</strong>：状态机等待下次调用<code>MoveNext</code>的状态</li>
+<li><strong>After</strong>：没有更多项可以枚举</li>
+</ul>
+</li>
+<li>如果状态机在Before或Suspended状态时调用了MoveNext方法，就转到Running状态。</li>
+<li>Running状态结束时，如果有更多项，状态机转入Suspended状态，否则转入并保持在After状态</li>
+<li><img src="https://greydoveh.github.io/post-images/IteratorFSM.png" alt="状态机" loading="lazy"></li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Generic/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 泛型
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
