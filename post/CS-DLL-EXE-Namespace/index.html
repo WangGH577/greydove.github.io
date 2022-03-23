@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 命名空间和程序集 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1648031497879">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="命名空间和程序集
+
+程序集
+
+编译器接收源代码文件并生成名称为程序集的输出文件
+给其他程序提供类或类型的程序集称为类库，通常以.dll结尾
+mscorlib库
+
+程序集mscorlib.dll包含C#类型以及大部分.NET语言的基本类型的定..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1648031497879" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 命名空间和程序集</h2>
+            <div class="post-date">2022-03-19</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-DLL-EXE-Namespace.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="命名空间和程序集">命名空间和程序集</h1>
+<ol>
+<li>程序集
+<ul>
+<li>编译器接收源代码文件并生成名称为<strong>程序集</strong>的输出文件</li>
+<li>给其他程序提供类或类型的程序集称为<strong>类库</strong>，通常以.dll结尾</li>
+<li>mscorlib库
+<ul>
+<li>程序集mscorlib.dll包含C#类型以及大部分.NET语言的基本类型的定义</li>
+<li>编译C#程序时，它必须总是被引用</li>
+</ul>
+</li>
+<li>如果引用的多个类库中存在同名的类，在试图使用这些类时会报错，因为它不知道使用哪个版本的类，这种错误被称为<strong>命名冲突</strong></li>
+</ul>
+</li>
+<li>命名空间
+<ul>
+<li>共享命名空间名的一组类和类型</li>
+<li>在命名空间内，每个类型名必须有别于所有其他类型</li>
+<li>命名空间内的类型称为命名空间的成员</li>
+<li>一个源文件可以包含任意数目的命名空间声明，可以顺序也可以嵌套</li>
+<li>命名空间不是封闭的，可以在其他地方再次声明相同的命名空间以便对它增加更多类型声明，也可以被分成多个程序集</li>
+<li>嵌套命名空间
+<ul>
+<li>嵌套声明的两种方式
+<ul>
+<li>原文嵌套，直接将命名空间放在一个封闭的命名空间内部</li>
+<li>分离的声明，如<code>namespace A.B { ... }</code>，其中A是一个声明在其他位置的命名空间，B是嵌套在A内部的命名空间</li>
+</ul>
+</li>
+<li>当生成单个程序集时，两种形式的嵌套命名空间生成相同的程序集</li>
+<li>内部命名空间内的成员不属于父命名空间，也就是说父命名空间和内部命名空间直接是相互独立的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>using指令
+<ul>
+<li>using命名空间指令
+<ul>
+<li>使用命名空间，可以在使用类时省略命名空间名</li>
+</ul>
+</li>
+<li>using别名指令
+<ul>
+<li>可以给命名空间或命名空间内的一个类型取别名</li>
+<li><code>using Syst = Syestm; using SC = System.Console;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集的结构
+<ul>
+<li>程序集不包含本地机器代码，而是公共中间语言代码。它还包含实施编译器JIT，在运行时转换CIL到本机代码所需的一切，包括对它所引用的其他程序集的引用。程序集的文件扩展名通常为.exe和.dll</li>
+<li>4个主要部分
+<ul>
+<li>清单
+<ul>
+<li>程序集名称标识符</li>
+<li>组成程序集的文件列表</li>
+<li>一个指示程序集中内容在哪里的地图</li>
+<li>关于引用的其他程序集的信息</li>
+</ul>
+</li>
+<li>类型元数据
+<ul>
+<li>包含该程序集中定义的所有类型的信息。这些信息包含关于每个类型要知道的所有事情</li>
+</ul>
+</li>
+<li>CIL代码
+<ul>
+<li>包含程序集所有的中间代码</li>
+</ul>
+</li>
+<li>资源部分
+<ul>
+<li>可选，但可以包含图形或语言资源</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集代码文件称为模块，尽管大部分程序集由单文件组成，但有些也有多个文件。对于有多个模块的程序集，一个文件是主模块，而其他的是次要模块
+<ul>
+<li>主模块含有程序集的清单和到次要模块的引用</li>
+<li>次要模块的文件名以扩展名.netmodule结尾</li>
+<li>多文件程序集被视为一个单一单元，它们一起部署一起定版</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集标识符
+<ul>
+<li>在.NET模块中，程序集的文件名不像在其他操作系统和环境中那么重要，更重要的是程序集的标识符</li>
+<li>标识符的组成
+<ul>
+<li>简单名：不带扩展名的文件名，也被称为程序集名或友好名称</li>
+<li>版本号：由4个句点分开的整数字符串组成</li>
+<li>文化信息：由2-5个字符组成，代表一种语言或一种语言和一个国家或地区</li>
+<li>公钥：128字节字符串，是该程序集公司唯一的
+<ul>
+<li>公钥是公钥/私钥对的一部分，它们是可以用于创建安全的数字签名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标识符被包含在程序集清单中</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-ENumerator-Iterator/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 枚举器和迭代器
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 预处理指令 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1648031497879">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="预处理指令
+
+预处理指令
+
+源代码指定了程序的定义
+预处理指令指示编译器如何处理源代码
+在C/C++中有实际的预处理阶段，预处理程序遍历源代码并为之后的编译阶段准备文本输出流
+C#中没有实际的预处理程序，预处理指令由编译器来处理
+
+
+基本规..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1648031497879" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 预处理指令</h2>
+            <div class="post-date">2022-03-20</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Preprocess.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="预处理指令">预处理指令</h1>
+<ol>
+<li>预处理指令
+<ul>
+<li>源代码指定了程序的定义</li>
+<li>预处理指令指示编译器如何处理源代码</li>
+<li>在C/C++中有实际的预处理阶段，预处理程序遍历源代码并为之后的编译阶段准备文本输出流</li>
+<li>C#中没有实际的预处理程序，预处理指令由编译器来处理</li>
+</ul>
+</li>
+<li>基本规则
+<ul>
+<li>预处理指令必须和C#代码在不同的行</li>
+<li>不需要以分号结尾</li>
+<li>必须以#开头，但是#前可以有空格，#和指令直接可以有空格</li>
+<li>允许行尾注释，，不允许分隔符注释（即允许<code>// ...</code>但是不允许<code>/* ... */</code>）</li>
+</ul>
+</li>
+<li>预处理指令类型
+<ul>
+<li><code>#define IDENTIFIER</code>：定义编译符</li>
+<li><code>#undef IDENTIFIER</code>：取消定义编译符</li>
+<li><code>#if EXPRESSION</code>：如果EXPRESSION为true，则编译下面的片段</li>
+<li><code>#elif EXPRESSION</code>：如果前面的<code>#if</code>为false且当前的EXPRESSION为true，则编译下面的片段</li>
+<li><code>#else</code>：如果之前的<code>#if</code>或者<code>#elif</code>为false，则编译下面的片段</li>
+<li><code>#endif</code>：标记一个<code>#if</code>片段的结构</li>
+<li><code>#region NAME</code>：标记一段代码的开始，没有效果</li>
+<li><code>#endregion NAME</code>：标记一段代码的结束，没有效果</li>
+<li><code>#warning MESSAGE</code>：显式编译时的警告消息</li>
+<li><code>#error MESSAGE</code>：显式编译时的错误消息</li>
+<li><code>#line INDICATOR</code>：修改在编译器消息中显示的行数</li>
+<li><code>#pragma TEXT</code>：指定有关程序上下文的信息</li>
+</ul>
+</li>
+<li><code>#define</code>和<code>#undef</code>
+<ul>
+<li>可以是除了true或false以外的任意标识符，包括C#关键字和在C#代码中声明的标识符</li>
+<li>没有值，和C/C++不同，不表示字符串</li>
+<li>只能在源文件的最前面，也就是任何C#代码之前使用，不能放在C#代码开始之后</li>
+<li>编译符号被限制在单个文件</li>
+<li>允许重复定义</li>
+</ul>
+</li>
+<li>条件编译
+<ul>
+<li>允许根据某个编译符号是否被定义标注一段代码是否被编译或者跳过</li>
+<li>条件是一个返回true或false的简单表达式
+<ul>
+<li>可以由单个编译符号、符号表达式或操作符组成，可以使用括号</li>
+<li>true和false也可以直接使用</li>
+</ul>
+</li>
+<li>条件编译结构
+<ul>
+<li><code>#if</code>和<code>#endif</code>必须配对使用，<code>#elif</code>和<code>#else</code>可根据条件选择</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>诊断指令
+<ul>
+<li>产生用户自定义的编译时的警告以及错误信息
+<ul>
+<li><code>#warning MESSAGE</code></li>
+<li><code>#error MESSAGE</code></li>
+<li>其中MESSAGE是自定义字符串代表错误信息，但是不需要加引号</li>
+</ul>
+</li>
+<li>当编译器遇到诊断指令时，会输出相关的消息，会和任何编译器产生的警告和错误列在一起</li>
+</ul>
+</li>
+<li>行号指令
+<ul>
+<li>行号指令可以做很多事情例如
+<ul>
+<li>改变由编译器警告和错误消息报告的出现行数</li>
+<li>改变被编译源文件的文件名</li>
+<li>对交互式调试器隐藏一些行</li>
+</ul>
+</li>
+<li>语法：</li>
+<li><code>#line INTEGER</code>：加整数可以设置下一行值为整数的行的行号</li>
+<li><code>#line &quot;FILENAME&quot;</code>：改变外观文件名，双引号是必须的</li>
+<li><code>#line default</code>：重新保存实际的行号和文件名，得到真实的行号和文件名</li>
+<li><code>#line hidden</code>：在断点调试器隐藏代码</li>
+<li><code>#line</code>：停止在调试器隐藏代码</li>
+</ul>
+</li>
+<li>区域指令
+<ul>
+<li>允许有选择地命名一段代码
+<ul>
+<li><code>#region NAME</code>被放在在希望标注代码段之前，NAME是可选字符串文本不加引号</li>
+<li>在代码段结束后用<code>#endregion</code>标记终止</li>
+</ul>
+</li>
+<li>尽管会被编译器忽略，但是可以被IDE使用如折叠代码</li>
+</ul>
+</li>
+<li><code>#pragma warning</code>指令
+<ul>
+<li>允许关闭及重新打开警告信息</li>
+<li>举例
+<ul>
+<li>
+<pre><code class="language-csharp">public struct Vector2Int {	// 随便提供了一个类
+    public int x, y;
+    public static Vector2Int zero {
+        get {
+            return new Vector2Int(0, 0);
+        }
+    }
+    public Vector2Int(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public static bool operator == (Vector2Int a, Vector2Int b) {
+        return a.x == b.x &amp;&amp; a.y == b.y ;
+    }
+    public static bool operator != (Vector2Int a, Vector2Int b) {
+        return a.x != b.x || a.y != b.y ;
+    }
+}
+</code></pre>
+</li>
+<li>警告信息如下：
+<ul>
+<li>
+<pre><code>“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
+“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
+</code></pre>
+</li>
+</ul>
+</li>
+<li>在文件开头加上<code>#pragma warning disable CS0660, CS0661</code>可以使编译器忽略这两条警告不产生警告信息（实际开发的时候除非没必要建议解决掉所有警告）</li>
+</ul>
+</li>
+<li>要关闭警告，可以使用<code>#pragma warning disable XXX, XXX</code>用逗号分隔希望关闭的警告数</li>
+<li>要打开警告，可以使用<code>#pragma warning restore XXX, XXX</code></li>
+<li>如果省略警告数，会应用于所有警告</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 命名空间和程序集
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

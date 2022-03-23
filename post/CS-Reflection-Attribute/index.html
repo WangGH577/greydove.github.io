@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>C#学习笔记 - 反射和特性 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1648031497879">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="反射和特性
+
+元数据和反射
+
+有些程序及其类型的数据称为元数据，它们保存在程序的程序集中
+程序在运行时，可以查看其他程序集或其本身的元数据，这个行为叫做反射
+对象浏览器是显示元数据的程序的一个实例
+要使用反射，必须使用System.Refl..." />
+    <meta name="keywords" content="CSharp" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1648031497879" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">C#学习笔记 - 反射和特性</h2>
+            <div class="post-date">2022-03-23</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/CS-Reflection-Attribute.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="反射和特性">反射和特性</h1>
+<ol>
+<li>元数据和反射
+<ul>
+<li>有些程序及其类型的数据称为<strong>元数据</strong>，它们保存在程序的程序集中</li>
+<li>程序在运行时，可以查看其他程序集或其本身的元数据，这个行为叫做<strong>反射</strong></li>
+<li>对象浏览器是显示元数据的程序的一个实例</li>
+<li>要使用反射，必须使用<code>System.Reflection</code>命名空间</li>
+</ul>
+</li>
+<li>Type类
+<ul>
+<li>Type类概述
+<ul>
+<li>BCL中提供的<strong>抽象类</strong>，被设计用来包含类型的特性</li>
+<li>在运行时，CLR创建Type（RuntimeType）派生的类的实例，包含了类型信息</li>
+<li>当我们访问这些实例时，CLR不会返回派生类的引用而是基类Type的引用</li>
+<li>简单起见，可以把引用指向的对象成为Type类型的对象，但实际上是BCL内部派生类型的对象</li>
+</ul>
+</li>
+<li>有关Type的重要事项
+<ul>
+<li>对于程序中用到的每一个类型，CLR都会创建一个包含这个类型信息的Type类型的对象</li>
+<li>程序中用到的每一个类型，都会关联到独立的Type类的对象</li>
+<li>不管创建的类型有多少个实例，只有一个Type对象会关联到所有这些实例</li>
+<li><em>貌似类似于static</em></li>
+</ul>
+</li>
+<li>可以从Type对象中获取类型的信息
+<ul>
+<li><strong>Name</strong>：属性，返回类型的名字</li>
+<li><strong>Namespace</strong>：属性，返回类型的生命的命名空间</li>
+<li><strong>Assembly</strong>：属性，返回声明类型的程序集，如果类型是泛型的，则返回定义这个类型的程序集</li>
+<li><strong>GetFields</strong>：方法，返回类型的字段列表</li>
+<li><strong>GetProperties</strong>：方法，返回类型的属性列表</li>
+<li><strong>Getthonds</strong>：方法，返回类型的方法列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取Type对象
+<ul>
+<li><code>GetType</code>方法
+<ul>
+<li>object类型包含了一个叫做<code>GetType</code>的方法，返回对实例的<code>Type</code>对象的引用</li>
+<li>通过<strong>对象</strong>去调用方法</li>
+</ul>
+</li>
+<li><code>typeof</code>运算符
+<ul>
+<li>在括号内传入<strong>类型</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>特性
+<ul>
+<li><strong>特性</strong>是一种允许我们向程序集增加元数据的语言结构，它是用于保存程序结构信息的某种特殊类型的类
+<ul>
+<li>将应用了特性的程序结构叫做<strong>目标</strong></li>
+<li>设计用来获取和使用元数据的程序的特性叫做<strong>消费者</strong></li>
+<li>.NET预定义了很多特性，也可以声明自定义特性</li>
+</ul>
+</li>
+<li>特性的要点
+<ul>
+<li>在源代码中将特性应用于程序结构</li>
+<li>编译器获取源代码并且从特性产生元数据，然后把元数据放到程序集中</li>
+<li>消费者程序可以获取特性的元数据以及程序中其他组件的元数据</li>
+<li>编译器同时产生和消费特性</li>
+</ul>
+</li>
+<li>特性名以Attribute后缀结尾，使用目标时省略后缀</li>
+</ul>
+</li>
+<li>应用特性
+<ul>
+<li><em>这里所说的结构是是指程序结构，包含结构体、类、方法等，不是单单指结构体struct</em></li>
+<li>特性的目的是告诉编译器把程序结构的某组元数据嵌入程序集，可以通过把特性应用到结构来实现</li>
+<li>在结构前防止特性片段来应用特性</li>
+<li>特性片段被方括号包围，其中是特性名和特性的参数列表</li>
+<li>大多数特性只针对直接跟随着一个或多个特性后的结构</li>
+<li>引用了特性的结构成为被特性装饰</li>
+</ul>
+</li>
+<li>预定义的保留的特性
+<ul>
+<li><code>Obsolete</code>特性
+<ul>
+<li>可以将结构标注为过期的，在使用时编译器会给出警告，但仍然可以调用</li>
+<li>两个可选参数
+<ul>
+<li><code>message</code>：<code>string?</code>，表示警告的提示信息</li>
+<li><code>error</code>：<code>bool</code>类型，如果为true，则会标记错误而不是警告</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Conditional</code>特性
+<ul>
+<li>需要使用<code>System.Diagnostics</code>命名空间</li>
+<li>允许包括或排斥特定方法的所有调用，为方法声明应用Conditional特性并把编译符号（宏定义的内容）作为参数来使用
+<ul>
+<li>如果定义了编译符号，和普通方法没有区别</li>
+<li>如果没有定义编译符号，那么编译器会忽略代码中这个方法的所有调用</li>
+</ul>
+</li>
+<li>
+<pre><code class="language-csharp">#define DEBUG
+// ...
+void Test() { ... }
+// ...
+#if DEBUG 
+    Test();
+#endif
+</code></pre>
+</li>
+<li>
+<pre><code class="language-csharp">#define DEBUG
+// ...
+[Conditional(&quot;DEBUG&quot;)]
+void Test() { ... }
+// ...
+Test();
+</code></pre>
+</li>
+<li>定义方法的CIL代码本身总会包含在程序集中，只是调用代码会被插入或忽略
+<ul>
+<li>编译这段代码时，会检查是否有编译符号的定义
+<ul>
+<li>如果被定义，编译器会像往常一样包含所有对方法的调用</li>
+<li>如果没有定义，编译器就不会输出任何对方法的调用代码</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用者信息特性
+<ul>
+<li>可以访问文件路径、代码行数、调用成员的名称等源代码信息，需要使用<code>System.Runtime.CompilerServices</code>命名空间</li>
+<li>三个特性
+<ul>
+<li><code>CallerFilePath</code>：调用者的文件路径</li>
+<li><code>CallerLineNumber</code>：调用方法的行号</li>
+<li><code>CallerMemberName</code>：调用方法的成员名</li>
+</ul>
+</li>
+<li>只能用于方法的参数，且是给定默认值的可选参数</li>
+</ul>
+</li>
+<li><code>DebuggerStepThrough</code>特性
+<ul>
+<li>位于<code>System.Diagnostics</code>命名空间</li>
+<li>在单步调试时可以不进入方法</li>
+<li>可以用于类、结构、构造函数、方法和访问器</li>
+</ul>
+</li>
+<li>其他预定义特性
+<ul>
+<li><code>CLSCompliant</code>：声明可公开的成员应该被编译器检测是否符合CLS，兼容的程序集可以被任何.NET兼容的语言使用</li>
+<li><code>Serializable</code>：声明结构可以被序列化</li>
+<li><code>NonSerialized</code>：声明结构不能被序列化</li>
+<li><code>DLLImport</code>：声明是非托管代码实现的</li>
+<li><code>WebMethod</code>：声明方法应该被作为XML Web服务的一部分暴露</li>
+<li><code>AttributeUsage</code>：声明特性能应用到什么类型的程序结构，将这个特性引用到结构声明上</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>有关应用特性的更多内容
+<ul>
+<li>多个特性
+<ul>
+<li>可以为单个结构应用多个特性</li>
+<li>多层结构：用多个方括号应用多个特性</li>
+<li>逗号分隔：多个特性写在一个方括号内，用逗号隔开</li>
+</ul>
+</li>
+<li>其他类型的目标
+<ul>
+<li>除了类，特性还可以应用到字段、属性等其他程序结构</li>
+<li>还可以显式的标注特性，如<code>[return : MyAttribute ]</code></li>
+<li>C#提供了10个标准的特性名不，大多数目标名可以自明，而<code>type</code>覆盖了类、结构、委托、枚举、接口；<code>typevar</code>目标名称指定使用泛型结构的类型参数
+<ul>
+<li><code>event</code>、<code>field</code>、<code>method</code>、<code>param</code>、<code>property</code>、<code>return</code>、<code>type</code>、<code>typevar</code>、<code>assembly</code>、<code>module</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>全局特性
+<ul>
+<li>可以使用<code>assembly</code>和<code>module</code>目标名称来使用显式目标说明符把特性设置在程序集或模块级别</li>
+<li>程序集级别的特性必须放置在任何命名空间之外，并且通常放在AssemblyInfo.cs文件中</li>
+<li>AssemblyInfo.sc文件通常包含有关公司、产品、以及版权信息的元数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自定义特性
+<ul>
+<li>用户自定义的特性类叫做自定义特性，所有的特性类都派生自<code>System.Attribute</code></li>
+<li>声明自定义特性
+<ul>
+<li>派生自<code>System.Attribute</code></li>
+<li>以Attribute结尾</li>
+<li>安全起见，通常建议声明为sealed</li>
+<li>所有特性的公共成员只能是
+<ul>
+<li>字段</li>
+<li>属性</li>
+<li>构造函数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用特性的构造函数
+<ul>
+<li>每个特性至少必须有一个公共的构造函数</li>
+<li>如果不显式提供构造函数，编译器会提供一个隐式的、公共的、无参的构造函数</li>
+<li>可以被重载</li>
+<li>必须使用全名，不能省略后缀，只有在应用特性的时候才能省略后缀</li>
+</ul>
+</li>
+<li>指定构造函数
+<ul>
+<li>为目标应用特性时，其实是是在指定构造函数来创建特性的实例</li>
+<li>列在特性应用中的参数其实就是构造函数的参数</li>
+<li>应用特性时，构造函数的实参必须是在编译期能确定值的常量表达式</li>
+<li>如果使用无参的构造函数，圆括号可以省略</li>
+</ul>
+</li>
+<li>使用构造函数
+<ul>
+<li>不能显式调用构造函数，特性的实例创建后，只有特性的消费者访问特性时才能调用构造函数</li>
+<li>应用一个特性是一条声明语句，不会决定什么时候构造特性类的对象</li>
+</ul>
+</li>
+<li>构造函数中的位置参数和命名参数
+<ul>
+<li>在特性类声明时，可以提供多于形参个数的实参，多出来的实参被称为<strong>命名参数</strong>，给特性类的其他成员进行赋值，需要显式写出成员名称和<strong>等号</strong></li>
+<li>注意这里的命名参数和前面学习的命名参数不同
+<ul>
+<li>前面讲的命名参数是指定的仍然是形参，只不过可以改变传参的位置和顺序，这里的命名参数可以在形参之外给成员赋值</li>
+<li>前面学习的命名参数使用的是冒号，这里使用登号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>限制特性的使用
+<ul>
+<li><code>AttributeUsage</code>特性是一个很重要的预定义特性，可以应用到自定义特性，用来限制特性使用在某个目标类型上</li>
+<li>有三个重要的公共属性
+<ul>
+<li><code>ValidOn</code>：保存特性能应用到的目标类型的列表，构造函数的第一个参数必须是<code>AttributeTarget</code>类型的枚举值，无指定默认值</li>
+<li><code>Inherited</code>：指示特性是否会装饰类型的派生类修饰，默认为true，可以使用命名参数指定</li>
+<li><code>AllowMutiple</code>：指示目标是否被应用到多个特性的实例的布尔值，默认为false，可以使用命名参数指定</li>
+</ul>
+</li>
+<li>构造函数
+<ul>
+<li>接受单个位置参数，指定了特性允许的目标类型（<code>AttributeTarge</code>枚举类型），用来设置<code>ValidOn</code>属性</li>
+<li><code>AttributeTarge</code>枚举的成员
+<ul>
+<li><code>All</code>、<code>Assembly</code>、<code>Class</code>、<code>Constructor</code>、<code>Delegate</code>、<code>Enum</code>、<code>Event</code>、<code>Field</code>、<code>GenericParameter</code>、<code>Interface</code>、<code>Method</code>、<code>Module</code>、<code>Parameter</code>、<code>Property</code>、<code>ReturnValue</code>、<code>Struct</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自定义特性的最佳实践
+<ul>
+<li>特性类应该表示目标结构的一些状态</li>
+<li>如果特性需要某些字段，可以通过包含具有位置参数的构造函数来收集数据，可选字段可以采用命名参数按需初始化</li>
+<li>除了属性之外，不要实现公共方法或其他函数成员</li>
+<li>为了更安全，把特性类声明为sealed</li>
+<li>在特性声明中使用<code>AttributeUsage</code>来显式指定特性目标组</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>访问特性
+<ul>
+<li>对于自定义特性也可以使用Type对象来获取信息，Type的两个方法<code>IsDefined</code>和<code>GetCustomAttributes</code>在这里非常有用</li>
+<li>使用<code>IsDefined</code>方法
+<ul>
+<li>可以使用该方法来检测某个特性是否应用到某个类上</li>
+<li>第一个参数接受需要检测的特性的Type对象</li>
+<li>第二个参数指示是否搜索类的继承树来查找这个特性</li>
+</ul>
+</li>
+<li>使用<code>GetCustomAttributes</code>方法
+<ul>
+<li>返回应用到结构的特性的数组
+<ul>
+<li>实际返回的对象是object类型的数组，因此我们必须将它强制转换为相应的特性类型</li>
+<li>参数指示是否搜索类的继承树来查找特性</li>
+<li>调用方法后，每一个与目标相关联的特性的实例就会被创建</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/6mlv2ak0T/" class="tag">
+                    CSharp
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Preprocess/">
+                  <h3 class="post-title">
+                    C#学习笔记 - 预处理指令
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

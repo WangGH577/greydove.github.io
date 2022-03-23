@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-03-18T09:28:42.763Z</updated>
+    <updated>2022-03-23T10:32:03.853Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -10,6 +10,588 @@
     <logo>https://greydoveh.github.io/images/avatar.png</logo>
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
+    <entry>
+        <title type="html"><![CDATA[C#学习笔记 - 反射和特性]]></title>
+        <id>https://greydoveh.github.io/post/CS-Reflection-Attribute/</id>
+        <link href="https://greydoveh.github.io/post/CS-Reflection-Attribute/">
+        </link>
+        <updated>2022-03-23T10:29:38.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="反射和特性">反射和特性</h1>
+<ol>
+<li>元数据和反射
+<ul>
+<li>有些程序及其类型的数据称为<strong>元数据</strong>，它们保存在程序的程序集中</li>
+<li>程序在运行时，可以查看其他程序集或其本身的元数据，这个行为叫做<strong>反射</strong></li>
+<li>对象浏览器是显示元数据的程序的一个实例</li>
+<li>要使用反射，必须使用<code>System.Reflection</code>命名空间</li>
+</ul>
+</li>
+<li>Type类
+<ul>
+<li>Type类概述
+<ul>
+<li>BCL中提供的<strong>抽象类</strong>，被设计用来包含类型的特性</li>
+<li>在运行时，CLR创建Type（RuntimeType）派生的类的实例，包含了类型信息</li>
+<li>当我们访问这些实例时，CLR不会返回派生类的引用而是基类Type的引用</li>
+<li>简单起见，可以把引用指向的对象成为Type类型的对象，但实际上是BCL内部派生类型的对象</li>
+</ul>
+</li>
+<li>有关Type的重要事项
+<ul>
+<li>对于程序中用到的每一个类型，CLR都会创建一个包含这个类型信息的Type类型的对象</li>
+<li>程序中用到的每一个类型，都会关联到独立的Type类的对象</li>
+<li>不管创建的类型有多少个实例，只有一个Type对象会关联到所有这些实例</li>
+<li><em>貌似类似于static</em></li>
+</ul>
+</li>
+<li>可以从Type对象中获取类型的信息
+<ul>
+<li><strong>Name</strong>：属性，返回类型的名字</li>
+<li><strong>Namespace</strong>：属性，返回类型的生命的命名空间</li>
+<li><strong>Assembly</strong>：属性，返回声明类型的程序集，如果类型是泛型的，则返回定义这个类型的程序集</li>
+<li><strong>GetFields</strong>：方法，返回类型的字段列表</li>
+<li><strong>GetProperties</strong>：方法，返回类型的属性列表</li>
+<li><strong>Getthonds</strong>：方法，返回类型的方法列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>获取Type对象
+<ul>
+<li><code>GetType</code>方法
+<ul>
+<li>object类型包含了一个叫做<code>GetType</code>的方法，返回对实例的<code>Type</code>对象的引用</li>
+<li>通过<strong>对象</strong>去调用方法</li>
+</ul>
+</li>
+<li><code>typeof</code>运算符
+<ul>
+<li>在括号内传入<strong>类型</strong></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>特性
+<ul>
+<li><strong>特性</strong>是一种允许我们向程序集增加元数据的语言结构，它是用于保存程序结构信息的某种特殊类型的类
+<ul>
+<li>将应用了特性的程序结构叫做<strong>目标</strong></li>
+<li>设计用来获取和使用元数据的程序的特性叫做<strong>消费者</strong></li>
+<li>.NET预定义了很多特性，也可以声明自定义特性</li>
+</ul>
+</li>
+<li>特性的要点
+<ul>
+<li>在源代码中将特性应用于程序结构</li>
+<li>编译器获取源代码并且从特性产生元数据，然后把元数据放到程序集中</li>
+<li>消费者程序可以获取特性的元数据以及程序中其他组件的元数据</li>
+<li>编译器同时产生和消费特性</li>
+</ul>
+</li>
+<li>特性名以Attribute后缀结尾，使用目标时省略后缀</li>
+</ul>
+</li>
+<li>应用特性
+<ul>
+<li><em>这里所说的结构是是指程序结构，包含结构体、类、方法等，不是单单指结构体struct</em></li>
+<li>特性的目的是告诉编译器把程序结构的某组元数据嵌入程序集，可以通过把特性应用到结构来实现</li>
+<li>在结构前防止特性片段来应用特性</li>
+<li>特性片段被方括号包围，其中是特性名和特性的参数列表</li>
+<li>大多数特性只针对直接跟随着一个或多个特性后的结构</li>
+<li>引用了特性的结构成为被特性装饰</li>
+</ul>
+</li>
+<li>预定义的保留的特性
+<ul>
+<li><code>Obsolete</code>特性
+<ul>
+<li>可以将结构标注为过期的，在使用时编译器会给出警告，但仍然可以调用</li>
+<li>两个可选参数
+<ul>
+<li><code>message</code>：<code>string?</code>，表示警告的提示信息</li>
+<li><code>error</code>：<code>bool</code>类型，如果为true，则会标记错误而不是警告</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>Conditional</code>特性
+<ul>
+<li>需要使用<code>System.Diagnostics</code>命名空间</li>
+<li>允许包括或排斥特定方法的所有调用，为方法声明应用Conditional特性并把编译符号（宏定义的内容）作为参数来使用
+<ul>
+<li>如果定义了编译符号，和普通方法没有区别</li>
+<li>如果没有定义编译符号，那么编译器会忽略代码中这个方法的所有调用</li>
+</ul>
+</li>
+<li>
+<pre><code class="language-csharp">#define DEBUG
+// ...
+void Test() { ... }
+// ...
+#if DEBUG 
+    Test();
+#endif
+</code></pre>
+</li>
+<li>
+<pre><code class="language-csharp">#define DEBUG
+// ...
+[Conditional(&quot;DEBUG&quot;)]
+void Test() { ... }
+// ...
+Test();
+</code></pre>
+</li>
+<li>定义方法的CIL代码本身总会包含在程序集中，只是调用代码会被插入或忽略
+<ul>
+<li>编译这段代码时，会检查是否有编译符号的定义
+<ul>
+<li>如果被定义，编译器会像往常一样包含所有对方法的调用</li>
+<li>如果没有定义，编译器就不会输出任何对方法的调用代码</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>调用者信息特性
+<ul>
+<li>可以访问文件路径、代码行数、调用成员的名称等源代码信息，需要使用<code>System.Runtime.CompilerServices</code>命名空间</li>
+<li>三个特性
+<ul>
+<li><code>CallerFilePath</code>：调用者的文件路径</li>
+<li><code>CallerLineNumber</code>：调用方法的行号</li>
+<li><code>CallerMemberName</code>：调用方法的成员名</li>
+</ul>
+</li>
+<li>只能用于方法的参数，且是给定默认值的可选参数</li>
+</ul>
+</li>
+<li><code>DebuggerStepThrough</code>特性
+<ul>
+<li>位于<code>System.Diagnostics</code>命名空间</li>
+<li>在单步调试时可以不进入方法</li>
+<li>可以用于类、结构、构造函数、方法和访问器</li>
+</ul>
+</li>
+<li>其他预定义特性
+<ul>
+<li><code>CLSCompliant</code>：声明可公开的成员应该被编译器检测是否符合CLS，兼容的程序集可以被任何.NET兼容的语言使用</li>
+<li><code>Serializable</code>：声明结构可以被序列化</li>
+<li><code>NonSerialized</code>：声明结构不能被序列化</li>
+<li><code>DLLImport</code>：声明是非托管代码实现的</li>
+<li><code>WebMethod</code>：声明方法应该被作为XML Web服务的一部分暴露</li>
+<li><code>AttributeUsage</code>：声明特性能应用到什么类型的程序结构，将这个特性引用到结构声明上</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>有关应用特性的更多内容
+<ul>
+<li>多个特性
+<ul>
+<li>可以为单个结构应用多个特性</li>
+<li>多层结构：用多个方括号应用多个特性</li>
+<li>逗号分隔：多个特性写在一个方括号内，用逗号隔开</li>
+</ul>
+</li>
+<li>其他类型的目标
+<ul>
+<li>除了类，特性还可以应用到字段、属性等其他程序结构</li>
+<li>还可以显式的标注特性，如<code>[return : MyAttribute ]</code></li>
+<li>C#提供了10个标准的特性名不，大多数目标名可以自明，而<code>type</code>覆盖了类、结构、委托、枚举、接口；<code>typevar</code>目标名称指定使用泛型结构的类型参数
+<ul>
+<li><code>event</code>、<code>field</code>、<code>method</code>、<code>param</code>、<code>property</code>、<code>return</code>、<code>type</code>、<code>typevar</code>、<code>assembly</code>、<code>module</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>全局特性
+<ul>
+<li>可以使用<code>assembly</code>和<code>module</code>目标名称来使用显式目标说明符把特性设置在程序集或模块级别</li>
+<li>程序集级别的特性必须放置在任何命名空间之外，并且通常放在AssemblyInfo.cs文件中</li>
+<li>AssemblyInfo.sc文件通常包含有关公司、产品、以及版权信息的元数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自定义特性
+<ul>
+<li>用户自定义的特性类叫做自定义特性，所有的特性类都派生自<code>System.Attribute</code></li>
+<li>声明自定义特性
+<ul>
+<li>派生自<code>System.Attribute</code></li>
+<li>以Attribute结尾</li>
+<li>安全起见，通常建议声明为sealed</li>
+<li>所有特性的公共成员只能是
+<ul>
+<li>字段</li>
+<li>属性</li>
+<li>构造函数</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>使用特性的构造函数
+<ul>
+<li>每个特性至少必须有一个公共的构造函数</li>
+<li>如果不显式提供构造函数，编译器会提供一个隐式的、公共的、无参的构造函数</li>
+<li>可以被重载</li>
+<li>必须使用全名，不能省略后缀，只有在应用特性的时候才能省略后缀</li>
+</ul>
+</li>
+<li>指定构造函数
+<ul>
+<li>为目标应用特性时，其实是是在指定构造函数来创建特性的实例</li>
+<li>列在特性应用中的参数其实就是构造函数的参数</li>
+<li>应用特性时，构造函数的实参必须是在编译期能确定值的常量表达式</li>
+<li>如果使用无参的构造函数，圆括号可以省略</li>
+</ul>
+</li>
+<li>使用构造函数
+<ul>
+<li>不能显式调用构造函数，特性的实例创建后，只有特性的消费者访问特性时才能调用构造函数</li>
+<li>应用一个特性是一条声明语句，不会决定什么时候构造特性类的对象</li>
+</ul>
+</li>
+<li>构造函数中的位置参数和命名参数
+<ul>
+<li>在特性类声明时，可以提供多于形参个数的实参，多出来的实参被称为<strong>命名参数</strong>，给特性类的其他成员进行赋值，需要显式写出成员名称和<strong>等号</strong></li>
+<li>注意这里的命名参数和前面学习的命名参数不同
+<ul>
+<li>前面讲的命名参数是指定的仍然是形参，只不过可以改变传参的位置和顺序，这里的命名参数可以在形参之外给成员赋值</li>
+<li>前面学习的命名参数使用的是冒号，这里使用登号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>限制特性的使用
+<ul>
+<li><code>AttributeUsage</code>特性是一个很重要的预定义特性，可以应用到自定义特性，用来限制特性使用在某个目标类型上</li>
+<li>有三个重要的公共属性
+<ul>
+<li><code>ValidOn</code>：保存特性能应用到的目标类型的列表，构造函数的第一个参数必须是<code>AttributeTarget</code>类型的枚举值，无指定默认值</li>
+<li><code>Inherited</code>：指示特性是否会装饰类型的派生类修饰，默认为true，可以使用命名参数指定</li>
+<li><code>AllowMutiple</code>：指示目标是否被应用到多个特性的实例的布尔值，默认为false，可以使用命名参数指定</li>
+</ul>
+</li>
+<li>构造函数
+<ul>
+<li>接受单个位置参数，指定了特性允许的目标类型（<code>AttributeTarge</code>枚举类型），用来设置<code>ValidOn</code>属性</li>
+<li><code>AttributeTarge</code>枚举的成员
+<ul>
+<li><code>All</code>、<code>Assembly</code>、<code>Class</code>、<code>Constructor</code>、<code>Delegate</code>、<code>Enum</code>、<code>Event</code>、<code>Field</code>、<code>GenericParameter</code>、<code>Interface</code>、<code>Method</code>、<code>Module</code>、<code>Parameter</code>、<code>Property</code>、<code>ReturnValue</code>、<code>Struct</code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自定义特性的最佳实践
+<ul>
+<li>特性类应该表示目标结构的一些状态</li>
+<li>如果特性需要某些字段，可以通过包含具有位置参数的构造函数来收集数据，可选字段可以采用命名参数按需初始化</li>
+<li>除了属性之外，不要实现公共方法或其他函数成员</li>
+<li>为了更安全，把特性类声明为sealed</li>
+<li>在特性声明中使用<code>AttributeUsage</code>来显式指定特性目标组</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>访问特性
+<ul>
+<li>对于自定义特性也可以使用Type对象来获取信息，Type的两个方法<code>IsDefined</code>和<code>GetCustomAttributes</code>在这里非常有用</li>
+<li>使用<code>IsDefined</code>方法
+<ul>
+<li>可以使用该方法来检测某个特性是否应用到某个类上</li>
+<li>第一个参数接受需要检测的特性的Type对象</li>
+<li>第二个参数指示是否搜索类的继承树来查找这个特性</li>
+</ul>
+</li>
+<li>使用<code>GetCustomAttributes</code>方法
+<ul>
+<li>返回应用到结构的特性的数组
+<ul>
+<li>实际返回的对象是object类型的数组，因此我们必须将它强制转换为相应的特性类型</li>
+<li>参数指示是否搜索类的继承树来查找特性</li>
+<li>调用方法后，每一个与目标相关联的特性的实例就会被创建</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[C#学习笔记 - 预处理指令]]></title>
+        <id>https://greydoveh.github.io/post/CS-Preprocess/</id>
+        <link href="https://greydoveh.github.io/post/CS-Preprocess/">
+        </link>
+        <updated>2022-03-20T06:47:04.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="预处理指令">预处理指令</h1>
+<ol>
+<li>预处理指令
+<ul>
+<li>源代码指定了程序的定义</li>
+<li>预处理指令指示编译器如何处理源代码</li>
+<li>在C/C++中有实际的预处理阶段，预处理程序遍历源代码并为之后的编译阶段准备文本输出流</li>
+<li>C#中没有实际的预处理程序，预处理指令由编译器来处理</li>
+</ul>
+</li>
+<li>基本规则
+<ul>
+<li>预处理指令必须和C#代码在不同的行</li>
+<li>不需要以分号结尾</li>
+<li>必须以#开头，但是#前可以有空格，#和指令直接可以有空格</li>
+<li>允许行尾注释，，不允许分隔符注释（即允许<code>// ...</code>但是不允许<code>/* ... */</code>）</li>
+</ul>
+</li>
+<li>预处理指令类型
+<ul>
+<li><code>#define IDENTIFIER</code>：定义编译符</li>
+<li><code>#undef IDENTIFIER</code>：取消定义编译符</li>
+<li><code>#if EXPRESSION</code>：如果EXPRESSION为true，则编译下面的片段</li>
+<li><code>#elif EXPRESSION</code>：如果前面的<code>#if</code>为false且当前的EXPRESSION为true，则编译下面的片段</li>
+<li><code>#else</code>：如果之前的<code>#if</code>或者<code>#elif</code>为false，则编译下面的片段</li>
+<li><code>#endif</code>：标记一个<code>#if</code>片段的结构</li>
+<li><code>#region NAME</code>：标记一段代码的开始，没有效果</li>
+<li><code>#endregion NAME</code>：标记一段代码的结束，没有效果</li>
+<li><code>#warning MESSAGE</code>：显式编译时的警告消息</li>
+<li><code>#error MESSAGE</code>：显式编译时的错误消息</li>
+<li><code>#line INDICATOR</code>：修改在编译器消息中显示的行数</li>
+<li><code>#pragma TEXT</code>：指定有关程序上下文的信息</li>
+</ul>
+</li>
+<li><code>#define</code>和<code>#undef</code>
+<ul>
+<li>可以是除了true或false以外的任意标识符，包括C#关键字和在C#代码中声明的标识符</li>
+<li>没有值，和C/C++不同，不表示字符串</li>
+<li>只能在源文件的最前面，也就是任何C#代码之前使用，不能放在C#代码开始之后</li>
+<li>编译符号被限制在单个文件</li>
+<li>允许重复定义</li>
+</ul>
+</li>
+<li>条件编译
+<ul>
+<li>允许根据某个编译符号是否被定义标注一段代码是否被编译或者跳过</li>
+<li>条件是一个返回true或false的简单表达式
+<ul>
+<li>可以由单个编译符号、符号表达式或操作符组成，可以使用括号</li>
+<li>true和false也可以直接使用</li>
+</ul>
+</li>
+<li>条件编译结构
+<ul>
+<li><code>#if</code>和<code>#endif</code>必须配对使用，<code>#elif</code>和<code>#else</code>可根据条件选择</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>诊断指令
+<ul>
+<li>产生用户自定义的编译时的警告以及错误信息
+<ul>
+<li><code>#warning MESSAGE</code></li>
+<li><code>#error MESSAGE</code></li>
+<li>其中MESSAGE是自定义字符串代表错误信息，但是不需要加引号</li>
+</ul>
+</li>
+<li>当编译器遇到诊断指令时，会输出相关的消息，会和任何编译器产生的警告和错误列在一起</li>
+</ul>
+</li>
+<li>行号指令
+<ul>
+<li>行号指令可以做很多事情例如
+<ul>
+<li>改变由编译器警告和错误消息报告的出现行数</li>
+<li>改变被编译源文件的文件名</li>
+<li>对交互式调试器隐藏一些行</li>
+</ul>
+</li>
+<li>语法：</li>
+<li><code>#line INTEGER</code>：加整数可以设置下一行值为整数的行的行号</li>
+<li><code>#line &quot;FILENAME&quot;</code>：改变外观文件名，双引号是必须的</li>
+<li><code>#line default</code>：重新保存实际的行号和文件名，得到真实的行号和文件名</li>
+<li><code>#line hidden</code>：在断点调试器隐藏代码</li>
+<li><code>#line</code>：停止在调试器隐藏代码</li>
+</ul>
+</li>
+<li>区域指令
+<ul>
+<li>允许有选择地命名一段代码
+<ul>
+<li><code>#region NAME</code>被放在在希望标注代码段之前，NAME是可选字符串文本不加引号</li>
+<li>在代码段结束后用<code>#endregion</code>标记终止</li>
+</ul>
+</li>
+<li>尽管会被编译器忽略，但是可以被IDE使用如折叠代码</li>
+</ul>
+</li>
+<li><code>#pragma warning</code>指令
+<ul>
+<li>允许关闭及重新打开警告信息</li>
+<li>举例
+<ul>
+<li>
+<pre><code class="language-csharp">public struct Vector2Int {	// 随便提供了一个类
+    public int x, y;
+    public static Vector2Int zero {
+        get {
+            return new Vector2Int(0, 0);
+        }
+    }
+    public Vector2Int(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+    public static bool operator == (Vector2Int a, Vector2Int b) {
+        return a.x == b.x &amp;&amp; a.y == b.y ;
+    }
+    public static bool operator != (Vector2Int a, Vector2Int b) {
+        return a.x != b.x || a.y != b.y ;
+    }
+}
+</code></pre>
+</li>
+<li>警告信息如下：
+<ul>
+<li>
+<pre><code>“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
+“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
+</code></pre>
+</li>
+</ul>
+</li>
+<li>在文件开头加上<code>#pragma warning disable CS0660, CS0661</code>可以使编译器忽略这两条警告不产生警告信息（实际开发的时候除非没必要建议解决掉所有警告）</li>
+</ul>
+</li>
+<li>要关闭警告，可以使用<code>#pragma warning disable XXX, XXX</code>用逗号分隔希望关闭的警告数</li>
+<li>要打开警告，可以使用<code>#pragma warning restore XXX, XXX</code></li>
+<li>如果省略警告数，会应用于所有警告</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[C#学习笔记 - 命名空间和程序集]]></title>
+        <id>https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/</id>
+        <link href="https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/">
+        </link>
+        <updated>2022-03-19T12:36:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="命名空间和程序集">命名空间和程序集</h1>
+<ol>
+<li>程序集
+<ul>
+<li>编译器接收源代码文件并生成名称为<strong>程序集</strong>的输出文件</li>
+<li>给其他程序提供类或类型的程序集称为<strong>类库</strong>，通常以.dll结尾</li>
+<li>mscorlib库
+<ul>
+<li>程序集mscorlib.dll包含C#类型以及大部分.NET语言的基本类型的定义</li>
+<li>编译C#程序时，它必须总是被引用</li>
+</ul>
+</li>
+<li>如果引用的多个类库中存在同名的类，在试图使用这些类时会报错，因为它不知道使用哪个版本的类，这种错误被称为<strong>命名冲突</strong></li>
+</ul>
+</li>
+<li>命名空间
+<ul>
+<li>共享命名空间名的一组类和类型</li>
+<li>在命名空间内，每个类型名必须有别于所有其他类型</li>
+<li>命名空间内的类型称为命名空间的成员</li>
+<li>一个源文件可以包含任意数目的命名空间声明，可以顺序也可以嵌套</li>
+<li>命名空间不是封闭的，可以在其他地方再次声明相同的命名空间以便对它增加更多类型声明，也可以被分成多个程序集</li>
+<li>嵌套命名空间
+<ul>
+<li>嵌套声明的两种方式
+<ul>
+<li>原文嵌套，直接将命名空间放在一个封闭的命名空间内部</li>
+<li>分离的声明，如<code>namespace A.B { ... }</code>，其中A是一个声明在其他位置的命名空间，B是嵌套在A内部的命名空间</li>
+</ul>
+</li>
+<li>当生成单个程序集时，两种形式的嵌套命名空间生成相同的程序集</li>
+<li>内部命名空间内的成员不属于父命名空间，也就是说父命名空间和内部命名空间直接是相互独立的</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>using指令
+<ul>
+<li>using命名空间指令
+<ul>
+<li>使用命名空间，可以在使用类时省略命名空间名</li>
+</ul>
+</li>
+<li>using别名指令
+<ul>
+<li>可以给命名空间或命名空间内的一个类型取别名</li>
+<li><code>using Syst = Syestm; using SC = System.Console;</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集的结构
+<ul>
+<li>程序集不包含本地机器代码，而是公共中间语言代码。它还包含实施编译器JIT，在运行时转换CIL到本机代码所需的一切，包括对它所引用的其他程序集的引用。程序集的文件扩展名通常为.exe和.dll</li>
+<li>4个主要部分
+<ul>
+<li>清单
+<ul>
+<li>程序集名称标识符</li>
+<li>组成程序集的文件列表</li>
+<li>一个指示程序集中内容在哪里的地图</li>
+<li>关于引用的其他程序集的信息</li>
+</ul>
+</li>
+<li>类型元数据
+<ul>
+<li>包含该程序集中定义的所有类型的信息。这些信息包含关于每个类型要知道的所有事情</li>
+</ul>
+</li>
+<li>CIL代码
+<ul>
+<li>包含程序集所有的中间代码</li>
+</ul>
+</li>
+<li>资源部分
+<ul>
+<li>可选，但可以包含图形或语言资源</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集代码文件称为模块，尽管大部分程序集由单文件组成，但有些也有多个文件。对于有多个模块的程序集，一个文件是主模块，而其他的是次要模块
+<ul>
+<li>主模块含有程序集的清单和到次要模块的引用</li>
+<li>次要模块的文件名以扩展名.netmodule结尾</li>
+<li>多文件程序集被视为一个单一单元，它们一起部署一起定版</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>程序集标识符
+<ul>
+<li>在.NET模块中，程序集的文件名不像在其他操作系统和环境中那么重要，更重要的是程序集的标识符</li>
+<li>标识符的组成
+<ul>
+<li>简单名：不带扩展名的文件名，也被称为程序集名或友好名称</li>
+<li>版本号：由4个句点分开的整数字符串组成</li>
+<li>文化信息：由2-5个字符组成，代表一种语言或一种语言和一个国家或地区</li>
+<li>公钥：128字节字符串，是该程序集公司唯一的
+<ul>
+<li>公钥是公钥/私钥对的一部分，它们是可以用于创建安全的数字签名</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标识符被包含在程序集清单中</li>
+</ul>
+</li>
+</ol>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[C#学习笔记 - 枚举器和迭代器]]></title>
         <id>https://greydoveh.github.io/post/CS-ENumerator-Iterator/</id>
@@ -1557,664 +2139,6 @@ foreach (var myEnum in myEnums) {
 </ul>
 </li>
 </ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 杂]]></title>
-        <id>https://greydoveh.github.io/post/CS-sth/</id>
-        <link href="https://greydoveh.github.io/post/CS-sth/">
-        </link>
-        <updated>2022-03-07T02:57:57.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="c学习笔记-杂">C#学习笔记 - 杂</h1>
-<blockquote>
-<p>主要记录一些其他语言没有或用法不一样的新玩意</p>
-<p>以及常用和重点内容</p>
-<p>结合《C#图解教程（第4版）》学习</p>
-</blockquote>
-<p><strong>1. C#中的foreach循环</strong></p>
-<ul>
-<li>迭代变量是临时的而且是只读的</li>
-<li>但对于引用类型的数据，引用是只读的，但是数据是可以修改的</li>
-</ul>
-<pre><code class="language-csharp">int[] nums = new int []{1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-foreach (int item in nums) {
-	Console.WriteLine(item);
-}
-</code></pre>
-<p><strong>2. C#中的高维数组</strong></p>
-<ul>
-<li>C#中数组只能放在类型后，而不能放在变量名后</li>
-<li>数组的长度不能写在类型声明的方括号中，只能写在实例化的方括号中</li>
-</ul>
-<pre><code class="language-csharp">// 1. 交错数组
-int[][] matrix = new int [][] {		// 或者写[2][]，但是不能些[2][3]
-    new int [] {1, 2, 3},			// 或者写[3]
-    new int [] {4, 5, 6}
-};
-// 2. 矩形数组
-int [,] matrix2 = new int [2, 3] {	// 或者写[,]，但是不能写[2,]或[,3]
-    {1, 2, 3},
-    {4, 5, 6}
-};
-</code></pre>
-<p><strong>3. 参数数组，即任意个数参数</strong></p>
-<pre><code class="language-csharp">void fun(params int[] nums) {
-    // ... 
-}
-</code></pre>
-<p><strong>4. 结构体</strong></p>
-<ul>
-<li>
-<p>在C#结构体的构造函数</p>
-<ul>
-<li>
-<p>构造函数必须对所有成员进行初始化</p>
-</li>
-<li>
-<p>和类不同的是，给结构体提供了其他构造函数时，系统提供的默认构造函数仍然保留，如果再给定一个无参的构造函数会报错</p>
-</li>
-<li>
-<p>但是如果通过默认参数的方式指定一种看上去无参的构造函数，仍然会调用系统的默认构造函数（基本类型都是默认值，引用类型都是null），如下面的例子，输出结果就是0</p>
-</li>
-<li>
-<pre><code class="language-csharp">struct S {
-    public int x;
-    public S(int x = 20) {
-        this.x = x;
-    }
-}
-class Program {
-    static void Main(string[] args) {
-        S s = new S();
-        System.Console.WriteLine(s.x);
-    }  
-}
-</code></pre>
-</li>
-</ul>
-</li>
-<li>
-<p>和C++不同的是，C#中结构体的字段默认是private类型</p>
-</li>
-<li>
-<p>C#中结构体字段不能直接初始化，要在构造函数中赋值</p>
-</li>
-<li>
-<p>结构体类型为值类型，而非引用类型</p>
-<ul>
-<li>可以不使用new，但是class必须使用new</li>
-<li>不能赋值为null，且不能引用同一对象，赋值为值拷贝</li>
-</ul>
-</li>
-<li>
-<p>结构体是密封的，不能被派生，也不能手动派生自其他类型（结构体隐式派生自ValueType），但是可以实现其他接口</p>
-</li>
-<li>
-<p>如果想将结构实例作为引用类型对象，需要创建<em>装箱</em>。<em>装箱和拆箱</em> 放在后面解释</p>
-</li>
-<li>
-<p>结构的开销小于类，但装箱拆箱代价较高</p>
-</li>
-<li>
-<p>预定义简单类型被.NET实现为结构</p>
-</li>
-<li>
-<p>可以声明分布结构类似分部类</p>
-</li>
-</ul>
-<p><strong>5. 字符串及处理方法</strong></p>
-<p><strong>6. 运算符重载</strong></p>
-<ul>
-<li>
-<pre><code class="language-csharp">public static Type operator + (Type a, Type b) {
-  // ...
-}
-</code></pre>
-</li>
-<li>
-<p>只能用于class或struct</p>
-</li>
-<li>
-<p>一元运算符要带一个class或struct类型的参数</p>
-</li>
-<li>
-<p>二元运算符两个参数，其中至少一个为class或struct类型</p>
-</li>
-<li>
-<p>同时使用public和static</p>
-</li>
-<li>
-<p>作为要操作的类的成员</p>
-</li>
-<li>
-<p>运算符重载限制</p>
-<ul>
-<li>不能创建新运算符，也不能修改运算符的语法规则用法</li>
-<li>不能重载预定义类型的运算符</li>
-<li>不能该改变运算符的优先级或者结合性</li>
-</ul>
-</li>
-</ul>
-<p><strong>7. 索引器</strong></p>
-<ul>
-<li>
-<pre><code class="language-csharp">public Type this[Type param1, ...] {
-    get { }
-    set { }
-}
-</code></pre>
-</li>
-<li>
-<p>不能声明为static</p>
-</li>
-<li>
-<p>与属性一样同样有一个隐藏参数value</p>
-</li>
-<li>
-<p>注意自己实现索引器时，尤其是访问数组和列表时<strong>要记得处理异常</strong></p>
-</li>
-<li>
-<p>可以根据参数列表不同进行重载</p>
-</li>
-</ul>
-<p><strong>8. dynamic类型</strong></p>
-<ul>
-<li>由于.NET框架中有动态类型语言如IronPython和IronRuby等，C#要使用这些语言的程序集时可以使用dynamic关键字</li>
-</ul>
-<p><strong>9. 预定义简单类型</strong></p>
-<ul>
-<li>sbyte、byte、short、ushort、int、uint、long、ulong：有符号/无符号  8、16、32、64位整数</li>
-<li>float、double：单双精度浮点数</li>
-<li>bool、char：布尔类型、字符类型</li>
-<li>decimal：小数类型的有效数字精度为28位</li>
-</ul>
-<p><strong>10. 格式化字符串</strong></p>
-<ul>
-<li>C#中格式化字符串不使用%d，而是用花括号+数字（替代标记）</li>
-</ul>
-<p><strong>11. 访问修饰符</strong></p>
-<ul>
-<li>private：私有，不写默认为私有</li>
-<li>public ：公有</li>
-<li>protected：受保护的</li>
-<li>internal：内部的，同一程序集内可以访问</li>
-<li>protected internal：内部的或受保护的</li>
-</ul>
-<p><strong>12. ref和out</strong></p>
-<ul>
-<li>使用ref时，相当于传入指针或引用
-<ul>
-<li>对于引用类型的数据，ref相当于二级指针</li>
-<li>如果不使用ref，在方法内部使用new时，不会同步到方法外，但是对象的内容会被修改</li>
-<li>如果使用ref，对象的内容会被修改，同时引用的执行也可以被更改</li>
-</ul>
-</li>
-<li>和ref不一样，ref对应引用，而out是输出返回用的
-<ul>
-<li>如果是out，则在函数内部不能读取到原来的值，使用前必须先给其赋值</li>
-<li>在调用函数时可以没有初始值，而且初始值对方法来说无所谓因为在内部会被先修改</li>
-</ul>
-</li>
-</ul>
-<p><strong>13. 命名参数</strong></p>
-<ul>
-<li>
-<p>可以在调用函数时，通过指定形参名的方式更改传参的顺序</p>
-</li>
-<li>
-<p>虽然看上去没什么用，所以这里举一个例子</p>
-</li>
-<li>
-<pre><code class="language-csharp">static void MyFunc(int a, int b = 456, int c = 789) {
-    System.Console.WriteLine(&quot;{0}, {1}, {2}, &quot;, a, b, c);
-}
-static void Main(string[] args) {
-    int[] nums = new int []{1, 2, 3};
-    MyFunc(123, c: 2);
-}   
-</code></pre>
-</li>
-</ul>
-<p><strong>14. 可选参数要放在参数数组即params前</strong></p>
-<p><strong>15. 类中出了字段、方法以外还有属性，属于函数成员（执行代码）</strong></p>
-<p><strong>16. 对象初始化语句</strong></p>
-<ul>
-<li>
-<pre><code class="language-csharp">new MyCalss {x = 10, y = 20};
-new MyCalss(10, 20) {x = 10, y = 20};
-</code></pre>
-</li>
-<li>
-<p>只能对public的成员使用</p>
-</li>
-<li>
-<p>执行晚于构造函数</p>
-</li>
-<li>
-<p>花括号内不加分号，花括号结束后要加毕竟是一条语句</p>
-</li>
-</ul>
-<p><strong>17. readonly修饰符</strong></p>
-<ul>
-<li>与const的区别：
-<ul>
-<li>readonly可以在初始化时或构造函数内赋值，如果是static则要在静态构造函数里赋值</li>
-<li>const在编译时决定，readonly在运行时决定，可以在不同情况下使用不同的值</li>
-<li>const的行为是静态的不能用static修饰，但readonly可以是实例字段也可以是静态字段</li>
-</ul>
-</li>
-</ul>
-<p><strong>18. 访问器</strong></p>
-<ul>
-<li>默认情况下get和set和对应的属性/索引器有相同访问级别</li>
-<li>可以给get和set分别添加访问级别，如get; private set;</li>
-<li>只有get和set两个都出现时才能添加访问修饰符，而且只能有一个访问器能有访问修饰符</li>
-<li>访问器的访问权限需要比对应的成员更加严格</li>
-</ul>
-<p><strong>19. 分部类</strong></p>
-<ul>
-<li>一个类拆成多个类来写，每一部分类名相同，都在前面加上partial修饰符</li>
-<li>在WPF中，每个页面都会生成两个类文件，一个声明页面上的控件，一个可用于实现页面或表单组件的外观和行为</li>
-</ul>
-<p><strong>20. 分部方法</strong></p>
-<ul>
-<li>一个分部类给出声明，另一个分部类给出实现</li>
-<li>两部分可以在同一个分部类中，也可以放在不同的分部类中</li>
-<li>条件：
-<ul>
-<li>返回类型必须是void</li>
-<li>方法的签名不包括访问修饰符，即隐式私有的</li>
-<li>参数列表不能有out</li>
-<li>两部分方法前都加上partial修饰符</li>
-</ul>
-</li>
-<li>如果要用分部方法
-<ul>
-<li>可以有声明没有实现，这种情况下编译器会把方法的声明和方法内所有对方法的调用删除</li>
-<li>不能只有实现没有声明</li>
-</ul>
-</li>
-</ul>
-<p><strong>21. 继承方法和父类方法同名时</strong></p>
-<ul>
-<li>不加关键词为直接覆盖，不推荐，会报警告</li>
-<li>加关键词new为覆盖/屏蔽，此时如果用父类引用指向子类对象时，执行方法为父类方法</li>
-<li>加关键词override为重写/覆写，此时如果用父类引用指向子类对象时，执行方法为子类方法
-<ul>
-<li>注意只有父类声明为virtual或abstract时，子类才允许重写</li>
-</ul>
-</li>
-</ul>
-<p><strong>22. 构造函数初始化语句</strong></p>
-<ul>
-<li>
-<p>base：调用基类构造</p>
-</li>
-<li>
-<pre><code class="language-csharp">class A {
-    int x;
-    A(int x = 0) {
-        this.x = x;
-    }
-}
-class B : A {
-	int y;
-    public B() : base() { }	// 等价于 public B() { }
-    public B(int x, int y) : base(x) {
-        this.y = y;
-    }
-}
-</code></pre>
-</li>
-<li>
-<p>this：提取当前类构造函数的公共部分</p>
-</li>
-<li>
-<pre><code class="language-csharp">class Stu {
-    readonly int id;
-    readonly string name;
-    float score;
-    int x;
-    private Stu(string name, int id) {
-        this.name = name;
-        this.id = id;
-    }
-    public Stu(string name, int id, float score) : this(name, id) {
-        this.score = score;
-    }
-    public Stu(string name, int id, int x) : this(name, id) {
-        this.x = x;
-    }
-}
-</code></pre>
-</li>
-</ul>
-<p><strong>23. 类访问修饰符</strong></p>
-<ul>
-<li>public：可以被任何程序集中的代码访问</li>
-<li>internal：只能被自己所在的程序集内的类看到（类的默认访问级别）</li>
-</ul>
-<p><strong>24. 成员访问修饰符</strong></p>
-<ul>
-<li>public：任意程序集均可访问</li>
-<li>private：仅自身类可以访问</li>
-<li>protected：仅自身类以及子类可以访问</li>
-<li>internal：相同程序集中的类均可访问</li>
-<li>protected internal：相同程序集中可访问，其他程序集中继承自该类的类可访问，即protected和internal是相或的关系</li>
-</ul>
-<p><strong>25. 抽象类和抽象成员</strong></p>
-<ul>
-<li>抽象成员
-<ul>
-<li>只有函数成员可以声明为abstract，方法和访问器只写声明不写实现，加分号</li>
-<li>抽象类中的方法、属性、事件、索引器可以声明为abstract</li>
-<li>可以被继承重写且非抽象类中必须重写，但是不用而且不能声明为virtual，重写时使用override</li>
-</ul>
-</li>
-<li>抽象类
-<ul>
-<li>用abstract修饰，不能实例化</li>
-<li>可以包含抽象或非抽象的成员</li>
-<li>抽象类继承抽象类可以不用重写抽象成员；非抽象类继承自抽象类必须重写所有抽象成员</li>
-</ul>
-</li>
-</ul>
-<p><strong>26. 密封类</strong></p>
-<ul>
-<li>被sealed修饰的类为密封类，密封类不能被继承</li>
-<li>一个类不能同时被abstract和sealed修饰，因为一个要求必须继承重写另一个不能被继承</li>
-<li>类似Java中的final类</li>
-</ul>
-<p><strong>27. 静态类</strong></p>
-<ul>
-<li>类本身需要被标记为static</li>
-<li>成员必须是静态的，声明为static或const</li>
-<li>可以有静态构造函数，但是不能实例化</li>
-<li>不能被继承，是密封类（隐式密封类，不需要声明为sealed）</li>
-<li>可以通过类名访问成员名</li>
-<li>常用的Math类就是静态类</li>
-</ul>
-<p><strong>28. 扩展方法</strong></p>
-<ul>
-<li>
-<p>通过在静态类中的公开静态方法中的第一个参数添加this，可以通过点去调用</p>
-</li>
-<li>
-<pre><code class="language-csharp">public static class ExtendString {	// static
-    public static int Find(this string s, string t) {	// public static	
-        for (int i = 0; i &lt; s.Length; i++) {
-            if (s[i] == t[0]) {
-                bool f = true;
-                for (int j = 0; j &lt; t.Length &amp;&amp; i + j &lt; s.Length; j++) {
-                    if (s[i + j] != t[j]) {
-                        f = false;  break;
-                    }
-                }
-                if (f)
-                    return i;
-                }
-            }
-        }
-        return -1;
-    }
-}
-
-class Program {
-    static void Main(string[] args) {
-        string s = &quot;123&quot;, t = &quot;22&quot;;
-        int id = s.Find(t);	// s.Find(t);
-        System.Console.WriteLine(id);
-    }      
-}
-</code></pre>
-</li>
-</ul>
-<p><strong>29. 浮点数取余</strong></p>
-<ul>
-<li>在C#中可以对浮点数进行取余</li>
-<li>运算规则：如2.0 % 1.5 = 0.5，2.5 % 1.5 = 1等</li>
-</ul>
-<p><strong>30. 类型转换的运算符重载</strong></p>
-<ul>
-<li>
-<pre><code class="language-csharp">class LimitedInt {
-    readonly int maxValue;
-    readonly int minValue;
-    private int value;
-    public int Value {
-        get {
-            return value;
-        } 
-        set {
-            this.value = value;
-        }
-    }
-    public LimitedInt(int x, int max = int.MaxValue, int min = int.MinValue) {
-        Value = x;
-        maxValue = max;
-        minValue = min;
-    }
-    // implicit为隐式转换，explicit为显式转换
-    public static implicit operator int(LimitedInt limitedInt) {	// LimitedInt转换为int
-        return limitedInt.Value;
-    }
-    public static implicit operator LimitedInt(int x) {		// int转换为LimitedInt
-        return new LimitedInt(x);
-    }
-}
-
-class Program {
-    static void Main(string[] args) {
-        LimitedInt limitedInt = 100;
-        int x = limitedInt;
-        System.Console.WriteLine(x);
-    }  
-}
-</code></pre>
-</li>
-<li>
-<p>如果声明了implicit隐式转换，也可以使用强制转换</p>
-</li>
-<li>
-<p>但是如果只声明了explicit显式转换，则不能使用隐式转换，必须使用显式转换（强制转换）</p>
-</li>
-<li>
-<p>两者不能同时声明</p>
-</li>
-</ul>
-<p><strong>31. using语句</strong></p>
-<ul>
-<li>
-<p>使用命名空间是using指令，不是using语句</p>
-</li>
-<li>
-<p>资源是指实现了IDisposable接口的类或结构</p>
-<ul>
-<li>
-<p>不适用using的情况下释放资源可以使用</p>
-</li>
-<li>
-<pre><code class="language-csharp">Type t = new Type();	// 分配资源，其中Type必须实现IDisposable
-// 使用资源
-t.Dispose();	// 处置资源
-</code></pre>
-</li>
-<li>
-<p>但是如果在使用资源的时候发生了异常可能导致Dispose不会被调用，需要手动处理异常</p>
-</li>
-</ul>
-</li>
-<li>
-<p>using语句可以尽快释放资源并确保这些资源被适当处置</p>
-<ul>
-<li>
-<pre><code class="language-csharp">using (Type t = new Type()) {	// 分配资源，其中Type必须实现IDisposable
-    // 使用资源
-}	// 处置资源（隐式）
-</code></pre>
-</li>
-<li>
-<p>using会执行以下内容：</p>
-<ul>
-<li>分配资源</li>
-<li>把使用资源的部分放入try块中</li>
-<li>创建资源的Dispose方法的调用，并放进finally块中</li>
-</ul>
-</li>
-<li>
-<p>这样就方便了程序员不需要手动处理异常，还能确保资源得到适当的处置</p>
-</li>
-<li>
-<p>using的小括号中可以用分配多个资源并用逗号隔开，并且using语句可以嵌套使用</p>
-</li>
-</ul>
-</li>
-<li>
-<p>using还有另外一种形式</p>
-<ul>
-<li>
-<pre><code class="language-csharp">Type t = new Type();	// 或其他分配资源的方式
-using (t) {
-    // ... 
-}
-</code></pre>
-</li>
-<li>
-<p>即把资源的声明和分配放在using之前</p>
-</li>
-<li>
-<p>不推荐使用，因为和另一种形式相比，不能保证在使用using之前资源没有被释放，或者在using执行结束后资源被释放后继续使用资源</p>
-</li>
-</ul>
-</li>
-<li>
-<p>using一般使用于一些如数量有限制或耗费系统资源的情况，如文件的读写、数据库的连接等</p>
-</li>
-</ul>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode 918.环形数组的最大和]]></title>
-        <id>https://greydoveh.github.io/post/leetcode-918/</id>
-        <link href="https://greydoveh.github.io/post/leetcode-918/">
-        </link>
-        <updated>2022-02-16T03:50:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="leetcode-918环形数组的最大和">LeetCode 918.环形数组的最大和</h1>
-<p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">题目链接</a></p>
-<h3 id="思路">思路</h3>
-<p>思路和<a href="https://leetcode-cn.com/problems/maximum-subarray/">LeetCode 53.最大子数组和</a>类似<br>
-在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是<strong>不跨越原点的最大值</strong><br>
-然后再求一个<strong>跨越原点的最大值</strong><br>
-这个思路和上面的反过来，先求中间一段<strong>最小子数组和</strong>ans2，然后用<strong>总和减去该最小子数组和</strong>，得到的即是<strong>跨越两边的最大值</strong>sum[n] - ans2<br>
-最后<strong>两者取最大值</strong>返回max(ans1, sum[n] - ans2);</p>
-<blockquote>
-<p>注意一个特殊情况，当整个数组全为负数的时候，最小子数组和为整个数组的和，会导致返回的值为0，此时取得是一个空的子数组，但是题目要求要的是一个<strong>非空</strong>子数组的和，所以要判断一下左右边界</p>
-</blockquote>
-<h3 id="代码">代码</h3>
-<pre><code class="language-csharp">public class Solution {
-    public int MaxSubarraySumCircular(int[] nums) {
-        int[] sum = new int [nums.Length + 1];
-        for (int i = 1; i &lt; sum.Length; i++) {
-            sum[i] = sum[i - 1] + nums[i - 1];
-        }
-        int min = sum[0], ans1 = int.MinValue;
-        for (int i = 1; i &lt; sum.Length; i++) {
-            ans1 = Math.Max(ans1, sum[i] - min);
-            min = Math.Min(sum[i], min);
-        }
-        int max = sum[0], ans2 = int.MaxValue, l = 0, r = 0, maxIndex = 0;
-        for (int i = 1; i &lt; sum.Length; i++) {
-            if (ans2 &gt; sum[i] - max) {
-                r = i;
-                l = maxIndex;
-                ans2 = sum[i] - max;
-            }
-            if (sum[i] &gt; max) {
-                max = sum[i];
-                maxIndex = i;
-            }
-        }
-        if (l == 0 &amp;&amp; r == sum.Length - 1) {
-            return ans1;
-        }
-        return Math.Max(ans1, sum[sum.Length - 1] - ans2);
-    }
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode.935 骑士拨号器]]></title>
-        <id>https://greydoveh.github.io/post/leetcode-935/</id>
-        <link href="https://greydoveh.github.io/post/leetcode-935/">
-        </link>
-        <updated>2022-02-12T14:44:12.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="leetcode935-骑士拨号器">LeetCode.935 骑士拨号器</h1>
-<p><a href="https://leetcode-cn.com/problems/knight-dialer/">题目链接</a></p>
-<h3 id="思路">思路</h3>
-<blockquote>
-<p>动态规划</p>
-</blockquote>
-<p>骑士每一步跳都会在号码后面增加一个新的数字，就会产生一个新的号码。<br>
-由于跳的方式是固定的，所以从某个数字可以跳到的其他数字也是固定的。</p>
-<blockquote>
-<p>0 -&gt; 4, 6;<br>
-1 -&gt; 6, 8;<br>
-2 -&gt; 7, 9;<br>
-3 -&gt; 4, 8;<br>
-4 -&gt; 3, 9, 0;<br>
-5 -&gt; null;<br>
-6 -&gt; 1, 7, 0;<br>
-7 -&gt; 2, 6;<br>
-8 -&gt; 1, 3;<br>
-9 -&gt; 2, 4;</p>
-</blockquote>
-<p>在这个基础上容易知道，要产生一个n位的号码，只需看第n-1位的数字是多少，然后根据这一位数字能够走到的位置k，得到可以得到k个新的号码。</p>
-<p>所以，可以得到状态转移方程<br>
-<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>f</mi><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>k</mi><mo>)</mo><mo>=</mo><msub><mo>∑</mo><mrow><mi>j</mi><mo>−</mo><mo>&gt;</mo><mi>k</mi></mrow></msub><mi>f</mi><mo>(</mo><mi>n</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">f(n, k) = \sum_{j-&gt;k} f(n - 1, j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.185818em;vertical-align:-0.43581800000000004em;"></span><span class="mop"><span class="mop op-symbol small-op" style="position:relative;top:-0.0000050000000000050004em;">∑</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.18639799999999984em;"><span style="top:-2.40029em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mord mtight">−</span><span class="mrel mtight">&gt;</span><span class="mord mathdefault mtight" style="margin-right:0.03148em;">k</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.43581800000000004em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span><br>
-其中f(n, k)代表长度为n尾号为k的号码的个数，在长度为n−1和n之间，如果骑士能够从j跳到k，则能够为生成尾号为k的号码提供1点贡献；如果有m个尾号为j的骑士，则能为生成尾号为k的号码提供m点贡献；若有不同的号码都能到k，则它们都能提供对应的贡献。</p>
-<p>举个例子，因为6能到达1, 7, 0三个点，所以通过16这个号码，可以产生161, 167, 160三个号码；同理，因为从0, 1, 7三个点可以到达6，所以XXX6可以由XX0, XX1, XX7三个号码产生。通过统计XX0, XX1, XX7的个数进行求和，则可以得到这么多个XXX6。如果对长度为nn所有尾号进行计数，则可以得到长度为nn的号码的个数。</p>
-<h3 id="代码">代码</h3>
-<pre><code class="language-csharp">public class Solution {
-    const int MOD = (int)1e9 + 7;
-    int[,] cnt;
-    public int KnightDialer(int n) {
-        cnt = new int[2, 10];
-        int[][] list = new int[10][] {
-            new int[2]{4, 6},
-            new int[2]{6, 8},
-            new int[2]{7, 9},
-            new int[2]{4, 8},
-            new int[3]{3, 9, 0},
-            new int[0]{},
-            new int[3]{1, 7, 0},
-            new int[2]{2, 6},
-            new int[2]{1, 3},
-            new int[2]{2, 4},
-        };
-        for (int i = 0; i &lt; 10; i++) {
-            cnt[0, i] = 1;
-        }
-        int pre = 0, now = 1;
-        for (int i = 1; i &lt; n; i++) {
-            for (int j = 0; j &lt; 10; j++) {
-                cnt[now, j] = 0;
-            }
-            for (int j = 0; j &lt; 10; j++) {
-                for (int k = 0; k &lt; list[j].Length; k++) {
-                    cnt[now, list[j][k]] = ((cnt[now, list[j][k]] % MOD) + (cnt[pre, j] % MOD)) % MOD;
-                }
-            }
-            (now, pre) = (pre, now);
-        }
-        long res = 0;
-        for (int j = 0; j &lt; 10; j++) {
-            res = ((res % MOD) + (cnt[pre, j] % MOD)) % MOD;
-        }
-        return (int)(res % MOD);
-    }
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
