@@ -8,8 +8,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1648031497879">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1648275656442">
 <link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 
 
 
@@ -37,7 +38,7 @@
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://greydoveh.github.io">
-        <img src="https://greydoveh.github.io/images/avatar.png?v=1648031497879" class="site-logo">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1648275656442" class="site-logo">
         <h1 class="site-title">鸽子屋</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -640,6 +641,219 @@ using (t) {
 </li>
 <li>
 <p>using一般使用于一些如数量有限制或耗费系统资源的情况，如文件的读写、数据库的连接等</p>
+</li>
+</ul>
+<p><strong>32. StringBuilder</strong></p>
+<ul>
+<li>位于<code>System.Text</code>命名空间</li>
+<li>是Unicode字符的可变数组</li>
+</ul>
+<p><strong>33. 把字符串解析为数据值</strong></p>
+<ul>
+<li>目标类型.Parse方法，成功返回数据值，失败抛出异常</li>
+<li>TryParse方法，返回布尔值是否成功，通过out参数返回数据值给输出变量</li>
+</ul>
+<p><strong>34. 可空类型</strong></p>
+<ul>
+<li>可空类型总是基于基础类型
+<ul>
+<li>可以从任何值类型创建可空类型</li>
+<li>不能从引用类型或其他可空类型创建可空类型</li>
+<li>不能在代码中显式声明可空类型，只能声明可空类型的变量</li>
+<li>编译器会使用泛型隐式创建可空类型</li>
+</ul>
+</li>
+<li>声明时添加一个?后缀到类型后面</li>
+<li>可空类型的结构
+<ul>
+<li>基础类型的实例</li>
+<li>几个重要的只读属性
+<ul>
+<li>HasValue：bool类型，指示值是否有效</li>
+<li>Value：和基础类型相同的类型并且返回变量的值</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果不是null可以和其他类型的变量一样使用
+<ul>
+<li>可以使用HasValue或和null比较来检测是否有值</li>
+</ul>
+</li>
+<li>可空类型和普通类型之间的转换
+<ul>
+<li>普通类型到可空类型：隐式转换</li>
+<li>可空类型到普通类型：显式转换</li>
+</ul>
+</li>
+<li>为可空类型赋值
+<ul>
+<li>基础类型的值</li>
+<li>同一可空类型的值</li>
+<li>null</li>
+</ul>
+</li>
+<li>空接合运算符
+<ul>
+<li>x ?? y
+<ul>
+<li>如果x为空，返回y的值</li>
+<li>如果x不为空，返回x</li>
+</ul>
+</li>
+<li>两个空值被认为相等</li>
+</ul>
+</li>
+<li>使用可空用户自定义类型
+<ul>
+<li>结构的可空形式只能通过Value属性访问内部基础类型，不直接暴露任何成员，即便是公共的</li>
+</ul>
+</li>
+<li><code>Nullable&lt;T&gt;</code>
+<ul>
+<li>可空类型通过一个叫做<code>System.Nullable&lt;T&gt;</code>的.NET类型来实现</li>
+<li>可空类型的问号语法是创建Nullable<T>类型变量的快捷语法</li>
+</ul>
+</li>
+</ul>
+<p><strong>35. 嵌套类型</strong></p>
+<ul>
+<li>在类或结构中声明类型，这种类型叫做<strong>嵌套类型</strong></li>
+<li>嵌套类型像<strong>封闭类型</strong>的成员一样声明
+<ul>
+<li>嵌套类型可以是任意类型</li>
+<li>嵌套类型可以是类或结构</li>
+</ul>
+</li>
+<li>如果一个类只作为帮助方法并且只对封闭类型有意义，可能需要声明为嵌套类型</li>
+<li>嵌套类型的对象不一定封闭在封闭类型的对象之内，嵌套类型的对象和它没有在另一个类型中声明时所在的位置一样
+<ul>
+<li><em>也就是说嵌套类型的对象不是封闭类型的成员，封闭类型对象中只有引用</em></li>
+</ul>
+</li>
+<li>可见性和嵌套类型
+<ul>
+<li>嵌套类型有<strong>成员访问级别</strong>，而不是类型访问级别
+<ul>
+<li>在类内部声明的嵌套类型可以有5种成员访问级别的一种：public、protected、private、internal、protected internal</li>
+<li>在结构内部声明的嵌套类型可以有3种成员访问级别的一种：public、internal、private</li>
+</ul>
+</li>
+<li>嵌套类型的默认访问级别是private</li>
+<li>嵌套类型的对象可以访问封闭类型的所有成员，不管是不是public</li>
+<li>封闭类型的成员总是可以访问封闭类型本身和有访问权限的嵌套类型成员</li>
+</ul>
+</li>
+<li>嵌套类型的可见性还会影响基类成员的继承
+<ul>
+<li>如果封闭类型是一个派生类，嵌套类型就可以使用相同的名字来隐藏基类成员</li>
+</ul>
+</li>
+<li>嵌套类型中的this引用指向的是嵌套类型的对象
+<ul>
+<li>如果嵌套类型的对象需要访问封闭类型，必须持有封闭类型的引用</li>
+<li>可以把封闭对象提供的this引用作为参数提供给嵌套类型的构造函数</li>
+</ul>
+</li>
+</ul>
+<p><strong>36. 析构模式和dispose模式</strong></p>
+<ul>
+<li>C#中类可以有析构函数
+<ul>
+<li>非托管资源指类似用Win32API或非托管内存块获取的文件句柄这样的资源，使用.NET资源无法获取它们，因此如果只使用.NET类是不需要编写太多析构函数的</li>
+<li>析构函数（在C#3.0之前有时也称为终结器）
+<ul>
+<li>每个类只能有一个析构函数</li>
+<li>析构函数不能有参数</li>
+<li>析构函数不能有访问修饰符</li>
+<li>析构函数名称与类名相同，但是前面要加一个<code>~</code></li>
+<li>没有静态析构函数</li>
+<li>不能显式调用，当垃圾回收器分析代码并认为不存在指向该对象的可能路径时，系统会在垃圾回收的过程中调用析构</li>
+</ul>
+</li>
+<li>原则
+<ul>
+<li>不要在不需要时实现析构函数，会严重影响性能</li>
+<li>析构函数应该只释放对象拥有的外部资源</li>
+<li>析构函数不应该访问其他对象，因为无法认定这些对象是否已经被销毁</li>
+</ul>
+</li>
+<li>构造函数和析构函数
+<ul>
+<li>实例构造函数：创建类的每个实例时调用一次</li>
+<li>静态构造函数：只调用一次，即首次访问任意静态成员之前，或创建类的任意实例之前</li>
+<li>析构函数：类的每个实例在程序流不再访问该实例之后的某个时刻调用</li>
+</ul>
+</li>
+<li>析构函数调用时机
+<ul>
+<li>与C++不同，C#析构函数不会在超出作用域时立即调用，事实上无法知道何时会调用析构函数</li>
+<li>也不能显式调用析构，只能知道系统会在对象从托管堆上移除之前的某个时刻调用析构函数</li>
+<li>如果要求非托管资源越快释放越好，则不能使用析构函数，而应该使用dispose模式</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>标准dispose模式
+<ul>
+<li>
+<p>特点</p>
+<ul>
+<li>包含非托管资源的类应该实现IDisposable接口，后者包含单一方法Dispose，Dispose包含释放资源的清除代码</li>
+<li>如果代码使用完了这些资源并且希望系统将它们释放，应该在程序代码中调用Dispose方法，注意是手动调用而不是系统去调用</li>
+<li>类还应该实现一个析构函数，在其中调用Dispose方法，以防止之前没有调用该方法</li>
+</ul>
+</li>
+<li>
+<p>析构函数和Dispose代码应该遵循以下原则</p>
+<ul>
+<li>如果由于某种原因代码没有调用Dispose，那么析构函数应该调用它并释放资源</li>
+<li>在Dispose方法最后应该调用GC.SuppressFinalize方法，通过CLR不要调用该对象的析构函数</li>
+<li>在Dispose中实现这些代码，这样多次调用该方法是安全的，重复调用时，后续调用不应该执行任何额外的操作，也不应该抛出任何异常</li>
+</ul>
+</li>
+<li>
+<p>标注的dispose模式</p>
+<ul>
+<li>
+<p>Dispose方法提供两个重载，一个是public，一个是protected，protected的重载包含实际的清除代码</p>
+</li>
+<li>
+<p>public版本在代码中显式调用以执行清除工作，他会调用portected版本</p>
+</li>
+<li>
+<p>析构函数调用protected版本</p>
+</li>
+<li>
+<p>protected版本的bool参数通知方法是被析构函数或是其他代码调用</p>
+</li>
+<li>
+<pre><code class="language-csharp">class Test : IDisposable {
+    bool disposed = false;
+
+    public void Dispose() {
+        Dispose(true);
+        GC.SuppressFinalize(this);	// Dispose后CLR不调用析构
+    }
+    ~Test() {
+        Dispose(false);	// 如果没有调用Dispose保证会被析构调用
+    }
+
+    protected virtual void Dispose(bool disposing) {
+        if (disposed)   return ;	// 多次调用是安全的
+        if (disposing) {
+            // 释放托管资源
+        }
+        // 释放非托管资源
+        disposed = true;
+    }
+}
+</code></pre>
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
 </li>
 </ul>
 
