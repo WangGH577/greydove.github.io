@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>51Nod-3188 字符王国 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1649484701242">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="51Nod-3188 字符王国 题解
+字符王国
+题目大意
+
+一个有向无环图，每个节点有一个字符
+路径的枯燥度定义为：这条路径上字符出现次数最多的字符出现的次数
+求最枯燥的路径的枯燥度
+
+解题思路1
+
+深搜+dp
+dpi,jdp_{i,j}d..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1649484701242" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">51Nod-3188 字符王国 题解</h2>
+            <div class="post-date">2022-04-09</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/51nod-3188.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="51nod-3188-字符王国-题解">51Nod-3188 字符王国 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=3188">字符王国</a></p>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>一个有向无环图，每个节点有一个字符</p>
+<p>路径的枯燥度定义为：这条路径上字符出现次数最多的字符出现的次数</p>
+<p>求最枯燥的路径的枯燥度</p>
+</blockquote>
+<h3 id="解题思路1">解题思路1</h3>
+<blockquote>
+<p>深搜+dp</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>表示第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>个节点出发的路径中，字符<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi></mrow><annotation encoding="application/x-tex">j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>出现的最多的次数</p>
+<p>对所有入度为0的节点做一次dfs（从越早的节点出发结果可能会越大，所以起点只考虑入度为0的点）</p>
+<p>对节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>的每个子节点搜索完毕后，更新从<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>节点出发的所有字符的出现次数</p>
+<p>最后求一次最大值即可</p>
+</blockquote>
+<h3 id="ac代码1">AC代码1</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 3e5 + 5;
+int n, m;
+string s;
+vector&lt;int&gt; mp[N];
+int indeg[N];
+
+int ans = 0;
+int cnt[N]['z' + 10];
+bool vis[N];
+
+void dfs(int x) {
+    if (vis[x]) return;
+    vis[x] = true;
+    for (int i = 0; i &lt; mp[x].size(); i++) {
+        dfs(mp[x][i]);
+        for (int j = 'a'; j &lt;= 'z'; j++) {
+            cnt[x][j] = max(cnt[x][j], cnt[mp[x][i]][j]);
+        }
+    }
+    cnt[x][s[x - 1]]++;
+}
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s;
+    while (m--) {
+        int u, v;
+        cin &gt;&gt; u &gt;&gt; v;
+        mp[u].emplace_back(v);
+        indeg[v]++;
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        if (indeg[i] == 0) {
+            dfs(i);
+        }
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        for (int j = 'a'; j &lt;= 'z'; j++) {
+            ans = max(ans, cnt[i][j]);
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+<h3 id="解题思路2">解题思路2</h3>
+<blockquote>
+<p>枚举每个字符，结果即为该字符出现最多的路径</p>
+<p>建立超级源点和超级汇点，对每个字符跑一次最长路即可，最大的结果即为答案</p>
+<p>如果一条边到达节点为该字符，该边权记录为1，否则为0</p>
+</blockquote>
+<h3 id="ac代码2">AC代码2</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 3e5 + 5;
+const int INF = 0x3f3f3f3f;
+int n, m;
+string s;
+vector&lt;int&gt; mp[N];
+int indeg[N];
+int outdeg[N];
+
+int ans = 0;
+int d[N];
+struct cmp {
+    bool operator() (int a, int b) {
+        return d[a] &lt; d[b];
+    }
+};
+
+int dijkstra(char ch) {
+    memset(d, -1, sizeof(d));
+    priority_queue&lt;int, vector&lt;int&gt;, cmp&gt; q;
+    q.push(0);
+    d[0] = 0;
+    while (q.size()) {
+        auto x = q.top();   q.pop();
+        for (int i = 0; i &lt; mp[x].size(); i++) {
+            int to = mp[x][i];
+            int dist = s[mp[x][i] - 1] == ch ? 1 : 0;
+            if (d[to] &lt; d[x] + dist) {
+                d[to] = d[x] + dist;
+                q.push(to);
+            }
+        }
+    }
+    return d[n + 1];
+}
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n &gt;&gt; m &gt;&gt; s;
+    while (m--) {
+        int u, v;
+        cin &gt;&gt; u &gt;&gt; v;
+        mp[u].emplace_back(v);
+        indeg[v]++;
+        outdeg[u]++;
+    }
+    for (int i = 1; i &lt;= n; i++) {
+        if (indeg[i] == 0) {
+            mp[0].emplace_back(i);
+        }
+        if (outdeg[i] == 0) {
+            mp[i].emplace_back(n + 1);
+        }
+    }
+    for (int i = 'a'; i &lt;= 'z'; i++) {
+        ans = max(ans, dijkstra(i));
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/CS-Learning/">
+                  <h3 class="post-title">
+                    C#学习笔记合集
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
