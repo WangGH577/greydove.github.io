@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>51Nod-2071 不相交子区间 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1649749273714">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="51Nod-2071 不相交子区间 题解
+不相交子区间
+题目概述
+
+从给出的线段中去掉尽量少的线段，使得剩下的线段两两之间没有内部公共点，求最后剩下几条线段
+
+思路分析
+
+按照右端点排序，记录当前能到达的最远右端点
+对于每条线段，如果左端点..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1649749273714" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">51Nod-2071 不相交子区间 题解</h2>
+            <div class="post-date">2022-04-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/51nod-2071.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="51nod-2071-不相交子区间-题解">51Nod-2071 不相交子区间 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2071">不相交子区间</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>从给出的线段中去掉尽量少的线段，使得剩下的线段两两之间没有内部公共点，求最后剩下几条线段</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>按照右端点排序，记录当前能到达的最远右端点</p>
+<p>对于每条线段，如果左端点在最远右端点左边，则说明该线段需要被删掉</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n;
+struct Node {
+    int l, r;
+    Node(int l = 0, int r = 0) : l(l), r(r) { }
+    bool operator &lt; (Node ano) {
+        return r &lt; ano.r;
+    }
+};
+
+vector&lt;Node&gt; v;
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        int l, r;
+        cin &gt;&gt; l &gt;&gt; r;
+        if (l &gt; r)  swap(l ,r);
+        v.emplace_back(Node(l, r));
+    }
+    sort(v.begin(), v.end());
+    int r = -1000, ans = n;
+    for (int i = 0; i &lt; n; i++) {
+        if (v[i].l &lt; r) {
+            ans--;
+        } else {
+            r = max(r, v[i].r);
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/51nod-1091/">
+                  <h3 class="post-title">
+                    51Nod-1091 线段的重叠 题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

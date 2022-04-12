@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>51Nod-2502、2658 最多分成多少块 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1649749273714">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="51Nod-2502、2658 最多分成多少块 题解
+最多分成多少块
+最多分成多少块 V2
+题目概述
+
+给一个[0, n)的排列的数组，把这个数组分成若干块，对每块进行按升序排序，保证整个数组最后是升序的
+问最多能分成几块
+
+思路分析
+
+容..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1649749273714" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">51Nod-2502、2658 最多分成多少块 题解</h2>
+            <div class="post-date">2022-04-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/51nod-2502-2658.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="51nod-2502-2658-最多分成多少块-题解">51Nod-2502、2658 最多分成多少块 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2502">最多分成多少块</a></p>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2658">最多分成多少块 V2</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>给一个[0, n)的排列的数组，把这个数组分成若干块，对每块进行按升序排序，保证整个数组最后是升序的</p>
+<p>问最多能分成几块</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>容易想到的是，如果最后的数组是有序的，首先0应该在第一组中，0前面的元素都要放在第一组，同时因为给出的是一个排列，所以前i个元素排好序后应该刚好是[0, i)，即第一组中的所有数字应该恰好是[0, i)的一个排列</p>
+<p>所以长度为i的前缀分成第一组的充要条件是：<strong>这个前缀的最小值为0，最大值为i</strong></p>
+<p>但是由于是一个排列，前i个元素中必定没有相等元素，前i个数的所以最大值为i时，最小值也一定为0</p>
+<p>所以<strong>长度为i的前缀分成第一组</strong>的充要条件是：<strong>这个前缀的最大值为i</strong></p>
+<p>然后再继续思考：</p>
+<p>现在<strong>有两个满足条件的前缀，一个长度为a，一个长度为b（a&lt;b），那么他们可以被分成两组，第一组为[0,a)，第二组为[a,b)</strong></p>
+<p>因为[0, a)排好后，[0,b)的前a个是不动的</p>
+<p>遍历数组，如果前i个元素的最大值为i，则组数+1</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n, a[N];
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    llong mx = -1, ans = 0;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i];
+        mx = max(mx, a[i]);
+        if (mx == i) {
+            ans++;
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/51nod-3234/">
+                  <h3 class="post-title">
+                    51Nod-3234 小明爱配对 题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

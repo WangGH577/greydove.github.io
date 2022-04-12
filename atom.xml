@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-04-09T06:11:43.663Z</updated>
+    <updated>2022-04-12T07:41:15.781Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -10,6 +10,459 @@
     <logo>https://greydoveh.github.io/images/avatar.png</logo>
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
+    <entry>
+        <title type="html"><![CDATA[51Nod-2071 不相交子区间 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-2071/</id>
+        <link href="https://greydoveh.github.io/post/51nod-2071/">
+        </link>
+        <updated>2022-04-12T07:40:49.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-2071-不相交子区间-题解">51Nod-2071 不相交子区间 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2071">不相交子区间</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>从给出的线段中去掉尽量少的线段，使得剩下的线段两两之间没有内部公共点，求最后剩下几条线段</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>按照右端点排序，记录当前能到达的最远右端点</p>
+<p>对于每条线段，如果左端点在最远右端点左边，则说明该线段需要被删掉</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n;
+struct Node {
+    int l, r;
+    Node(int l = 0, int r = 0) : l(l), r(r) { }
+    bool operator &lt; (Node ano) {
+        return r &lt; ano.r;
+    }
+};
+
+vector&lt;Node&gt; v;
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        int l, r;
+        cin &gt;&gt; l &gt;&gt; r;
+        if (l &gt; r)  swap(l ,r);
+        v.emplace_back(Node(l, r));
+    }
+    sort(v.begin(), v.end());
+    int r = -1000, ans = n;
+    for (int i = 0; i &lt; n; i++) {
+        if (v[i].l &lt; r) {
+            ans--;
+        } else {
+            r = max(r, v[i].r);
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-1091 线段的重叠 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-1091/</id>
+        <link href="https://greydoveh.github.io/post/51nod-1091/">
+        </link>
+        <updated>2022-04-12T07:35:53.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-1091-线段的重叠-题解">51Nod-1091 线段的重叠 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=1091">线段的重叠</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>给出N条线段的起点和终点，从中选出2条线段，这两条线段的重叠部分是最长的。输出这个最长的距离。</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>对这些线段优先按照左端点升序排序</p>
+<p>枚举每条线段，记录枚举过的线段能到达的最远距离</p>
+<p>对于每条线段，如果有重叠，计算重叠的长度最大值</p>
+<p>重叠长度的计算方式为：max(最远右端点, 当前右端点)- 当前左断点</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n, m, x;
+
+struct Node {
+    llong l, r;
+    Node(llong l = 0, llong r = 0) : l(l), r(r) { }
+    bool operator &lt; (Node a) {
+        if (l == a.l)   return r &lt; a.r;
+        return l &lt; a.l;
+    }
+};
+vector&lt;Node&gt; v;
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        llong l, r; cin &gt;&gt; l &gt;&gt; r;
+        v.emplace_back(Node(l, r));
+    }
+    sort(v.begin(), v.end());
+    llong ans = 0, id = 0;
+    for (int i = 1; i &lt; n; i++) {
+        if (v[i].l &lt; v[id].r) {
+            ans = max(ans, min(v[id].r, v[i].r) - max(v[id].l, v[i].l));
+        }
+        if (v[i].r &gt; v[id].r) {
+            id = i;
+        } 
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-1289 大鱼吃小鱼 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-1289/</id>
+        <link href="https://greydoveh.github.io/post/51nod-1289/">
+        </link>
+        <updated>2022-04-12T07:24:43.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-1289-大鱼吃小鱼-题解">51Nod-1289 大鱼吃小鱼 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=1289">大鱼吃小鱼</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>有N条鱼每条鱼的位置及大小均不同，他们沿着X轴游动，有的向左，有的向右。游动的速度是一样的，两条鱼相遇大鱼会吃掉小鱼。从左到右给出每条鱼的大小和游动的方向（0表示向左，1表示向右）。问足够长的时间之后，能剩下多少条鱼？</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>用栈去维护向右移动的鱼</p>
+<p>从左到右遍历，如果碰到向左的鱼，则判断鱼的大小与栈顶元素的关系，</p>
+<p>如果栈顶的鱼更大，则忽略这条鱼（被栈顶吃掉），否则栈顶的鱼被吃掉退栈</p>
+<p>一直到栈为空或者栈顶鱼大于这条向左的鱼</p>
+<p>如果栈为空，则这条鱼活了下来，左边的其他鱼都被吃掉了</p>
+<p>否则栈中剩余的鱼存活，这条向左的鱼被吃掉</p>
+<p>最后记录向左移动存活的鱼（栈为空时计数）和向右移动存活的鱼（遍历到最后栈中剩下的鱼）</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n;
+int a[N], b[N];
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i] &gt;&gt; b[i];
+    }
+    int ans = 0;
+    stack&lt;int&gt; st;
+    for (int i = 0; i &lt; n; i++) {
+        if (b[i]) {
+            st.push(i);
+        } else {
+            while (st.size() &amp;&amp; a[i] &gt; a[st.top()]) {
+                st.pop();
+            }
+            if (st.empty()) {
+                ans++;
+            }
+        }
+    }
+    ans += st.size();
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-2488 矩形并的面积 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-2488/</id>
+        <link href="https://greydoveh.github.io/post/51nod-2488/">
+        </link>
+        <updated>2022-04-12T07:05:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-2488-矩形并的面积-题解">51Nod-2488 矩形并的面积 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2488">矩形并的面积</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>给两个矩形，每条边分别和坐标轴平行，求两个矩形覆盖的总面积</p>
+</blockquote>
+<h3 id="解题思路">解题思路</h3>
+<blockquote>
+<p>用左下和右上两个点来表示矩形</p>
+<p>如果两个矩形分别为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>b</mi><mo>)</mo><mo separator="true">,</mo><mo>(</mo><mi>c</mi><mo separator="true">,</mo><mi>d</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(a, b), (c, d)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>e</mi><mo separator="true">,</mo><mi>f</mi><mo>)</mo><mo separator="true">,</mo><mo>(</mo><mi>g</mi><mo separator="true">,</mo><mi>h</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(e, f), (g, h)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">e</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">h</span><span class="mclose">)</span></span></span></span>，相交部分的矩形表示为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><msub><mi>x</mi><mn>1</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>1</mn></msub><mo>)</mo><mo separator="true">,</mo><mo>(</mo><msub><mi>x</mi><mn>2</mn></msub><mo separator="true">,</mo><msub><mi>y</mi><mn>2</mn></msub><mo>)</mo></mrow><annotation encoding="application/x-tex">(x_1, y_1), (x_2, y_2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mopen">(</span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p>则</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>a</mi><mo separator="true">,</mo><mi>e</mi><mo>)</mo><mspace linebreak="newline"></mspace><msub><mi>y</mi><mn>1</mn></msub><mo>=</mo><mi>m</mi><mi>a</mi><mi>x</mi><mo>(</mo><mi>b</mi><mo separator="true">,</mo><mi>f</mi><mo>)</mo><mspace linebreak="newline"></mspace><msub><mi>x</mi><mn>2</mn></msub><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>c</mi><mo separator="true">,</mo><mi>g</mi><mo>)</mo><mspace linebreak="newline"></mspace><msub><mi>y</mi><mn>2</mn></msub><mo>=</mo><mi>m</mi><mi>i</mi><mi>n</mi><mo>(</mo><mi>d</mi><mo separator="true">,</mo><mi>h</mi><mo>)</mo><mspace linebreak="newline"></mspace></mrow><annotation encoding="application/x-tex">x_1 = max(a, e)\\
+y_1 = max(b, f)\\
+x_2 = min(c, g)\\
+y_2 = min(d, h)\\
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">e</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mopen">(</span><span class="mord mathdefault">b</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">c</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mclose">)</span></span><span class="mspace newline"></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">h</span><span class="mclose">)</span></span><span class="mspace newline"></span></span></span></span></p>
+<p>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>x</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>x</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">x_1 &lt; x_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6891em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">x</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>且<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>y</mi><mn>1</mn></msub><mo>&lt;</mo><msub><mi>y</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">y_1 &lt; y_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7335400000000001em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，说明两矩形确实有相交部分</p>
+<p>求两个矩形面积之和然后减去相交的小矩形的面积即可</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+int n, m;
+llong a, b, c, d;
+llong e, f, g, h;
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; a &gt;&gt; b &gt;&gt; c &gt;&gt; d;
+    cin &gt;&gt; e &gt;&gt; f &gt;&gt; g &gt;&gt; h;
+    llong ans = 0;
+    ans += (c - a) * (d - b);
+    ans += (g - e) * (h - f);
+    llong x1 = max(a, e);
+    llong y1 = max(b, f);
+    llong x2 = min(c, g);
+    llong y2 = min(d, h);
+    if (x1 &lt; x2 &amp;&amp; y1 &lt; y2) { 
+        ans -= (x2 - x1) * (y2 - y1);
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-3045 Lcm与Gcd构造 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-3045/</id>
+        <link href="https://greydoveh.github.io/post/51nod-3045/">
+        </link>
+        <updated>2022-04-12T06:41:42.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-3045-lcm与gcd构造-题解">51Nod-3045 Lcm与Gcd构造 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=3045">Lcm与Gcd构造</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>已知gcd(a,b)和lcm(a,b)，求满足条件的ab使得a+b最小</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>根据<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>c</mi><mi>d</mi></mrow><annotation encoding="application/x-tex">gcd</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>c</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">lcm</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">m</span></span></span></span>可以求得<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><mi>b</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo>∗</mo><mi>l</mi><mi>c</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">a*b=gcd*lcm</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">m</span></span></span></span><br>
+然后枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>∗</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">a*b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>的因子分别作为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>，判断是否满足条件并求最小值<br>
+实际复杂度过大，所以这里采用另外的方式<br>
+令<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>=</mo><mfrac><mi>a</mi><mrow><mi>g</mi><mi>c</mi><mi>d</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">x=\frac{a}{gcd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.1764999999999999em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.695392em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>y</mi><mo>=</mo><mfrac><mi>b</mi><mrow><mi>g</mi><mi>c</mi><mi>d</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">y=\frac{b}{gcd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.3612159999999998em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span><br>
+则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi><mo>+</mo><mi>b</mi><mo>=</mo><mi>g</mi><mi>c</mi><mi>d</mi><mo>∗</mo><mo>(</mo><mi>x</mi><mo>+</mo><mi>y</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">a + b = gcd * (x + y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">a</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>g</mi><mi>c</mi><mi>d</mi><mo>(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo>)</mo><mo>=</mo><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">gcd(x, y) == 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault">c</span><span class="mord mathdefault">d</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span></span><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span><br>
+<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi><mo>∗</mo><mi>y</mi><mo>=</mo><mfrac><mrow><mi>a</mi><mo>∗</mo><mi>b</mi></mrow><mrow><mi>g</mi><mi>c</mi><mi>d</mi><mo>∗</mo><mi>g</mi><mi>c</mi><mi>d</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>l</mi><mi>c</mi><mi>m</mi></mrow><mrow><mi>g</mi><mi>c</mi><mi>d</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">x * y = \frac{a * b}{gcd * gcd} = \frac{lcm}{gcd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.3612159999999998em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span><span class="mbin mtight">∗</span><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">a</span><span class="mbin mtight">∗</span><span class="mord mathdefault mtight">b</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.3612159999999998em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></p>
+<p>只需要枚举<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi>l</mi><mi>c</mi><mi>m</mi></mrow><mrow><mi>g</mi><mi>c</mi><mi>d</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{lcm}{gcd}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.3612159999999998em;vertical-align:-0.481108em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.8801079999999999em;"><span style="top:-2.6550000000000002em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.03588em;">g</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">d</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.394em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">m</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.481108em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>因子即可</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong gcd, lcm;
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    int T = 1;	cin &gt;&gt; T;
+    while (T--) {
+        cin &gt;&gt; gcd &gt;&gt; lcm;
+        llong t = lcm / gcd;
+        llong ans = 0x7fffffffffffffff;
+        for (llong i = 1; i &lt;= t / i; i++) {
+            if (t % i == 0 &amp;&amp; __gcd(i, t / i) == 1) {
+                ans = min(ans, gcd * (i + t / i));
+            }
+        }
+        cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-2502、2658 最多分成多少块 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-2502-2658/</id>
+        <link href="https://greydoveh.github.io/post/51nod-2502-2658/">
+        </link>
+        <updated>2022-04-12T06:15:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-2502-2658-最多分成多少块-题解">51Nod-2502、2658 最多分成多少块 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2502">最多分成多少块</a></p>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=2658">最多分成多少块 V2</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>给一个[0, n)的排列的数组，把这个数组分成若干块，对每块进行按升序排序，保证整个数组最后是升序的</p>
+<p>问最多能分成几块</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>容易想到的是，如果最后的数组是有序的，首先0应该在第一组中，0前面的元素都要放在第一组，同时因为给出的是一个排列，所以前i个元素排好序后应该刚好是[0, i)，即第一组中的所有数字应该恰好是[0, i)的一个排列</p>
+<p>所以长度为i的前缀分成第一组的充要条件是：<strong>这个前缀的最小值为0，最大值为i</strong></p>
+<p>但是由于是一个排列，前i个元素中必定没有相等元素，前i个数的所以最大值为i时，最小值也一定为0</p>
+<p>所以<strong>长度为i的前缀分成第一组</strong>的充要条件是：<strong>这个前缀的最大值为i</strong></p>
+<p>然后再继续思考：</p>
+<p>现在<strong>有两个满足条件的前缀，一个长度为a，一个长度为b（a&lt;b），那么他们可以被分成两组，第一组为[0,a)，第二组为[a,b)</strong></p>
+<p>因为[0, a)排好后，[0,b)的前a个是不动的</p>
+<p>遍历数组，如果前i个元素的最大值为i，则组数+1</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n, a[N];
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    llong mx = -1, ans = 0;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i];
+        mx = max(mx, a[i]);
+        if (mx == i) {
+            ans++;
+        }
+    }
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[51Nod-3234 小明爱配对 题解]]></title>
+        <id>https://greydoveh.github.io/post/51nod-3234/</id>
+        <link href="https://greydoveh.github.io/post/51nod-3234/">
+        </link>
+        <updated>2022-04-09T10:55:10.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="51nod-3234-小明爱配对-题解">51Nod-3234 小明爱配对 题解</h1>
+<p><a href="http://www.51nod.com/Challenge/Problem.html#problemId=3234">小明爱配对</a></p>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>给定一个序列，给序列中的人两两配对</p>
+<ol>
+<li>相邻男女可以配对</li>
+<li>优先选择权值相差最小的一对，不止一对选择下标最小的一对</li>
+<li>配对成功后从原序列中删除，原来不相邻的可以变成相邻</li>
+<li>一直到无法配对为止</li>
+</ol>
+<p>按配对的先后顺序求所有的对</p>
+</blockquote>
+<h3 id="解题思路">解题思路</h3>
+<blockquote>
+<p>使用堆去存储配对信息</p>
+<p>对初始序列扫描一遍，把所有符合要求的对放入堆中</p>
+<p>每次从堆中取出一个配对，并在原序列中删除，并把新的相邻可配对元素放入堆中</p>
+<p>删除的复杂度较高，可以使用链表解决</p>
+<p>也可以使用标记的方式，同时对每个元素分别记录左右位置信息，当删除配对时更新左右位置信息，将元素标记为删除，可以防止某个元素被重复使用</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int INF = 0x3f3f3f3f;
+int n, m;
+vector&lt;pair&lt;int, int&gt; &gt; ans;
+vector&lt;pair&lt;int, int&gt; &gt; a;
+bool vis[N];
+int l[N], r[N];
+
+struct Node {
+    int l, r, sub;
+    Node(int l = 0, int r = 0, int sub = 0) : l(l), r(r), sub(sub) { }
+};
+
+struct cmp {
+    bool operator () (Node a, Node b){
+        if (a.sub == b.sub) {
+            if (a.l == b.l) {
+                return a.r &gt; b.r;
+            }
+            return a.l &gt; b.l;
+        }
+        return a.sub &gt; b.sub;
+    }
+};
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        string s;   int x;
+        cin &gt;&gt; s &gt;&gt; x;
+        a.emplace_back(make_pair(s == &quot;B&quot;, x));
+        l[i] = i - 1;   r[i] = i + 1;
+    }
+    r[n - 1] = -1;
+    priority_queue&lt;Node, vector&lt;Node&gt;, cmp&gt; pq;
+    for (int i = 1; i&lt; n; i++) {
+        if (a[i - 1].first ^ a[i].first) {
+            pq.push(Node(i - 1, i, abs(a[i - 1].second - a[i].second)));
+        }
+    }
+    while (pq.size()) {
+        auto x = pq.top();  pq.pop();
+        if (vis[x.l] || vis[x.r]) continue;
+        ans.emplace_back(make_pair(x.l, x.r));
+        vis[x.l] = vis[x.r] = true;
+        int ll = l[x.l], rr = r[x.r];
+        if (~ll &amp;&amp; ~rr) {
+            r[ll] = rr;
+            l[rr] = ll;
+            if (a[ll].first ^ a[rr].first) {
+                pq.push(Node(ll, rr, abs(a[ll].second - a[rr].second)));
+            }
+        }
+    }
+    cout &lt;&lt; ans.size() &lt;&lt; &quot;\n&quot;;
+    for (auto x : ans) {
+        cout &lt;&lt; x.first + 1 &lt;&lt; &quot; &quot; &lt;&lt; x.second + 1 &lt;&lt; &quot;\n&quot;;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[51Nod-3188 字符王国 题解]]></title>
         <id>https://greydoveh.github.io/post/51nod-3188/</id>
@@ -207,1854 +660,53 @@ int main() {
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 反射和特性]]></title>
-        <id>https://greydoveh.github.io/post/CS-Reflection-Attribute/</id>
-        <link href="https://greydoveh.github.io/post/CS-Reflection-Attribute/">
+        <title type="html"><![CDATA[LeetCode 918.环形数组的最大和]]></title>
+        <id>https://greydoveh.github.io/post/leetcode-918/</id>
+        <link href="https://greydoveh.github.io/post/leetcode-918/">
         </link>
-        <updated>2022-03-23T10:29:38.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="反射和特性">反射和特性</h1>
-<ol>
-<li>元数据和反射
-<ul>
-<li>有些程序及其类型的数据称为<strong>元数据</strong>，它们保存在程序的程序集中</li>
-<li>程序在运行时，可以查看其他程序集或其本身的元数据，这个行为叫做<strong>反射</strong></li>
-<li>对象浏览器是显示元数据的程序的一个实例</li>
-<li>要使用反射，必须使用<code>System.Reflection</code>命名空间</li>
-</ul>
-</li>
-<li>Type类
-<ul>
-<li>Type类概述
-<ul>
-<li>BCL中提供的<strong>抽象类</strong>，被设计用来包含类型的特性</li>
-<li>在运行时，CLR创建Type（RuntimeType）派生的类的实例，包含了类型信息</li>
-<li>当我们访问这些实例时，CLR不会返回派生类的引用而是基类Type的引用</li>
-<li>简单起见，可以把引用指向的对象成为Type类型的对象，但实际上是BCL内部派生类型的对象</li>
-</ul>
-</li>
-<li>有关Type的重要事项
-<ul>
-<li>对于程序中用到的每一个类型，CLR都会创建一个包含这个类型信息的Type类型的对象</li>
-<li>程序中用到的每一个类型，都会关联到独立的Type类的对象</li>
-<li>不管创建的类型有多少个实例，只有一个Type对象会关联到所有这些实例</li>
-<li><em>貌似类似于static</em></li>
-</ul>
-</li>
-<li>可以从Type对象中获取类型的信息
-<ul>
-<li><strong>Name</strong>：属性，返回类型的名字</li>
-<li><strong>Namespace</strong>：属性，返回类型的生命的命名空间</li>
-<li><strong>Assembly</strong>：属性，返回声明类型的程序集，如果类型是泛型的，则返回定义这个类型的程序集</li>
-<li><strong>GetFields</strong>：方法，返回类型的字段列表</li>
-<li><strong>GetProperties</strong>：方法，返回类型的属性列表</li>
-<li><strong>Getthonds</strong>：方法，返回类型的方法列表</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>获取Type对象
-<ul>
-<li><code>GetType</code>方法
-<ul>
-<li>object类型包含了一个叫做<code>GetType</code>的方法，返回对实例的<code>Type</code>对象的引用</li>
-<li>通过<strong>对象</strong>去调用方法</li>
-</ul>
-</li>
-<li><code>typeof</code>运算符
-<ul>
-<li>在括号内传入<strong>类型</strong></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>特性
-<ul>
-<li><strong>特性</strong>是一种允许我们向程序集增加元数据的语言结构，它是用于保存程序结构信息的某种特殊类型的类
-<ul>
-<li>将应用了特性的程序结构叫做<strong>目标</strong></li>
-<li>设计用来获取和使用元数据的程序的特性叫做<strong>消费者</strong></li>
-<li>.NET预定义了很多特性，也可以声明自定义特性</li>
-</ul>
-</li>
-<li>特性的要点
-<ul>
-<li>在源代码中将特性应用于程序结构</li>
-<li>编译器获取源代码并且从特性产生元数据，然后把元数据放到程序集中</li>
-<li>消费者程序可以获取特性的元数据以及程序中其他组件的元数据</li>
-<li>编译器同时产生和消费特性</li>
-</ul>
-</li>
-<li>特性名以Attribute后缀结尾，使用目标时省略后缀</li>
-</ul>
-</li>
-<li>应用特性
-<ul>
-<li><em>这里所说的结构是是指程序结构，包含结构体、类、方法等，不是单单指结构体struct</em></li>
-<li>特性的目的是告诉编译器把程序结构的某组元数据嵌入程序集，可以通过把特性应用到结构来实现</li>
-<li>在结构前防止特性片段来应用特性</li>
-<li>特性片段被方括号包围，其中是特性名和特性的参数列表</li>
-<li>大多数特性只针对直接跟随着一个或多个特性后的结构</li>
-<li>引用了特性的结构成为被特性装饰</li>
-</ul>
-</li>
-<li>预定义的保留的特性
-<ul>
-<li><code>Obsolete</code>特性
-<ul>
-<li>可以将结构标注为过期的，在使用时编译器会给出警告，但仍然可以调用</li>
-<li>两个可选参数
-<ul>
-<li><code>message</code>：<code>string?</code>，表示警告的提示信息</li>
-<li><code>error</code>：<code>bool</code>类型，如果为true，则会标记错误而不是警告</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>Conditional</code>特性
-<ul>
-<li>需要使用<code>System.Diagnostics</code>命名空间</li>
-<li>允许包括或排斥特定方法的所有调用，为方法声明应用Conditional特性并把编译符号（宏定义的内容）作为参数来使用
-<ul>
-<li>如果定义了编译符号，和普通方法没有区别</li>
-<li>如果没有定义编译符号，那么编译器会忽略代码中这个方法的所有调用</li>
-</ul>
-</li>
-<li>
-<pre><code class="language-csharp">#define DEBUG
-// ...
-void Test() { ... }
-// ...
-#if DEBUG 
-    Test();
-#endif
-</code></pre>
-</li>
-<li>
-<pre><code class="language-csharp">#define DEBUG
-// ...
-[Conditional(&quot;DEBUG&quot;)]
-void Test() { ... }
-// ...
-Test();
-</code></pre>
-</li>
-<li>定义方法的CIL代码本身总会包含在程序集中，只是调用代码会被插入或忽略
-<ul>
-<li>编译这段代码时，会检查是否有编译符号的定义
-<ul>
-<li>如果被定义，编译器会像往常一样包含所有对方法的调用</li>
-<li>如果没有定义，编译器就不会输出任何对方法的调用代码</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>调用者信息特性
-<ul>
-<li>可以访问文件路径、代码行数、调用成员的名称等源代码信息，需要使用<code>System.Runtime.CompilerServices</code>命名空间</li>
-<li>三个特性
-<ul>
-<li><code>CallerFilePath</code>：调用者的文件路径</li>
-<li><code>CallerLineNumber</code>：调用方法的行号</li>
-<li><code>CallerMemberName</code>：调用方法的成员名</li>
-</ul>
-</li>
-<li>只能用于方法的参数，且是给定默认值的可选参数</li>
-</ul>
-</li>
-<li><code>DebuggerStepThrough</code>特性
-<ul>
-<li>位于<code>System.Diagnostics</code>命名空间</li>
-<li>在单步调试时可以不进入方法</li>
-<li>可以用于类、结构、构造函数、方法和访问器</li>
-</ul>
-</li>
-<li>其他预定义特性
-<ul>
-<li><code>CLSCompliant</code>：声明可公开的成员应该被编译器检测是否符合CLS，兼容的程序集可以被任何.NET兼容的语言使用</li>
-<li><code>Serializable</code>：声明结构可以被序列化</li>
-<li><code>NonSerialized</code>：声明结构不能被序列化</li>
-<li><code>DLLImport</code>：声明是非托管代码实现的</li>
-<li><code>WebMethod</code>：声明方法应该被作为XML Web服务的一部分暴露</li>
-<li><code>AttributeUsage</code>：声明特性能应用到什么类型的程序结构，将这个特性引用到结构声明上</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>有关应用特性的更多内容
-<ul>
-<li>多个特性
-<ul>
-<li>可以为单个结构应用多个特性</li>
-<li>多层结构：用多个方括号应用多个特性</li>
-<li>逗号分隔：多个特性写在一个方括号内，用逗号隔开</li>
-</ul>
-</li>
-<li>其他类型的目标
-<ul>
-<li>除了类，特性还可以应用到字段、属性等其他程序结构</li>
-<li>还可以显式的标注特性，如<code>[return : MyAttribute ]</code></li>
-<li>C#提供了10个标准的特性名不，大多数目标名可以自明，而<code>type</code>覆盖了类、结构、委托、枚举、接口；<code>typevar</code>目标名称指定使用泛型结构的类型参数
-<ul>
-<li><code>event</code>、<code>field</code>、<code>method</code>、<code>param</code>、<code>property</code>、<code>return</code>、<code>type</code>、<code>typevar</code>、<code>assembly</code>、<code>module</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>全局特性
-<ul>
-<li>可以使用<code>assembly</code>和<code>module</code>目标名称来使用显式目标说明符把特性设置在程序集或模块级别</li>
-<li>程序集级别的特性必须放置在任何命名空间之外，并且通常放在AssemblyInfo.cs文件中</li>
-<li>AssemblyInfo.sc文件通常包含有关公司、产品、以及版权信息的元数据</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>自定义特性
-<ul>
-<li>用户自定义的特性类叫做自定义特性，所有的特性类都派生自<code>System.Attribute</code></li>
-<li>声明自定义特性
-<ul>
-<li>派生自<code>System.Attribute</code></li>
-<li>以Attribute结尾</li>
-<li>安全起见，通常建议声明为sealed</li>
-<li>所有特性的公共成员只能是
-<ul>
-<li>字段</li>
-<li>属性</li>
-<li>构造函数</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>使用特性的构造函数
-<ul>
-<li>每个特性至少必须有一个公共的构造函数</li>
-<li>如果不显式提供构造函数，编译器会提供一个隐式的、公共的、无参的构造函数</li>
-<li>可以被重载</li>
-<li>必须使用全名，不能省略后缀，只有在应用特性的时候才能省略后缀</li>
-</ul>
-</li>
-<li>指定构造函数
-<ul>
-<li>为目标应用特性时，其实是是在指定构造函数来创建特性的实例</li>
-<li>列在特性应用中的参数其实就是构造函数的参数</li>
-<li>应用特性时，构造函数的实参必须是在编译期能确定值的常量表达式</li>
-<li>如果使用无参的构造函数，圆括号可以省略</li>
-</ul>
-</li>
-<li>使用构造函数
-<ul>
-<li>不能显式调用构造函数，特性的实例创建后，只有特性的消费者访问特性时才能调用构造函数</li>
-<li>应用一个特性是一条声明语句，不会决定什么时候构造特性类的对象</li>
-</ul>
-</li>
-<li>构造函数中的位置参数和命名参数
-<ul>
-<li>在特性类声明时，可以提供多于形参个数的实参，多出来的实参被称为<strong>命名参数</strong>，给特性类的其他成员进行赋值，需要显式写出成员名称和<strong>等号</strong></li>
-<li>注意这里的命名参数和前面学习的命名参数不同
-<ul>
-<li>前面讲的命名参数是指定的仍然是形参，只不过可以改变传参的位置和顺序，这里的命名参数可以在形参之外给成员赋值</li>
-<li>前面学习的命名参数使用的是冒号，这里使用登号</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>限制特性的使用
-<ul>
-<li><code>AttributeUsage</code>特性是一个很重要的预定义特性，可以应用到自定义特性，用来限制特性使用在某个目标类型上</li>
-<li>有三个重要的公共属性
-<ul>
-<li><code>ValidOn</code>：保存特性能应用到的目标类型的列表，构造函数的第一个参数必须是<code>AttributeTarget</code>类型的枚举值，无指定默认值</li>
-<li><code>Inherited</code>：指示特性是否会装饰类型的派生类修饰，默认为true，可以使用命名参数指定</li>
-<li><code>AllowMutiple</code>：指示目标是否被应用到多个特性的实例的布尔值，默认为false，可以使用命名参数指定</li>
-</ul>
-</li>
-<li>构造函数
-<ul>
-<li>接受单个位置参数，指定了特性允许的目标类型（<code>AttributeTarge</code>枚举类型），用来设置<code>ValidOn</code>属性</li>
-<li><code>AttributeTarge</code>枚举的成员
-<ul>
-<li><code>All</code>、<code>Assembly</code>、<code>Class</code>、<code>Constructor</code>、<code>Delegate</code>、<code>Enum</code>、<code>Event</code>、<code>Field</code>、<code>GenericParameter</code>、<code>Interface</code>、<code>Method</code>、<code>Module</code>、<code>Parameter</code>、<code>Property</code>、<code>ReturnValue</code>、<code>Struct</code></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>自定义特性的最佳实践
-<ul>
-<li>特性类应该表示目标结构的一些状态</li>
-<li>如果特性需要某些字段，可以通过包含具有位置参数的构造函数来收集数据，可选字段可以采用命名参数按需初始化</li>
-<li>除了属性之外，不要实现公共方法或其他函数成员</li>
-<li>为了更安全，把特性类声明为sealed</li>
-<li>在特性声明中使用<code>AttributeUsage</code>来显式指定特性目标组</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>访问特性
-<ul>
-<li>对于自定义特性也可以使用Type对象来获取信息，Type的两个方法<code>IsDefined</code>和<code>GetCustomAttributes</code>在这里非常有用</li>
-<li>使用<code>IsDefined</code>方法
-<ul>
-<li>可以使用该方法来检测某个特性是否应用到某个类上</li>
-<li>第一个参数接受需要检测的特性的Type对象</li>
-<li>第二个参数指示是否搜索类的继承树来查找这个特性</li>
-</ul>
-</li>
-<li>使用<code>GetCustomAttributes</code>方法
-<ul>
-<li>返回应用到结构的特性的数组
-<ul>
-<li>实际返回的对象是object类型的数组，因此我们必须将它强制转换为相应的特性类型</li>
-<li>参数指示是否搜索类的继承树来查找特性</li>
-<li>调用方法后，每一个与目标相关联的特性的实例就会被创建</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 预处理指令]]></title>
-        <id>https://greydoveh.github.io/post/CS-Preprocess/</id>
-        <link href="https://greydoveh.github.io/post/CS-Preprocess/">
-        </link>
-        <updated>2022-03-20T06:47:04.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="预处理指令">预处理指令</h1>
-<ol>
-<li>预处理指令
-<ul>
-<li>源代码指定了程序的定义</li>
-<li>预处理指令指示编译器如何处理源代码</li>
-<li>在C/C++中有实际的预处理阶段，预处理程序遍历源代码并为之后的编译阶段准备文本输出流</li>
-<li>C#中没有实际的预处理程序，预处理指令由编译器来处理</li>
-</ul>
-</li>
-<li>基本规则
-<ul>
-<li>预处理指令必须和C#代码在不同的行</li>
-<li>不需要以分号结尾</li>
-<li>必须以#开头，但是#前可以有空格，#和指令直接可以有空格</li>
-<li>允许行尾注释，，不允许分隔符注释（即允许<code>// ...</code>但是不允许<code>/* ... */</code>）</li>
-</ul>
-</li>
-<li>预处理指令类型
-<ul>
-<li><code>#define IDENTIFIER</code>：定义编译符</li>
-<li><code>#undef IDENTIFIER</code>：取消定义编译符</li>
-<li><code>#if EXPRESSION</code>：如果EXPRESSION为true，则编译下面的片段</li>
-<li><code>#elif EXPRESSION</code>：如果前面的<code>#if</code>为false且当前的EXPRESSION为true，则编译下面的片段</li>
-<li><code>#else</code>：如果之前的<code>#if</code>或者<code>#elif</code>为false，则编译下面的片段</li>
-<li><code>#endif</code>：标记一个<code>#if</code>片段的结构</li>
-<li><code>#region NAME</code>：标记一段代码的开始，没有效果</li>
-<li><code>#endregion NAME</code>：标记一段代码的结束，没有效果</li>
-<li><code>#warning MESSAGE</code>：显式编译时的警告消息</li>
-<li><code>#error MESSAGE</code>：显式编译时的错误消息</li>
-<li><code>#line INDICATOR</code>：修改在编译器消息中显示的行数</li>
-<li><code>#pragma TEXT</code>：指定有关程序上下文的信息</li>
-</ul>
-</li>
-<li><code>#define</code>和<code>#undef</code>
-<ul>
-<li>可以是除了true或false以外的任意标识符，包括C#关键字和在C#代码中声明的标识符</li>
-<li>没有值，和C/C++不同，不表示字符串</li>
-<li>只能在源文件的最前面，也就是任何C#代码之前使用，不能放在C#代码开始之后</li>
-<li>编译符号被限制在单个文件</li>
-<li>允许重复定义</li>
-</ul>
-</li>
-<li>条件编译
-<ul>
-<li>允许根据某个编译符号是否被定义标注一段代码是否被编译或者跳过</li>
-<li>条件是一个返回true或false的简单表达式
-<ul>
-<li>可以由单个编译符号、符号表达式或操作符组成，可以使用括号</li>
-<li>true和false也可以直接使用</li>
-</ul>
-</li>
-<li>条件编译结构
-<ul>
-<li><code>#if</code>和<code>#endif</code>必须配对使用，<code>#elif</code>和<code>#else</code>可根据条件选择</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>诊断指令
-<ul>
-<li>产生用户自定义的编译时的警告以及错误信息
-<ul>
-<li><code>#warning MESSAGE</code></li>
-<li><code>#error MESSAGE</code></li>
-<li>其中MESSAGE是自定义字符串代表错误信息，但是不需要加引号</li>
-</ul>
-</li>
-<li>当编译器遇到诊断指令时，会输出相关的消息，会和任何编译器产生的警告和错误列在一起</li>
-</ul>
-</li>
-<li>行号指令
-<ul>
-<li>行号指令可以做很多事情例如
-<ul>
-<li>改变由编译器警告和错误消息报告的出现行数</li>
-<li>改变被编译源文件的文件名</li>
-<li>对交互式调试器隐藏一些行</li>
-</ul>
-</li>
-<li>语法：</li>
-<li><code>#line INTEGER</code>：加整数可以设置下一行值为整数的行的行号</li>
-<li><code>#line &quot;FILENAME&quot;</code>：改变外观文件名，双引号是必须的</li>
-<li><code>#line default</code>：重新保存实际的行号和文件名，得到真实的行号和文件名</li>
-<li><code>#line hidden</code>：在断点调试器隐藏代码</li>
-<li><code>#line</code>：停止在调试器隐藏代码</li>
-</ul>
-</li>
-<li>区域指令
-<ul>
-<li>允许有选择地命名一段代码
-<ul>
-<li><code>#region NAME</code>被放在在希望标注代码段之前，NAME是可选字符串文本不加引号</li>
-<li>在代码段结束后用<code>#endregion</code>标记终止</li>
-</ul>
-</li>
-<li>尽管会被编译器忽略，但是可以被IDE使用如折叠代码</li>
-</ul>
-</li>
-<li><code>#pragma warning</code>指令
-<ul>
-<li>允许关闭及重新打开警告信息</li>
-<li>举例
-<ul>
-<li>
-<pre><code class="language-csharp">public struct Vector2Int {	// 随便提供了一个类
-    public int x, y;
-    public static Vector2Int zero {
-        get {
-            return new Vector2Int(0, 0);
+        <updated>2022-02-16T03:50:14.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="leetcode-918环形数组的最大和">LeetCode 918.环形数组的最大和</h1>
+<p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">题目链接</a></p>
+<h3 id="思路">思路</h3>
+<p>思路和<a href="https://leetcode-cn.com/problems/maximum-subarray/">LeetCode 53.最大子数组和</a>类似<br>
+在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是<strong>不跨越原点的最大值</strong><br>
+然后再求一个<strong>跨越原点的最大值</strong><br>
+这个思路和上面的反过来，先求中间一段<strong>最小子数组和</strong>ans2，然后用<strong>总和减去该最小子数组和</strong>，得到的即是<strong>跨越两边的最大值</strong>sum[n] - ans2<br>
+最后<strong>两者取最大值</strong>返回max(ans1, sum[n] - ans2);</p>
+<blockquote>
+<p>注意一个特殊情况，当整个数组全为负数的时候，最小子数组和为整个数组的和，会导致返回的值为0，此时取得是一个空的子数组，但是题目要求要的是一个<strong>非空</strong>子数组的和，所以要判断一下左右边界</p>
+</blockquote>
+<h3 id="代码">代码</h3>
+<pre><code class="language-csharp">public class Solution {
+    public int MaxSubarraySumCircular(int[] nums) {
+        int[] sum = new int [nums.Length + 1];
+        for (int i = 1; i &lt; sum.Length; i++) {
+            sum[i] = sum[i - 1] + nums[i - 1];
         }
-    }
-    public Vector2Int(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-    public static bool operator == (Vector2Int a, Vector2Int b) {
-        return a.x == b.x &amp;&amp; a.y == b.y ;
-    }
-    public static bool operator != (Vector2Int a, Vector2Int b) {
-        return a.x != b.x || a.y != b.y ;
-    }
-}
-</code></pre>
-</li>
-<li>警告信息如下：
-<ul>
-<li>
-<pre><code>“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
-“Vector2Int”定义运算符 == 或运算符 !=，但不重写 Object.Equals(object o) [Test] csharp(CS0660) [55, 15]
-</code></pre>
-</li>
-</ul>
-</li>
-<li>在文件开头加上<code>#pragma warning disable CS0660, CS0661</code>可以使编译器忽略这两条警告不产生警告信息（实际开发的时候除非没必要建议解决掉所有警告）</li>
-</ul>
-</li>
-<li>要关闭警告，可以使用<code>#pragma warning disable XXX, XXX</code>用逗号分隔希望关闭的警告数</li>
-<li>要打开警告，可以使用<code>#pragma warning restore XXX, XXX</code></li>
-<li>如果省略警告数，会应用于所有警告</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 命名空间和程序集]]></title>
-        <id>https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/</id>
-        <link href="https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/">
-        </link>
-        <updated>2022-03-19T12:36:45.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="命名空间和程序集">命名空间和程序集</h1>
-<ol>
-<li>程序集
-<ul>
-<li>编译器接收源代码文件并生成名称为<strong>程序集</strong>的输出文件</li>
-<li>给其他程序提供类或类型的程序集称为<strong>类库</strong>，通常以.dll结尾</li>
-<li>mscorlib库
-<ul>
-<li>程序集mscorlib.dll包含C#类型以及大部分.NET语言的基本类型的定义</li>
-<li>编译C#程序时，它必须总是被引用</li>
-</ul>
-</li>
-<li>如果引用的多个类库中存在同名的类，在试图使用这些类时会报错，因为它不知道使用哪个版本的类，这种错误被称为<strong>命名冲突</strong></li>
-</ul>
-</li>
-<li>命名空间
-<ul>
-<li>共享命名空间名的一组类和类型</li>
-<li>在命名空间内，每个类型名必须有别于所有其他类型</li>
-<li>命名空间内的类型称为命名空间的成员</li>
-<li>一个源文件可以包含任意数目的命名空间声明，可以顺序也可以嵌套</li>
-<li>命名空间不是封闭的，可以在其他地方再次声明相同的命名空间以便对它增加更多类型声明，也可以被分成多个程序集</li>
-<li>嵌套命名空间
-<ul>
-<li>嵌套声明的两种方式
-<ul>
-<li>原文嵌套，直接将命名空间放在一个封闭的命名空间内部</li>
-<li>分离的声明，如<code>namespace A.B { ... }</code>，其中A是一个声明在其他位置的命名空间，B是嵌套在A内部的命名空间</li>
-</ul>
-</li>
-<li>当生成单个程序集时，两种形式的嵌套命名空间生成相同的程序集</li>
-<li>内部命名空间内的成员不属于父命名空间，也就是说父命名空间和内部命名空间直接是相互独立的</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>using指令
-<ul>
-<li>using命名空间指令
-<ul>
-<li>使用命名空间，可以在使用类时省略命名空间名</li>
-</ul>
-</li>
-<li>using别名指令
-<ul>
-<li>可以给命名空间或命名空间内的一个类型取别名</li>
-<li><code>using Syst = Syestm; using SC = System.Console;</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>程序集的结构
-<ul>
-<li>程序集不包含本地机器代码，而是公共中间语言代码。它还包含实施编译器JIT，在运行时转换CIL到本机代码所需的一切，包括对它所引用的其他程序集的引用。程序集的文件扩展名通常为.exe和.dll</li>
-<li>4个主要部分
-<ul>
-<li>清单
-<ul>
-<li>程序集名称标识符</li>
-<li>组成程序集的文件列表</li>
-<li>一个指示程序集中内容在哪里的地图</li>
-<li>关于引用的其他程序集的信息</li>
-</ul>
-</li>
-<li>类型元数据
-<ul>
-<li>包含该程序集中定义的所有类型的信息。这些信息包含关于每个类型要知道的所有事情</li>
-</ul>
-</li>
-<li>CIL代码
-<ul>
-<li>包含程序集所有的中间代码</li>
-</ul>
-</li>
-<li>资源部分
-<ul>
-<li>可选，但可以包含图形或语言资源</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>程序集代码文件称为模块，尽管大部分程序集由单文件组成，但有些也有多个文件。对于有多个模块的程序集，一个文件是主模块，而其他的是次要模块
-<ul>
-<li>主模块含有程序集的清单和到次要模块的引用</li>
-<li>次要模块的文件名以扩展名.netmodule结尾</li>
-<li>多文件程序集被视为一个单一单元，它们一起部署一起定版</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>程序集标识符
-<ul>
-<li>在.NET模块中，程序集的文件名不像在其他操作系统和环境中那么重要，更重要的是程序集的标识符</li>
-<li>标识符的组成
-<ul>
-<li>简单名：不带扩展名的文件名，也被称为程序集名或友好名称</li>
-<li>版本号：由4个句点分开的整数字符串组成</li>
-<li>文化信息：由2-5个字符组成，代表一种语言或一种语言和一个国家或地区</li>
-<li>公钥：128字节字符串，是该程序集公司唯一的
-<ul>
-<li>公钥是公钥/私钥对的一部分，它们是可以用于创建安全的数字签名</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>标识符被包含在程序集清单中</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 枚举器和迭代器]]></title>
-        <id>https://greydoveh.github.io/post/CS-ENumerator-Iterator/</id>
-        <link href="https://greydoveh.github.io/post/CS-ENumerator-Iterator/">
-        </link>
-        <updated>2022-03-18T09:25:34.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="枚举器和迭代器">枚举器和迭代器</h1>
-<ol>
-<li>枚举器、可枚举类型
-<ul>
-<li>数组可以按需提供一个叫做枚举器的对象</li>
-<li>枚举器可以依次返回请求的数组中的元素</li>
-<li>获取一个对象枚举器的方法是调用<code>GetEnumerator</code>方法，实现该方法的类型称为<strong>可枚举类型</strong></li>
-<li><code>foreach</code>结构设计用来和可枚举类型一起使用，只要遍历对象是可枚举类型，就会执行：
-<ul>
-<li>调用<code>GetEnumerator</code>方法获取对象的枚举器</li>
-<li>从枚举器中请求每一项并且把它作为迭代变量，代码可以读取该变量但是不可改变</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><code>IEnumerator</code>接口
-<ul>
-<li>实现了<code>IEnumerator</code>接口的枚举器包含三个函数成员：<code>current</code>，<code>MoveNext</code>, <code>Reset</code></li>
-<li><code>Current</code>返回当前位置的属性
-<ul>
-<li>只读</li>
-<li>返回<code>object</code>类型的引用，所以可以返回任何类型</li>
-</ul>
-</li>
-<li><code>MoveNext</code>把枚举器前进到集合中的下一项，并返回新位置是否有效
-<ul>
-<li>初始位置在第一项之前，所以使用<code>Current</code>前必须至少调用一次<code>MoveNext</code></li>
-</ul>
-</li>
-<li><code>Reset</code>重置枚举器的位置</li>
-<li>利用枚举器模仿foreach循环遍历集合中的项</li>
-<li>
-<pre><code class="language-csharp">int[] MyArray = {1, 2, 3, 4, 5};
-IEnumerator ie = MyArray.GetEnumerator();
-while (ie.MoveNext()) {
-    System.Console.WriteLine((int)ie.Current);
-}
-</code></pre>
-</li>
-<li>编写foreach时，C#编译器会生成与上述代码逻辑十分类似CIL形式的代码</li>
-</ul>
-</li>
-<li><code>IEnumerable</code>接口
-<ul>
-<li><code>IEnumerable</code>接口只有一个成员：<code>GetEnumerator</code>方法，返回对象的枚举器</li>
-</ul>
-</li>
-<li>使用<code>IEnumerator</code>接口和<code>IEnumerable</code>接口
-<ul>
-<li>可枚举类型实现<code>IEnumerable</code>接口，实现方法<code>GetEnumerator</code>方法，返回值为另一个枚举器对象</li>
-<li>枚举器对象实现<code>IEnumerator</code>接口，实现方法<code>MoveNext</code>、<code>Reset</code>以及属性<code>Current</code></li>
-</ul>
-</li>
-<li>泛型枚举接口
-<ul>
-<li>非泛型接口形式
-<ul>
-<li><code>IEnumerable</code>接口的<code>GetEnumerator</code>方法返回实现<code>IEnumerator</code>枚举器类的实例</li>
-<li>实现<code>IEnumerator</code>的类实现了<code>Current</code>属性，它返回<code>object</code>引用，使用需要强转为实际类型</li>
-<li>实现不是类型安全的，在手动强转时可能会发生异常</li>
-</ul>
-</li>
-<li>泛型接口
-<ul>
-<li><code>IEnumerable&lt;T&gt;</code>接口的<code>GetEnumerator</code>方法返回<code>IEnumerator&lt;T&gt;</code>的枚举器类的实例</li>
-<li>实现<code>IEnumerator&lt;T&gt;</code>的类实现的<code>Current</code>类型返回实际类型的的对象</li>
-<li>返回实际类型的引用，是类型安全的，如果要自己创建可枚举类，应该实现这些泛型接口</li>
-</ul>
-</li>
-<li><strong>注意</strong>
-<ul>
-<li>泛型接口也实现了非泛型接口，<em>目的貌似是强制向下兼容</em>，因为在C#2.0版本以前没有泛型</li>
-<li>因此需要提供泛型与非泛型两个版本的方法实现</li>
-<li>由于泛型接口和非泛型接口的方法/属性同名同参数列表但是返回类型不同（<code>Current</code>和<code>GetGetEnumerator</code>）</li>
-<li>所以需要使用<em>显式接口成员实现</em>，返回类型一致的如<code>MoveNext</code>、<code>Reset</code>只需要提供一份实现即可</li>
-<li>另外<code>IEnumerator&lt;T&gt;</code>泛型版本还实现了<code>IDisposable</code>接口，所以还需要手动实现<code>Dispose</code>方法释放资源</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>迭代器
-<ul>
-<li>C#从2.0版本开始提供了更简单的创建枚举器和可枚举类型的方法。实际上，编译器将为我们创建它们，这种结构叫做<strong>迭代器</strong></li>
-<li>迭代器块
-<ul>
-<li>有一个或多个yield语句的代码块</li>
-<li>迭代器块与其他语句块不同，其他块包含的语句被当作是命令式的。也就是说，先执行代码的第一个语句，然后执行后面的语句，最后控制离开块</li>
-<li>另一方面，迭代器块不是需要在同一时间执行的一串命令式命令，而是描述了希望编译器为我们创建的枚举器类的行为，迭代器块中的代码描述了如何枚举元素</li>
-<li>两个特殊语句
-<ul>
-<li>yield return语句指定了序列中返回的下一项</li>
-<li>yield break语句指定在序列中没用其他项</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>使用迭代器来创建枚举器和可枚举类型
-<ul>
-<li>
-<pre><code class="language-csharp">class Test {
-    int[] arr = {1, 2, 3, 4, 5};
-    public IEnumerator&lt;int&gt; GetEnumerator() {
-        return TestEnumerator();
-    }
-    IEnumerator&lt;int&gt; TestEnumerator() {
-        for (int i = 0; i &lt; arr.Length; i++) {
-            yield return arr[i];
+        int min = sum[0], ans1 = int.MinValue;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            ans1 = Math.Max(ans1, sum[i] - min);
+            min = Math.Min(sum[i], min);
         }
-    }
-}
-</code></pre>
-</li>
-<li>不需要实现<code>IEnumerator</code>接口，<code>TestEnumerator</code>返回值即为枚举器</li>
-</ul>
-</li>
-<li>使用迭代器创建可枚举类型
-<ul>
-<li>
-<pre><code class="language-csharp">class Test {
-    int[] arr = {1, 2, 3, 4, 5};
-    public IEnumerator&lt;int&gt; GetEnumerator() {
-        return TestEnumerator().GetEnumerator();
-    }
-    IEnumerable&lt;int&gt; TestEnumerator() {
-        for (int i = 0; i &lt; arr.Length; i++) {
-            yield return arr[i];
+        int max = sum[0], ans2 = int.MaxValue, l = 0, r = 0, maxIndex = 0;
+        for (int i = 1; i &lt; sum.Length; i++) {
+            if (ans2 &gt; sum[i] - max) {
+                r = i;
+                l = maxIndex;
+                ans2 = sum[i] - max;
+            }
+            if (sum[i] &gt; max) {
+                max = sum[i];
+                maxIndex = i;
+            }
         }
+        if (l == 0 &amp;&amp; r == sum.Length - 1) {
+            return ans1;
+        }
+        return Math.Max(ans1, sum[sum.Length - 1] - ans2);
     }
 }
 </code></pre>
-</li>
-<li>不需要实现<code>IEnumerable</code>接口，<code>TestEnumerator</code>返回值即为可枚举类型，同时<code>Test</code>类本身也是可枚举类型</li>
-<li>在使用<code>foreach</code>遍历时可以使用类对象，也可以使用类枚举器方法<code>TestEnumerator()</code></li>
-</ul>
-</li>
-</ul>
-</li>
-<li>常见迭代器模式
-<ul>
-<li>实现返回枚举器的迭代器时，必须通过实现<code>GetEnumerator</code>来让类可枚举，它返回由迭代器返回的枚举器</li>
-<li>如果实现迭代器返回可枚举类型
-<ul>
-<li>可以实现<code>GetEnumerator</code>让类可枚举，让它调用迭代器方法以获取自动生成的实现<code>IEnumerable</code>的类实例，然后可枚举类型对象返回由<code>GetEnumerator</code>创建的枚举器</li>
-<li>也可以不实现<code>GetEnumerator</code>，此时类本身不可枚举，但迭代器返回的是可枚举类，可以直接调用迭代器方法</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>产生多个可枚举类型
-<ul>
-<li>同一个类可以产生多个可枚举类型，只需要实现多个迭代器方法，这些方法返回可枚举类型，然后通过迭代器去获得可枚举类型，可以不实现<code>GetEnumerator</code></li>
-<li>同理，一个类可以产生多个枚举器，但由于让类可枚举必须实现<code>GetEnumerator</code>方法，具体返回哪个迭代器的枚举器，可以通过一个布尔变量来进行选择</li>
-</ul>
-</li>
-<li>将迭代器作为属性
-<ul>
-<li>使用类似迭代器方法，只不过把迭代器块作为属性的get访问器来声明</li>
-</ul>
-</li>
-<li>注意事项
-<ul>
-<li>迭代器需要<code>System.Collections.Generic</code>命名空间</li>
-<li>使用迭代器时会由编译器产生枚举器，但这个枚举器中<strong>没有实现Reset方法</strong>，调用时会抛出`System.NotSupportedException异常</li>
-</ul>
-</li>
-<li>迭代器实质
-<ul>
-<li>由编译器生成的枚举器类是包含四个状态的<strong>状态机</strong>
-<ul>
-<li><strong>Before</strong>：首次调用<code>MoveNext</code>的初始状态</li>
-<li><strong>Running</strong>：调用<code>MoveNext</code>后进入这个状态。在这个状态中，枚举器检测并设置下一项的位置。在遇到<code>yield return</code>、<code>yield break</code>或在迭代器体结束时，退出状态</li>
-<li><strong>Suspended</strong>：状态机等待下次调用<code>MoveNext</code>的状态</li>
-<li><strong>After</strong>：没有更多项可以枚举</li>
-</ul>
-</li>
-<li>如果状态机在Before或Suspended状态时调用了MoveNext方法，就转到Running状态。</li>
-<li>Running状态结束时，如果有更多项，状态机转入Suspended状态，否则转入并保持在After状态</li>
-<li><img src="https://greydoveh.github.io/post-images/IteratorFSM.png" alt="状态机" loading="lazy"></li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 泛型]]></title>
-        <id>https://greydoveh.github.io/post/CS-Generic/</id>
-        <link href="https://greydoveh.github.io/post/CS-Generic/">
-        </link>
-        <updated>2022-03-17T12:57:56.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="泛型">泛型</h1>
-<ol>
-<li>泛型概述
-<ul>
-<li>提供了一种让多个类型共享一组代码的方式，允许声明类型参数化的代码，可以用不同的类型进行实例化</li>
-<li>泛型类型不是类型，是类型的模板</li>
-<li>五种泛型（注意前四个是类型，方法是成员）
-<ul>
-<li>类</li>
-<li>结构</li>
-<li>接口</li>
-<li>委托</li>
-<li>方法</li>
-</ul>
-</li>
-<li>在类名后面放置<code>&lt;T&gt;</code>，然后在类中使用类型占位符<code>T</code>替换掉原本的类型，结果就是泛型类声明</li>
-</ul>
-</li>
-<li>泛型类
-<ul>
-<li>声明类和创建类的实例</li>
-<li>泛型不是类而是类的模板，所以必须先从它们构建实际的类类型</li>
-<li>步骤
-<ul>
-<li>在某些类型上使用占位符来声明一个类</li>
-<li>为占位符提供<strong>真实类型</strong>，这样就有了真实类的定义，该类型称为<strong>构造类型</strong></li>
-<li>创建构造类型的实例</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>声明泛型类
-<ul>
-<li>在类型后面放置一组尖括号</li>
-<li>尖括号中用逗号分隔的占位符字符串来表示希望提供的类型，这叫做<strong>类型参数</strong></li>
-<li>在泛型类声明中使用类型参数来表示应该替代的类型</li>
-</ul>
-</li>
-<li>创建构造类型
-<ul>
-<li>告诉编译器能使用哪些真实类型来替代类型参数，编译器获得真实类型并创建构造类型用来创造真实类对象的模板</li>
-<li>要替代类型参数的真是类型叫做<strong>类型实参</strong></li>
-</ul>
-</li>
-<li>创建变量和实例
-<ul>
-<li>非泛型
-<ul>
-<li>源代码大小：更大，需要为每一中类编写一个新的实现</li>
-<li>可执行大小：无论每一个版本都会被使用，都会在编译的版本中出现</li>
-<li>写的难易度：易于书写，因为它更具体</li>
-<li>维护的难易度：更容易出问题，因为所有的修改需要用到</li>
-</ul>
-</li>
-<li>泛型
-<ul>
-<li>源代码大小：更小，不管构造类型数量有多少，只需要一个实现</li>
-<li>可执行大小：可执行文件中只会出现有构造类型的类型</li>
-<li>写的难易度：比较难写，因为它更抽象</li>
-<li>维护的难易度：易于维护，因为它只需要修改一个地方</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>类型参数的约束
-<ul>
-<li>所有的对象最终从object继承，泛型类只能确定这些参数类型实现了object的成员，如果代码尝试使用其他成员，编译器会产生一个错误信息</li>
-<li>要让泛型变得更有用，需要提供额外信息让编译器知道参数可以接受哪些类型来产生构造类型</li>
-<li>符合约束的类型参数叫做<strong>未绑定的类型参数</strong></li>
-<li>where子句：约束使用where子句列出
-<ul>
-<li>每一个有约束的类型参数都有自己的where子句</li>
-<li>如果形参有多个约束，它们的where子句使用逗号分隔</li>
-<li>语法：<code>where TypeParam : constraint1, constraint2, ...</code></li>
-</ul>
-</li>
-<li>有关where子句的要点：
-<ul>
-<li>它们在类型参数列表关闭的尖括号之后列出</li>
-<li>它们不使用逗号或其他符号分隔</li>
-<li>它们可以以任何次序列出</li>
-<li>where是上下文关键字，所以可以在其他上下文中使用，即<em>在其他地方可以用where作为变量名等</em></li>
-<li>
-<pre><code class="language-csharp">class MyClass&lt;T1, T2, T3&gt; where T2 : Customer where T3 : IComparable {
-    // ...
-}
-// 一个 where子句 只能写一个类型，但是可以有多条限制，顺序有要求下面讲
-// 多个 where子句 之间，不用分隔符，顺序任意
-</code></pre>
-</li>
-</ul>
-</li>
-<li>约束类型
-<ul>
-<li>类名：只有这个类型的类或子类才能作类型实参</li>
-<li>class：任何引用类型，包括类、数组、委托和接口都可以用作类型实参</li>
-<li>struct：任何值类型可以用作实参</li>
-<li>接口名：只有这个接口或实现这个接口的类型才能用作类型实参</li>
-<li>new()：任何带有无参公共构造函数的类型都可以用作实参，这叫做<strong>构造函数约束</strong></li>
-</ul>
-</li>
-<li>约束的次序
-<ul>
-<li>最多只能有一个主约束（类名、class、struct），如果有则必须放在第一位</li>
-<li>可以有任意多的接口名约束</li>
-<li>如果有构造函数约束，则必须放在最后</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>泛型方法
-<ul>
-<li>与其他泛型不一样，泛型方法是成员不是类型，可以在非泛型类中声明</li>
-<li>声明泛型方法
-<ul>
-<li>方法名称之后和方法参数列表之前放置类型参数列表</li>
-<li>在方法参数列表后放置可选的约束子句</li>
-<li>返回值可以是泛型类型</li>
-</ul>
-</li>
-<li>调用泛型方法
-<ul>
-<li>提供类型实参</li>
-</ul>
-</li>
-<li>推断类型
-<ul>
-<li>有时可以从方法参数中推断出泛型方法的类型形参用到的类型</li>
-<li>如对于方法<code>public void MyMethod&lt;T&gt; (T myVal) { ... }</code></li>
-<li>实际调用时可以写<code>MyMethod&lt;int&gt;(5)</code>，也可以省略方法形参直接写<code>MyMethod(5)</code></li>
-<li>除了相同类型时，其他有用到T的也可以推断，如类型参数是<code>T</code>但参数是<code>T[]</code></li>
-</ul>
-</li>
-<li>扩展方法和泛型类
-<ul>
-<li>扩展方法（静态方法，第一个参数使用this修饰）可以和泛型类结合使用</li>
-<li>泛型类的扩展方法
-<ul>
-<li>必须声明为static</li>
-<li>必须是静态类成员</li>
-<li>第一个参数必须有关键字this</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>泛型结构
-<ul>
-<li>泛型结构的规则和条件与泛型类是一样的</li>
-</ul>
-</li>
-<li>泛型委托
-<ul>
-<li>在委托类型名称和委托参数列表之间加上尖括号放置类型参数列表</li>
-<li>在方法参数列表后面添加约束子句</li>
-</ul>
-</li>
-<li>泛型接口
-<ul>
-<li>声明类似泛型类</li>
-<li>实现接口的时候可以用泛型类的类型参数作为泛型接口的类型实参
-<ul>
-<li>
-<pre><code class="language-csharp">interface IB&lt;T&gt; {
-    // ...
-}
-class A&lt;S&gt; : IB&lt;S&gt; {
-    // ...
-}
-</code></pre>
-</li>
-<li>可以在非泛型类中实现泛型接口</li>
-<li>实现不同类型参数的泛型接口是不同的接口，如<code>A</code>可以同时实现<code>IB&lt;string&gt;</code>和<code>IB&lt;int&gt;</code>，但实现具体类型不能再使用泛型，如<code>A&lt;S&gt;</code>实现不能同时实现<code>IB&lt;int&gt;</code>和<code>IB&lt;S&gt;</code>，因为当S为int时存在潜在的冲突，但是泛型接口的名字不会和非泛型接口冲突</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>协变和逆变
-<ul>
-<li>可变性
-<ul>
-<li>协变、逆变、不变</li>
-</ul>
-</li>
-<li>协变
-<ul>
-<li>原则上父类引用可以指向子类对象，但是对于泛型委托来说，如果一个泛型委托的类型参数只作为输出值，他只能指向相同类型参数的委托类型，而不能指向类型参数为子类的委托类型，即下面的代码会报错</li>
-<li>
-<pre><code class="language-csharp">class Animal { }
-class Dog : Animal { }
-delegate T Factory&lt;T&gt;();
-class Program {
-    static Dog MakeDog() {	return new Dog();	}
-    static void Main() {
-        Factory&lt;Dog&gt; dogMaker = MakeDog;
-        Factory&lt;Animal&gt; animalMaker = dogMaker;	// 报错，因为两个委托之间不存在继承关系
-    }
-}
-</code></pre>
-</li>
-<li>如果派生类只用于输出值，这种结构化的委托有效性之间的常数关系叫做<strong>协变</strong></li>
-<li>为了让编译器知道这是我们的期望，则需要用<code>out</code>关键字标记委托声明中的类型参数</li>
-<li>即将上面的代码修改为<code>delegate T Factory&lt;out T&gt;();</code>即可通过编译</li>
-</ul>
-</li>
-<li>逆变
-<ul>
-<li>与上面的例子类似</li>
-<li>期望传入基类时允许传入派生对象的特性叫<strong>逆变</strong></li>
-<li>
-<pre><code class="language-csharp">class Animal {  public int t = 10;   }
-class Dog : Animal { }
-delegate void Act&lt;in T&gt;(T t);
-class Program {
-    static void ActOnAnimal(Animal a) {
-        System.Console.WriteLine(a.t);
-    }
-    static void Main() {
-        Act&lt;Animal&gt; act = ActOnAnimal;
-        Act&lt;Dog&gt;    dog = act;
-        dog(new Dog());
-    }
-}
-</code></pre>
-</li>
-<li>in为逆变关键字</li>
-<li>如果类型参数只用作委托方法的输入参数，可以添加逆变关键字in，让两种不兼容但是理论上可行的类型可以成功赋值</li>
-</ul>
-</li>
-<li>协变与逆变
-<ul>
-<li>协变
-<ul>
-<li><code>F&lt;out T&gt;()</code>类型的委托，类型变量是父类</li>
-<li>实际构建委托时，使用子类的类型变量进行声明</li>
-<li>在调用的时候，方法返回指向子类对象的引用</li>
-</ul>
-</li>
-<li>逆变
-<ul>
-<li><code>F&lt;in T&gt;(T t)</code>类型的委托，类型参数是子类</li>
-<li>实际构造委托时，使用父类类型进行声明</li>
-<li>在调用的时候，方法传入子类的变量，参数的父类引用指向子类对象</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>接口的协变与逆变
-<ul>
-<li>接口除了应用到委托上，还可以应用到接口上</li>
-<li>在泛型接口声明的时候，在泛型类型前加上协变/逆变关键字</li>
-</ul>
-</li>
-<li>如果是返回类型和委托不匹配的方法去给委托赋值时，不需要添加out关键字，编译器会自动识别</li>
-<li>但是如果刚刚的方法已经创建了委托并用该委托去给其他委托赋值时，就需要添加out关键字</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 转换]]></title>
-        <id>https://greydoveh.github.io/post/CS-Convert/</id>
-        <link href="https://greydoveh.github.io/post/CS-Convert/">
-        </link>
-        <updated>2022-03-15T12:53:19.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="转换">转换</h1>
-<ol>
-<li>转换
-<ul>
-<li>转换是接受一个类型的值并使用它作为另一个类型的等价值的过程</li>
-<li>转换后的值应该和源值一样的，但其类型为目标类型</li>
-</ul>
-</li>
-<li>隐式转换
-<ul>
-<li>零扩充：目标多出来的最高为都以0填充</li>
-<li>符号扩充：额外的高位用源表达式的符号位填充</li>
-</ul>
-</li>
-<li>显式转换和强制转换</li>
-<li>转换的类型
-<ul>
-<li>转换
-<ul>
-<li>预定义的
-<ul>
-<li>数字
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-<li>引用
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-<li>拆箱/装箱</li>
-</ul>
-</li>
-<li>用户自定义的
-<ul>
-<li>隐式</li>
-<li>显式</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>除了标准转换，还可以为自定义类型定义隐式转换和显式转换
-<ul>
-<li>还有一个预定义的转换类型，叫做<strong>装箱</strong>，可以将任意类型转换为
-<ul>
-<li>object类型</li>
-<li>System.ValueType类型</li>
-</ul>
-</li>
-<li>拆箱可以将一个装箱的值转换为原始类型</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>数字的转换
-<ul>
-<li>隐式数字转换
-<ul>
-<li>如下关系存在隐式转换
-<ul>
-<li>byte：ushort、short</li>
-<li>sbyte：short</li>
-<li>char：ushort</li>
-<li>ushort：uint、int</li>
-<li>short：int</li>
-<li>uint：ulong、long</li>
-<li>int：long</li>
-<li>ulong：float、decimal</li>
-<li>long：float、decimal</li>
-<li>float：double</li>
-<li>double</li>
-<li>decimal</li>
-</ul>
-</li>
-<li>把上图看成有向图的邻接表，如果从A到B存在路径，则A可以隐式转换为B</li>
-</ul>
-</li>
-<li>溢出检测上下文
-<ul>
-<li>C#提供了运行时检测结果移除的能力，通过<strong>checked</strong>和<strong>unchecked</strong>运算符实现</li>
-<li>代码片段是否被检查称作溢出检测上下文
-<ul>
-<li>如果指定一个表达式或代码为checked，CLR会在转换产生<strong>溢出时抛出OverflowException</strong>异常</li>
-<li>如果代码不是checked，转换会继续而不管是否产生溢出</li>
-</ul>
-</li>
-<li>默认的溢出检测上下文是不检查</li>
-<li>checked和unchecked运算符
-<ul>
-<li>表达式放在圆括号内并且不能是一个方法
-<ul>
-<li>checked(表达式)</li>
-<li>unchecked(表达式)</li>
-</ul>
-</li>
-<li>在unchecked上下文中会忽略溢出</li>
-<li>在checked上下文中如果发生溢出会抛出OverflowException异常</li>
-</ul>
-</li>
-<li>checked和unchecked语句
-<ul>
-<li>运算符用于表达式，而语句执行相同的功能，但是控制的是一段代码中的所有转换</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>显式数字转换
-<ul>
-<li>对于显式类型转换可能会发生数据丢失，知道<strong>数据发生丢失时会如何处理</strong>很重要</li>
-<li>checked情况下溢出会抛出异常，下面介绍的是unchecked或者无修饰的不检查的情况</li>
-<li>S：源类型，T：目标类型</li>
-<li>整数类型到整数类型
-<ul>
-<li>S比T长？丢弃S中额外的最高位：符号扩展或零扩展S到T的长度</li>
-</ul>
-</li>
-<li>float或double到整数类型
-<ul>
-<li>舍掉小数截断为最接近的整数</li>
-<li>如果截断后不在T的范围内，属于C#的未定义行为，可以使用checked修饰并处理异常</li>
-</ul>
-</li>
-<li>decimal到整数
-<ul>
-<li>如果结果不在T的范围内，则抛出OverflowException异常</li>
-</ul>
-</li>
-<li>double到float
-<ul>
-<li>被舍入到最接近的float值</li>
-<li>如果值太小不能用float表示，则设置为+0或-0</li>
-<li>如果值太大不能用float表示，则设置为+INF或-INF</li>
-</ul>
-</li>
-<li>float或double到decimal
-<ul>
-<li>如果值太小不能使用decimal表示则设置为0</li>
-<li>如果值太大则会抛出溢出异常</li>
-</ul>
-</li>
-<li>decimal到float或double
-<ul>
-<li>总会成功，但是可能损失精度</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>引用转换
-<ul>
-<li>由引用保存的那部分信息是它执行的数据类型</li>
-<li>引用转换接受源引用并返回一个指向堆中同一位置的引用，但是把引用标记为其他的类型</li>
-<li>父类引用可以指向子类的对象
-<ul>
-<li>如果是父类引用指向子类对象，它看不到子类扩展父类的部分，即便是public</li>
-<li>如果是子类重写的父类的方法，则用父类引用调用方法时调用的是子类重写的方法</li>
-<li>但是如果子类是使用new屏蔽的方法，父类调用时依然是调用父类本身的方法</li>
-</ul>
-</li>
-<li>隐式引用转换
-<ul>
-<li>任何引用类型可以隐式转换为object类型</li>
-<li>任何类型可以隐式转换到它继承的接口</li>
-<li>类可以隐式转换到
-<ul>
-<li>它继承链中的任何类</li>
-<li>它实现的任何接口</li>
-</ul>
-</li>
-<li>委托可以隐式转换成以下.NET BCL类和接口
-<ul>
-<li>System.Delegate、System.MulticastDelegate</li>
-<li>System.ICloneable、System.Runtime.Serialization.ISerializable</li>
-</ul>
-</li>
-<li>ArrayS数组，其中元素是Ts类型，可以隐式转换成
-<ul>
-<li>以下.NET BCL类和接口
-<ul>
-<li>System.Array</li>
-<li>System.ICloneable</li>
-<li>System.IList</li>
-<li>System.ICollection</li>
-<li>System.IEnumerable</li>
-</ul>
-</li>
-<li>另一个数组ArrayT，其中元素类型Tt需要满足以下所有条件
-<ul>
-<li>两个数组有一样的维度</li>
-<li>元素类型Ts和Tt都是引用类型</li>
-<li>Ts和Tt直接存在隐式转换</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>显式引用转换
-<ul>
-<li>显式转换包括
-<ul>
-<li>从object到任何引用类型</li>
-<li>从基类型到继承它的类型</li>
-</ul>
-</li>
-<li>倒转上述隐式转换的方向，可以使用显式引用转换</li>
-<li>编译器允许引用在内存中不存在的类型，但是运行到强制转换时会抛出InvalidCastException异常</li>
-<li>有效的显式引用转换
-<ul>
-<li>显式转换没必要。
-<ul>
-<li>存在隐式转换时，显式转换是有效的，但是和隐式转换执行相同的内容</li>
-</ul>
-</li>
-<li>源引用是null。
-<ul>
-<li>null可以转换成引用类型，在运行到转换时虽然不会抛出InvalidCastException异常</li>
-<li>但是后面如果试图访问会抛出NullReferenceException异常</li>
-</ul>
-</li>
-<li>由源引用执行的实际数据可以被安全的进行隐式转换
-<ul>
-<li>如B是A的子类，一个A类引用实际指向B类对象，则把它转换为B类引用时是有效的</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>装箱转换
-<ul>
-<li>装箱概述
-<ul>
-<li>包括值类型在内的所有C#类型都派生自object类型</li>
-<li>值类型是轻量高效的类型，默认情况下堆上不包括它们的对象组件</li>
-<li>如果需要使用对象组件，可以使用<strong>装箱</strong>（<em>boxing</em>）</li>
-<li>装箱是一种隐式转换，它接收值类型的值，根据这个值在堆上创建一个完整的引用类型的对象并返回引用</li>
-<li>
-<pre><code class="language-csharp">int i = 10;
-object oi = i;
-</code></pre>
-</li>
-</ul>
-</li>
-<li>装箱是创建副本
-<ul>
-<li>在装箱后该值有两份副本，原始值类型和引用类型副本，每一个都可以独立操作</li>
-</ul>
-</li>
-<li>装箱转换
-<ul>
-<li>任何值类型都可以被隐式转换为object类型、System.ValueType、InterfaveT（前提是实现了T接口）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>拆箱转换
-<ul>
-<li><strong>拆箱</strong>（<em>unboxing</em>）是把装箱后的对象转换回值类型的过程</li>
-<li>拆箱是显式转换</li>
-<li>系统把值拆箱成T类型时执行了如下步骤：
-<ul>
-<li>它检查到要拆箱的对象实际是T的装箱值</li>
-<li>它把对象的值复制到变量</li>
-</ul>
-</li>
-<li>尝试将一个值拆箱为非原始类型时会抛出一个InvalidCastException异常</li>
-</ul>
-</li>
-<li>用户自定义转换
-<ul>
-<li>用户可以为类和结构定义显式和隐式转换</li>
-<li>
-<pre><code class="language-csharp">public static implicit/explicit operator TargetType (SourceType Identifier) {
-    // ... 
-    return ObjectOfTargetType;
-}
-</code></pre>
-</li>
-<li>implicit是隐式转换，explicit是显式转换</li>
-<li>用户自定义转换的约束
-<ul>
-<li>只可以为类或结构定义用户自定义转换</li>
-<li>不能重定义标准隐式转换或显式转换</li>
-<li>对于S和T如下命题为真
-<ul>
-<li>S和T是不同类型</li>
-<li>S和T不能通过继承关联，也就是S不能继承自T，T也不能继承自S</li>
-<li>S和T都不能是接口类型或者object类型</li>
-<li>转换运算符必须是S或T的成员</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>评估用户自定义转换
-<ul>
-<li>目前讨论的自定义转换都是在单步内直接把源类型转换为目标类型</li>
-<li>但是用户自定义转换在完整转换最多可以有3个步骤
-<ul>
-<li>预备标准转换</li>
-<li>用户自定义转换</li>
-<li>后续标准转换</li>
-</ul>
-</li>
-<li>这个链中不可能有一个以上的用户自定义类型转换</li>
-</ul>
-</li>
-<li>多步用户自定义转换的示例
-<ul>
-<li>Employee继承自Person，所以从Employee到Person存在标准转换</li>
-<li>Person中包含一个int类型的age字段，从int到float有标准转换</li>
-<li>Person中定义了从Person到int类中的隐式转换，返回age</li>
-<li>Employee =&gt; Person =&gt; int =&gt; float</li>
-<li>第一步为预备标准转换，第二步为用户自定义转换，第三步后续标准转换</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>is运算符
-<ul>
-<li>源表达式 is 目标类型，返回bool</li>
-<li>如果源表达式可以通过以下方式成功转换为目标类型，运算符返回true
-<ul>
-<li>引用转换</li>
-<li>装箱转换</li>
-<li>拆箱转换</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>as运算符
-<ul>
-<li>类似于强转，只是不抛异常，转换失败会返回null</li>
-<li>源表达式 as 目标类型，返回引用</li>
-<li>由于as运算符返回引用表达式，它可以用作赋值表达式的源</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 接口]]></title>
-        <id>https://greydoveh.github.io/post/CS-Interface/</id>
-        <link href="https://greydoveh.github.io/post/CS-Interface/">
-        </link>
-        <updated>2022-03-14T12:49:24.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="接口">接口</h1>
-<ol>
-<li>接口使用示例（IComparable）
-<ul>
-<li>Array.Sort可以排序预定义类型的数组，对自定义类型排序会抛出异常</li>
-<li>可以实现IComparable接口中的CompareTo方法后再使用排序</li>
-<li>IComparable接口声明在BCL中，包含唯一的方法CompareTo</li>
-<li>
-<pre><code class="language-csharp">public interface IComparable {	// interface为接口定义的关键字
-    int CompareTo(object obj);	// this &gt; obj返回+，&lt;-，=0
-}
-</code></pre>
-</li>
-<li>实现接口
-<ul>
-<li>在基类列表后面列出接口名称</li>
-<li>必须为接口的每一个成员提供实现</li>
-</ul>
-</li>
-<li>要使用Sort，如果仅声明CompareTo方法是不够的，还需要实现IComparable接口</li>
-</ul>
-</li>
-<li>声明接口
-<ul>
-<li>重要事项
-<ul>
-<li>接口声明不能包含以下成员：
-<ul>
-<li>数据成员</li>
-<li>静态成员</li>
-</ul>
-</li>
-<li>接口声明只能包含如下类型的非静态成员函数的声明：
-<ul>
-<li>方法</li>
-<li>属性</li>
-<li>事件</li>
-<li>索引器</li>
-</ul>
-</li>
-<li>这些函数成员的声明不能包含任何实现代码，而在每一个成员声明的主体后使用分号</li>
-<li>按照惯例，接口名称必须以大写的I开始</li>
-<li>类似于分部类，接口也可以分隔成分部接口声明</li>
-</ul>
-</li>
-<li>接口的访问性和接口成员的访问性
-<ul>
-<li>接口声明可以有任何的访问修饰符public、protected、internal或private</li>
-<li>接口成员是隐式public的，不允许有任何访问修饰符包括public</li>
-<li><strong>在类实现接口的方法的时候要显式写出public</strong></li>
-<li>在类通过<strong>显式接口成员实现</strong>（即后面介绍的<code>接口名.方法名</code>）的时候不能写public</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>实现接口
-<ul>
-<li>重要事项
-<ul>
-<li>它必须实现接口的所有成员</li>
-<li>如果类从基类继承并实现了接口，基类列表中的基类名称必须放在接口之前</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>接口是引用类型
-<ul>
-<li>不能通过类对象的成员访问接口，但是可以把对象强转为接口类型来获取指向接口的引用</li>
-<li>可以通过点号调用接口的方法</li>
-</ul>
-</li>
-<li>接口和as运算符
-<ul>
-<li>如果类对象没有实现接口，强转会抛异常</li>
-<li>使用as运算符可以避免这个问题
-<ul>
-<li>如果实现了接口则返回接口的引用</li>
-<li>没有实现接口则返回null而不是抛异常</li>
-</ul>
-</li>
-<li>类对象引用 as 接口名</li>
-</ul>
-</li>
-<li>实现多个接口
-<ul>
-<li>类可以实现任意数量的接口</li>
-<li>基类与接口、接口与接口之间用逗号分隔</li>
-</ul>
-</li>
-<li>实现具有重复成员的接口
-<ul>
-<li>如果一个类实现了多个接口并且其中一些接口有相同签名和返回类型的成员
-<ul>
-<li>那么类可以实现单个成员来满足所有包含重复成员的接口</li>
-</ul>
-</li>
-<li>如果参数列表不同
-<ul>
-<li>可以都实现，作为方法重载</li>
-</ul>
-</li>
-<li>如果参数列表相同但是返回类型不同
-<ul>
-<li>会报错，只能使用后面要讲的显式接口成员实现</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>多个接口的引用
-<ul>
-<li>对象引用可以强转为接口的引用，如果实现了多个接口，可以获取每个接口的独立引用</li>
-</ul>
-</li>
-<li>派生成员作为实现
-<ul>
-<li>实现接口的类可以从它的基类继承实现的代码，即便基类没有实现该接口</li>
-</ul>
-</li>
-<li>显式接口成员实现
-<ul>
-<li>单个类可以实现多个接口需要的成员，如6、7部分</li>
-<li>也可以通过<strong>显式接口成员实现</strong>的方式为每一个接口分离实现，与显式接口成员实现相对的叫做<strong>类级别实现</strong></li>
-<li>使用<strong>限定接口名称</strong>来声明，由<code>接口名称.成员名称</code>来实现</li>
-<li>可以对多个接口中的重复成员提供不同的实现</li>
-<li>类级别实现与显式接口成员实现（此处简称接口实现）的区别
-<ul>
-<li>类级别实现，方法是属于类的，而接口实现是属于接口的</li>
-<li>类级别实现中，接口方法会指向类级别实现，而接口实现是包含了自己的代码</li>
-<li>通过类级别实现，可以通过对象引用调用，可以在类内部直接调用，也可以通过接口引用去调用；而接口实现只能通过接口引用去调用</li>
-<li>
-<pre><code class="language-csharp">public interface II {
-    int Fun();
-}
-
-class Test : II {
-    int II.Fun() {  return 123; }
-    public int Fun() {  return 456; }
-}
-
-        Test t = new Test();
-        System.Console.WriteLine(t.Fun());	// 类级别实现，输出456
-        II i = t as II;
-        System.Console.WriteLine(i.Fun());	// 显式接口成员实现，输出123
-</code></pre>
-</li>
-</ul>
-</li>
-<li>如果有显式接口成员实现，类级别是允许的，但不是必须的，有以下三种实现场景
-<ul>
-<li>类级别实现</li>
-<li>显式接口成员实现</li>
-<li>类级别和显式接口成员实现</li>
-</ul>
-</li>
-<li>访问显式接口成员<strong>只能</strong>通过接口引用访问</li>
-</ul>
-</li>
-<li>接口可以继承接口
-<ul>
-<li>接口本身可以从一个或多个接口继承</li>
-<li>接口可以多继承
-<ul>
-<li>接口本身可以继承其他接口</li>
-<li>结果接口包含它声明的所有接口和所有基接口的成员</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记 - 委托、匿名方法、事件]]></title>
-        <id>https://greydoveh.github.io/post/CS-Delegate-Lambda-Event/</id>
-        <link href="https://greydoveh.github.io/post/CS-Delegate-Lambda-Event/">
-        </link>
-        <updated>2022-03-13T12:42:06.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="c委托-匿名方法-事件">C#委托、匿名方法、事件</h1>
-<h3 id="委托">委托</h3>
-<ol>
-<li>委托概述
-<ul>
-<li>委托是持有一个或多个方法的对象
-<ul>
-<li>可以理解成一个类型安全的、面向对象的函数指针</li>
-</ul>
-</li>
-<li>委托可以包含多个方法，调用委托时，包含的每一个方法都会执行</li>
-<li>可以把delegate看做一个包含有序方法列表的对象，这些方法具有相同的签名和返回类型
-<ul>
-<li>方法的列表被称为<strong>调用列表</strong></li>
-<li>委托保存的方法可以来自任何类或者结构，可以是静态方法也可以是实例方法，只要它们在委托的返回类型以及委托的签名（包括<em>ref</em>和<em>out</em>修饰符）</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>声明委托类型
-<ul>
-<li>不一定需要在类内部声明，因为它是类型的声明</li>
-</ul>
-</li>
-<li>创建委托对象
-<ul>
-<li>两种方式
-<ul>
-<li>可以使用new去创建委托，构造函数的参数即为方法名（<strong>注意不带括号</strong>）</li>
-<li>可以使用快捷语法，在方法名称和其对应二点委托类型之间存在隐式转换，所以可以之间将方法名赋值给委托变量</li>
-</ul>
-</li>
-<li>除了为委托分配内存，创建委托对象还会把第一个方法放入委托的调用列表</li>
-</ul>
-</li>
-<li>组合委托
-<ul>
-<li>委托可以使用额外的运算符（+）来组合，这个运算最终会创建一个新委托，其调用列表连接了作为操作数的两个委托的调用列表副本</li>
-<li>组合委托没有修改作为操作数的委托，<strong>委托是恒定的</strong>，委托对象被创建以后不能在被改变，委托的赋值是引用的赋值，让原来的引用指向了新的对象</li>
-</ul>
-</li>
-<li>为委托添加方法
-<ul>
-<li>委托虽然是不变的，但是C#提供了看上去可以为委托添加方法的语句，即使用+=运算符</li>
-<li>+=运算符后面可以加相同签名和返回类型的方法或者委托</li>
-<li>使用+=时，仍然没有修改委托，同样是<strong>创建了一个新的委托</strong></li>
-<li>可以为委托添加多个方法，每次添加都会在调用列表创建一个新的元素。</li>
-</ul>
-</li>
-<li>从委托移除方法
-<ul>
-<li>可以使用-=从委托移除方法，同样是创建了一个新的委托</li>
-<li>如果要移除的方法在调用列表里有多个实例，-=运算符会<strong>移除最后一个</strong>实例</li>
-<li>如果委托中不存在要移除的方法，则没有效果</li>
-<li>如果调用的委托为null，则会抛出异常</li>
-<li>如果委托的调用列表为空，即为null，所以把所有方法移除后，委托会变成null</li>
-</ul>
-</li>
-<li>调用委托
-<ul>
-<li>可以像调用方法一样调用委托</li>
-<li>调用委托的参数将会用于委托中的所有方法</li>
-<li>调用委托时中只会得到最后一个方法的返回值，其他的返回值均会被忽略，包括out修饰的返回值参数</li>
-<li>如果委托中同一个方法出现多次，则每一次都会被调用</li>
-<li>建议在调用委托前判断是否为空，或者使用另一种方式<code>del?.Invoke()</code></li>
-</ul>
-</li>
-<li>调用带引用参数的委托
-<ul>
-<li>如果委托有引用参数，参数值会根据调用列表中的一个或多个方法的返回值而改变</li>
-<li>在调用委托列表的下一个方法时，参数的新值会传给下一个方法</li>
-</ul>
-</li>
-</ol>
-<h3 id="匿名方法">匿名方法</h3>
-<ol>
-<li>匿名方法概述
-<ul>
-<li>如果方法只用来初始化委托，没有必要创建独立的具名方法，可以使用匿名方法</li>
-<li>匿名方法是在初始化委托时内联声明的方法</li>
-</ul>
-</li>
-<li>使用匿名方法
-<ul>
-<li>声明委托时作为初始化表达式</li>
-<li>组合委托时在赋值语句右边</li>
-<li>为委托增加事件时在赋值语句右边</li>
-</ul>
-</li>
-<li>匿名方法的语法
-<ul>
-<li>delegate关键字</li>
-<li>参数列表，括号中包括参数类型和参数名，没有参数可以省略（圆括号也可以省略）</li>
-<li>语句块，包含了匿名方法的代码</li>
-<li>返回值
-<ul>
-<li>不需要显式写出返回类型，内部的返回值类型需要与委托匹配</li>
-</ul>
-</li>
-<li>参数
-<ul>
-<li>除了数组参数，匿名方法的参数列表必须在以下三方面与委托匹配
-<ul>
-<li>参数数量</li>
-<li>参数类型及位置</li>
-<li>修饰符</li>
-</ul>
-</li>
-<li>可以通过使圆括号为空或省略圆括号来简化匿名方法的参数列表，但是必须满足：
-<ul>
-<li>委托的参数列表不能包含任何out参数</li>
-<li>匿名方法不使用任何参数</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>params参数
-<ul>
-<li>委托类型声明指定最后一个参数为params类型的参数</li>
-<li>匿名方法参数列表忽略了params关键字</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>变量和参数的作用域
-<ul>
-<li>参数和方法内部变量的作用域被限制在匿名方法内</li>
-<li>外部变量
-<ul>
-<li>外围作用域的变量叫做<strong>外部变量</strong></li>
-<li>用在匿名方法实现代码中的外部变量称为<strong>被方法捕获</strong></li>
-</ul>
-</li>
-<li>捕获变量的生命周期的扩展
-<ul>
-<li>只要捕获方法还是委托的一部分，即使变量离开了作用域，捕获的外部变量也会一直有效</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><strong>Lambda表达式</strong>
-<ul>
-<li>C#3.0引入的匿名方法的简化方式
-<ul>
-<li>删除delegate关键字</li>
-<li>在参数列表和匿名方法主体之间</li>
-</ul>
-</li>
-<li>进一步简化
-<ul>
-<li>省略参数的类型，只留下参数名
-<ul>
-<li>省略类型的参数列表称为隐式类型</li>
-<li>带有参数的参数列表称为显式类型</li>
-<li>要么都是显式类型，要么都是隐式类型</li>
-</ul>
-</li>
-<li>如果只有一个参数并且是隐式类型，可以省略外围的圆括号</li>
-<li>如果没有返回值类型且只有一条语句，可以省略花括号</li>
-<li>如果方法体只有一句返回语句，可以省略花括号和return语句</li>
-</ul>
-</li>
-<li>参数列表的要点
-<ul>
-<li>参数列表必须匹配</li>
-<li>参数列表中的参数不一定需要包含类型（即隐式类型），除非委托有ref或out参数修饰，此时必须注明类型（即显式类型）</li>
-<li>只有当只有一个参数且为隐式类型时，圆括号才能省略，否则必须有括号</li>
-<li>如果没有参数，必须使用一组空的圆括号</li>
-</ul>
-</li>
-</ul>
-</li>
-</ol>
-<h3 id="事件">事件</h3>
-<ol>
-<li><strong>发布者/订阅者</strong>模式
-<ul>
-<li>发布者定义了一系列程序的其他部分可能感兴趣的事件</li>
-<li>其他类可以注册，以便这些事件发生时发布者可以通知它们，这些订阅者类通过向发布者提供一个方法来<strong>注册</strong>以获取通知</li>
-<li>当事件发生时，<strong>发布者触发事件，然后执行订阅者提交的所有事件</strong></li>
-<li>由订阅者提供的方法称为<strong>回调方法</strong>，因为发布者通过执行这些方法来往回调用订阅者的方法。还可以将它们称为<strong>事件处理程序</strong>，因为它们是为处理事件而调用的代码</li>
-</ul>
-</li>
-<li>事件概述
-<ul>
-<li>重要事项：
-<ul>
-<li>订阅者 <em>publisher</em>：发布某个事件的类或结构，其他类可以在该事件发生时得到通知</li>
-<li>发布者 <em>subscriber</em>：注册并在事件发生时得到通知的类或结构</li>
-<li>事件处理程序 <em>event handler</em>：由订阅者注册到事件的方法，在发布者触发事件时执行。事件处理程序方法可以定义在事件所在的类或结构中，也可以定义在不同的类或结构中</li>
-<li>触发事件 <em>raise</em>：调用（<em>invoke</em>）或触发（<em>fire</em>）事件的术语。在事件触发时，所有注册到它的方法都会被依次调用</li>
-</ul>
-</li>
-<li>实际上，事件就像是专门用于某种特殊用途的委托。事件包含了一个私有的委托
-<ul>
-<li>事件提供了对它的私有的控制委托的结构化访问，也就是说无法直接访问委托</li>
-<li>事件中可用的操作比委托要少，只可以添加、删除或调用事件处理程序</li>
-<li>事件被触发时，它调用委托来依次调用调用列表中的方法</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>声明事件
-<ul>
-<li>发布者必须提供事件对象。创建事件比较简单，只需要委托类型和名字。</li>
-<li>声明事件的语法如下：
-<ul>
-<li>事件声明在一个类中</li>
-<li>他需要委托类型的名称，任何附加到事件的处理程序都必须与委托类型的签名和返回类型匹配</li>
-<li>它声明为public，这样其他类和结构可以在它上面注册事件处理程序</li>
-<li>不能使用new来创建它的对象</li>
-<li><code>public event EventHandler eventHandler;</code></li>
-<li>其中<code>event</code>为关键字，<code>EventHandler</code>为委托类型，<code>eventHandler</code>为事件名</li>
-<li>也可以生成为static</li>
-</ul>
-</li>
-<li><strong>事件是成员</strong>，不是类型
-<ul>
-<li>和字段、方法一样，事件是类或结构的成员</li>
-<li>不能在一段可执行代码中声明事件</li>
-<li>他必须声明在类或结构中</li>
-<li>被隐式自动初始化为null</li>
-</ul>
-</li>
-<li>BCL声明了一个叫做EventHandler的委托，专门用于系统事件</li>
-</ul>
-</li>
-<li>订阅事件
-<ul>
-<li>使用+=运算符来为事件增加事件处理程序，事件处理程序位于运算符右边</li>
-<li>事件处理程序的规范可以是实例方法名、静态方法名、匿名方法、Lambda表达式</li>
-</ul>
-</li>
-<li>标准事件的用法
-<ul>
-<li>程序事件的异步处理是C#事件的绝佳场景（如GUI编程中按钮点击、按下按键或系统定时器）</li>
-<li>.NET框架提供了一个标准模式，即System命名空间声明的EventHandler委托类型</li>
-<li>该类型的声明如下：<code>public delegate void EventHandler(object sender, EventArgs e);</code>
-<ul>
-<li>第一个参数用来保存触发事件的对象的引用</li>
-<li>第二个参数用来保存状态信息</li>
-<li>返回类型是void</li>
-</ul>
-</li>
-<li>关于第二个参数EventArgs
-<ul>
-<li><strong>该参数不用于保存数据</strong>，它用于不需要传递数据的事件处理程序</li>
-<li>如果希望传递数据，必须声明一个派生自EventArgs的类，用合适的字段保存需要传递的数据</li>
-<li>目的是让EventArgs提供一个对所有事件和事件处理器都通用的签名</li>
-</ul>
-</li>
-<li>一般传递参数
-<ul>
-<li>第一个参数可以使用this，第二个参数如果不传递数据可以使用null</li>
-<li>如果要传递数据，需要使用EventArgs的派生类，并有对应版本的泛型委托，泛型的类型参数即为该派生类</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>移除事件处理程序
-<ul>
-<li>可以使用-=移除事件</li>
-<li>如果注册了多次，则只移除列表中的最后一个实例</li>
-</ul>
-</li>
-<li>事件访问器
-<ul>
-<li>可以通过为事件定义事件访问器改变+=和-=两个运算符的操作</li>
-<li>两个访问器，add对应+=，remove对应-=</li>
-<li>声明方式类似于属性</li>
-<li>两个访问器都有value隐式值参数</li>
-<li>如果使用访问器，则不包含内部委托对象，需要自己实现委托来进行事件注册，类似属性给出get和set的实现时需要手动绑定字段</li>
-<li>两个访问器表现为void方法，不能使用包含返回值的return</li>
-</ul>
-</li>
-</ol>
 ]]></content>
     </entry>
 </feed>

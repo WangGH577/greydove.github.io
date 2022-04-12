@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>51Nod-3234 小明爱配对 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1649749273714">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="51Nod-3234 小明爱配对 题解
+小明爱配对
+题目大意
+
+给定一个序列，给序列中的人两两配对
+
+相邻男女可以配对
+优先选择权值相差最小的一对，不止一对选择下标最小的一对
+配对成功后从原序列中删除，原来不相邻的可以变成相邻
+一直到无法配..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1649749273714" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">51Nod-3234 小明爱配对 题解</h2>
+            <div class="post-date">2022-04-09</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/51nod-3234.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="51nod-3234-小明爱配对-题解">51Nod-3234 小明爱配对 题解</h1>
+<p><a href="http://www.51nod.com/Challenge/Problem.html#problemId=3234">小明爱配对</a></p>
+<h3 id="题目大意">题目大意</h3>
+<blockquote>
+<p>给定一个序列，给序列中的人两两配对</p>
+<ol>
+<li>相邻男女可以配对</li>
+<li>优先选择权值相差最小的一对，不止一对选择下标最小的一对</li>
+<li>配对成功后从原序列中删除，原来不相邻的可以变成相邻</li>
+<li>一直到无法配对为止</li>
+</ol>
+<p>按配对的先后顺序求所有的对</p>
+</blockquote>
+<h3 id="解题思路">解题思路</h3>
+<blockquote>
+<p>使用堆去存储配对信息</p>
+<p>对初始序列扫描一遍，把所有符合要求的对放入堆中</p>
+<p>每次从堆中取出一个配对，并在原序列中删除，并把新的相邻可配对元素放入堆中</p>
+<p>删除的复杂度较高，可以使用链表解决</p>
+<p>也可以使用标记的方式，同时对每个元素分别记录左右位置信息，当删除配对时更新左右位置信息，将元素标记为删除，可以防止某个元素被重复使用</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int INF = 0x3f3f3f3f;
+int n, m;
+vector&lt;pair&lt;int, int&gt; &gt; ans;
+vector&lt;pair&lt;int, int&gt; &gt; a;
+bool vis[N];
+int l[N], r[N];
+
+struct Node {
+    int l, r, sub;
+    Node(int l = 0, int r = 0, int sub = 0) : l(l), r(r), sub(sub) { }
+};
+
+struct cmp {
+    bool operator () (Node a, Node b){
+        if (a.sub == b.sub) {
+            if (a.l == b.l) {
+                return a.r &gt; b.r;
+            }
+            return a.l &gt; b.l;
+        }
+        return a.sub &gt; b.sub;
+    }
+};
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        string s;   int x;
+        cin &gt;&gt; s &gt;&gt; x;
+        a.emplace_back(make_pair(s == &quot;B&quot;, x));
+        l[i] = i - 1;   r[i] = i + 1;
+    }
+    r[n - 1] = -1;
+    priority_queue&lt;Node, vector&lt;Node&gt;, cmp&gt; pq;
+    for (int i = 1; i&lt; n; i++) {
+        if (a[i - 1].first ^ a[i].first) {
+            pq.push(Node(i - 1, i, abs(a[i - 1].second - a[i].second)));
+        }
+    }
+    while (pq.size()) {
+        auto x = pq.top();  pq.pop();
+        if (vis[x.l] || vis[x.r]) continue;
+        ans.emplace_back(make_pair(x.l, x.r));
+        vis[x.l] = vis[x.r] = true;
+        int ll = l[x.l], rr = r[x.r];
+        if (~ll &amp;&amp; ~rr) {
+            r[ll] = rr;
+            l[rr] = ll;
+            if (a[ll].first ^ a[rr].first) {
+                pq.push(Node(ll, rr, abs(a[ll].second - a[rr].second)));
+            }
+        }
+    }
+    cout &lt;&lt; ans.size() &lt;&lt; &quot;\n&quot;;
+    for (auto x : ans) {
+        cout &lt;&lt; x.first + 1 &lt;&lt; &quot; &quot; &lt;&lt; x.second + 1 &lt;&lt; &quot;\n&quot;;
+    }
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/51nod-3188/">
+                  <h3 class="post-title">
+                    51Nod-3188 字符王国 题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>51Nod-1289 大鱼吃小鱼 题解 | 鸽子屋</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://greydoveh.github.io/favicon.ico?v=1649749273714">
+<link rel="stylesheet" href="https://greydoveh.github.io/styles/main.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="51Nod-1289 大鱼吃小鱼 题解
+大鱼吃小鱼
+题目概述
+
+有N条鱼每条鱼的位置及大小均不同，他们沿着X轴游动，有的向左，有的向右。游动的速度是一样的，两条鱼相遇大鱼会吃掉小鱼。从左到右给出每条鱼的大小和游动的方向（0表示向左，1表示向..." />
+    <meta name="keywords" content="算法题解" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://greydoveh.github.io">
+        <img src="https://greydoveh.github.io/images/avatar.png?v=1649749273714" class="site-logo">
+        <h1 class="site-title">鸽子屋</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+        
+          <a href="/post/friend" class="site-nav">
+            友链
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/greydoveh" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      咕咕咕
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://greydoveh.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">51Nod-1289 大鱼吃小鱼 题解</h2>
+            <div class="post-date">2022-04-12</div>
+            
+              <div class="feature-container" style="background-image: url('https://greydoveh.github.io/post-images/51nod-1289.jpg')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="51nod-1289-大鱼吃小鱼-题解">51Nod-1289 大鱼吃小鱼 题解</h1>
+<p><a href="https://www.51nod.com/Challenge/Problem.html#problemId=1289">大鱼吃小鱼</a></p>
+<h3 id="题目概述">题目概述</h3>
+<blockquote>
+<p>有N条鱼每条鱼的位置及大小均不同，他们沿着X轴游动，有的向左，有的向右。游动的速度是一样的，两条鱼相遇大鱼会吃掉小鱼。从左到右给出每条鱼的大小和游动的方向（0表示向左，1表示向右）。问足够长的时间之后，能剩下多少条鱼？</p>
+</blockquote>
+<h3 id="思路分析">思路分析</h3>
+<blockquote>
+<p>用栈去维护向右移动的鱼</p>
+<p>从左到右遍历，如果碰到向左的鱼，则判断鱼的大小与栈顶元素的关系，</p>
+<p>如果栈顶的鱼更大，则忽略这条鱼（被栈顶吃掉），否则栈顶的鱼被吃掉退栈</p>
+<p>一直到栈为空或者栈顶鱼大于这条向左的鱼</p>
+<p>如果栈为空，则这条鱼活了下来，左边的其他鱼都被吃掉了</p>
+<p>否则栈中剩余的鱼存活，这条向左的鱼被吃掉</p>
+<p>最后记录向左移动存活的鱼（栈为空时计数）和向右移动存活的鱼（遍历到最后栈中剩下的鱼）</p>
+</blockquote>
+<h3 id="ac代码">AC代码</h3>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long llong;
+const int N = 2e5 + 5;
+const int MOD = 1e9 + 7;
+llong n;
+int a[N], b[N];
+
+int main() {
+    #ifdef LOCAL
+        freopen(&quot;D:/Code/ACM/in.in&quot;, &quot;r&quot;, stdin);
+        freopen(&quot;D:/Code/ACM/out.out&quot;, &quot;w&quot;, stdout);
+    #endif
+    cin.tie(0)-&gt;sync_with_stdio(0);
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        cin &gt;&gt; a[i] &gt;&gt; b[i];
+    }
+    int ans = 0;
+    stack&lt;int&gt; st;
+    for (int i = 0; i &lt; n; i++) {
+        if (b[i]) {
+            st.push(i);
+        } else {
+            while (st.size() &amp;&amp; a[i] &gt; a[st.top()]) {
+                st.pop();
+            }
+            if (st.empty()) {
+                ans++;
+            }
+        }
+    }
+    ans += st.size();
+    cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
+    return 0;
+}
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://greydoveh.github.io/tag/QFHf-zTAc/" class="tag">
+                    算法题解
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://greydoveh.github.io/post/51nod-2488/">
+                  <h3 class="post-title">
+                    51Nod-2488 矩形并的面积 题解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
