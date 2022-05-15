@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://greydoveh.github.io</id>
     <title>鸽子屋</title>
-    <updated>2022-04-12T07:41:15.781Z</updated>
+    <updated>2022-05-15T12:51:00.612Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://greydoveh.github.io"/>
     <link rel="self" href="https://greydoveh.github.io/atom.xml"/>
@@ -10,6 +10,288 @@
     <logo>https://greydoveh.github.io/images/avatar.png</logo>
     <icon>https://greydoveh.github.io/favicon.ico</icon>
     <rights>All rights reserved 2022, 鸽子屋</rights>
+    <entry>
+        <title type="html"><![CDATA[校赛A题 题解]]></title>
+        <id>https://greydoveh.github.io/post/ACM-A/</id>
+        <link href="https://greydoveh.github.io/post/ACM-A/">
+        </link>
+        <updated>2022-05-15T12:50:22.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="a-english-problem">A. English Problem</h1>
+<h3 id="题目解释">题目解释</h3>
+<p>既然是英文题那就简单解释一下题意好了。<br>
+给你两个整数n和k，你要构造一个长度为N且每个数互不相同的数组，满足的条件如下：</p>
+<ol>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn><mo>≤</mo><msub><mi>a</mi><mi>i</mi></msub><mo>≤</mo><mn>1</mn><msup><mn>0</mn><mn>6</mn></msup></mrow><annotation encoding="application/x-tex">2 \leq a_i \leq 10^6</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.7859700000000001em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8141079999999999em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord"><span class="mord">0</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">6</span></span></span></span></span></span></span></span></span></span></span></li>
+<li>所有元素的最小素因子的异或是一个小于等于k的素数</li>
+</ol>
+<h3 id="思路">思路</h3>
+<p>难度定义是cf div2的A题（或者不超过B）</p>
+<p>偶数的最小素因子一定是2</p>
+<ol>
+<li>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>是奇数的情况，可以构造<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>个偶数，他们的最小素因子的异或一定为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></li>
+<li>对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi></mrow><annotation encoding="application/x-tex">n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">n</span></span></span></span>是偶数的情况，可以先构造<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">n-2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>个偶数（异或结果为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span>），再构造两个异或起来是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>的素数即可，如<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>5</mn><mo>⊕</mo><mn>7</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">5 \oplus 7 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">5</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⊕</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">7</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>17</mn><mo>⊕</mo><mn>19</mn><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">17 \oplus 19 = 2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">7</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">⊕</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">9</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span></li>
+</ol>
+<p><s>（所以对于正解来说k是没用的，题目只是限制大家的构造尽可能小）</s></p>
+<h3 id="std">std</h3>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+using namespace std;
+const int MOD = 1e9 + 7;
+int n, k;
+
+int main() {
+    int T = 1;  cin &gt;&gt; T;
+    while (T--) {
+        cin &gt;&gt; n &gt;&gt; k;
+        if (n &amp; 1) {
+            for (int i = 1; i &lt;= n; i++) {
+                cout &lt;&lt; 2 * i &lt;&lt; &quot; &quot;;
+            }
+        } else {
+            for (int i = 1; i &lt;= n - 2; i++) {
+                cout &lt;&lt; 2 * i &lt;&lt; &quot; &quot;;
+            }
+            cout &lt;&lt; &quot;5 7 &quot;;
+        }   
+        cout &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[校赛B题 题解]]></title>
+        <id>https://greydoveh.github.io/post/ACM-B/</id>
+        <link href="https://greydoveh.github.io/post/ACM-B/">
+        </link>
+        <updated>2022-05-15T12:49:45.000Z</updated>
+        <content type="html"><![CDATA[<h1 id="b-辉哥的像素画">B. 辉哥的像素画</h1>
+<h3 id="思路">思路</h3>
+<p>问题可以转化为，给定一个三角形，判断某个点是否在三角形内。然后遍历每个点就好</p>
+<p>有三种方法：</p>
+<ol>
+<li>向量叉积法：
+<ul>
+<li>主要利用向量叉积的方向性，如果一个点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>在三角形<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mi>B</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">ABC</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>内部，那一定满足：</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>A</mi><mi>B</mi></mrow><mo>⃗</mo></mover><mo>∗</mo><mover accent="true"><mrow><mi>A</mi><mi>P</mi></mrow><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{AB} * \vec{AP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>B</mi><mi>C</mi></mrow><mo>⃗</mo></mover><mo>∗</mo><mover accent="true"><mrow><mi>B</mi><mi>P</mi></mrow><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{BC} * \vec{BP}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mover accent="true"><mrow><mi>C</mi><mi>A</mi></mrow><mo>⃗</mo></mover><mo>∗</mo><mover accent="true"><mrow><mi>C</mi><mi>A</mi></mrow><mo>⃗</mo></mover></mrow><annotation encoding="application/x-tex">\vec{CA}*\vec{CA}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">A</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.9663299999999999em;vertical-align:0em;"></span><span class="mord accent"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.9663299999999999em;"><span style="top:-3em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.07153em;">C</span><span class="mord mathdefault">A</span></span></span><span style="top:-3.25233em;"><span class="pstrut" style="height:3em;"></span><span class="accent-body" style="left:-0.2355em;"><span class="overlay" style="height:0.714em;width:0.471em;"><svg width='0.471em' height='0.714em' style='width:0.471em' viewBox='0 0 471 714' preserveAspectRatio='xMinYMin'><path d='M377 20c0-5.333 1.833-10 5.5-14S391 0 397 0c4.667 0 8.667 1.667 12 5
+3.333 2.667 6.667 9 10 19 6.667 24.667 20.333 43.667 41 57 7.333 4.667 11
+10.667 11 18 0 6-1 10-3 12s-6.667 5-14 9c-28.667 14.667-53.667 35.667-75 63
+-1.333 1.333-3.167 3.5-5.5 6.5s-4 4.833-5 5.5c-1 .667-2.5 1.333-4.5 2s-4.333 1
+-7 1c-4.667 0-9.167-1.833-13.5-5.5S337 184 337 178c0-12.667 15.667-32.333 47-59
+H213l-171-1c-8.667-6-13-12.333-13-19 0-4.667 4.333-11.333 13-20h359
+c-16-25.333-24-45-24-59z'/></svg></span></span></span></span></span></span></span></span></span></span>三个向量同向（其中<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>∗</mo></mrow><annotation encoding="application/x-tex">*</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.46528em;vertical-align:0em;"></span><span class="mord">∗</span></span></span></span>指向量的叉积，可能有多种写法，注意<strong>方向性</strong>，自己比划一下）</li>
+</ul>
+</li>
+<li>直线公式法：
+<ul>
+<li>叉积没学好的同学可以用直线公式法，这也是比赛中很多同学提交并且WA掉的方法，主要需要注意因为<strong>斜率可能不存在</strong>，而且可能产生浮点数导致精度爆炸，所以建议使用直线一般式，同时把分母约掉</li>
+<li>具体的方法就是判断<strong>P、A在直线BC同侧</strong>，<strong>P、B在直线AC同侧</strong>，<strong>P、C在直线AB同侧</strong>，则说明<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>在三角形<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mi>B</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">ABC</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>内，只要有一个在异侧，说明在三角形外</li>
+</ul>
+</li>
+<li>面积法：
+<ul>
+<li>如果<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>S</mi><mrow><mi>A</mi><mi>B</mi><mi>C</mi></mrow></msub><mo>=</mo><msub><mi>S</mi><mrow><mi>P</mi><mi>A</mi><mi>B</mi></mrow></msub><mo>+</mo><msub><mi>S</mi><mrow><mi>P</mi><mi>A</mi><mi>C</mi></mrow></msub><mo>+</mo><msub><mi>S</mi><mrow><mi>P</mi><mi>B</mi><mi>C</mi></mrow></msub></mrow><annotation encoding="application/x-tex">S_{ABC}=S_{PAB} + S_{PAC} + S_{PBC}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">A</span><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight">A</span><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight">A</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05764em;">S</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.32833099999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.05764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">P</span><span class="mord mathdefault mtight" style="margin-right:0.05017em;">B</span><span class="mord mathdefault mtight" style="margin-right:0.07153em;">C</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，则说明<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>P</mi></mrow><annotation encoding="application/x-tex">P</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span></span></span></span>点在三角形<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi><mi>B</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">ABC</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span>内部</li>
+<li>需要注意的是如果使用面积可能会因为<strong>浮点数的精度</strong>问题导致WA，尤其是使用海伦公式计算面积要经过两次开根号；所以建议使用坐标计算面积（可以使用叉积算面积或者直接推导面积公式），由于坐标点都是整数，使用坐标计算面积时，除了最后有一个除以2不存在除法或根号等产生浮点数的运算，所以可以通过计算<strong>面积的2倍</strong>来完全避开浮点精度产生的问题，不使用二倍面积去判断也可以通过，稍微控制下精度就好。</li>
+</ul>
+</li>
+</ol>
+<h3 id="std">std</h3>
+<h4 id="std1cpp向量叉乘法">std1.cpp(向量叉乘法)</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+using namespace std;
+typedef long long llong;
+const int MOD = 1e9 + 7;
+const int N = 1e3 + 5;
+
+struct Point {
+    typedef Point Vector;
+    int x, y, z;
+    Point(int x = 0, int y = 0, int z = 0) : x(x), y(y), z(z) { }
+    Vector operator - (const Point&amp; b) const {
+        return Point(b.x - x, b.y - y, b.z - z);
+    }
+    Vector operator * (const Point&amp; b) const {  // 向量叉乘
+        return Point(y * b.z - b.y * z, z * b.x - x * b.z, x * b.y - y * b.x);
+    }
+};
+typedef Point Vector;
+
+int n, k;
+Point p[5];
+Vector v[5];
+int s[5];
+
+bool judge(const Point&amp; pp) {
+    for (int i = 0; i &lt; 3; i++) {
+        s[i] = (v[i] * (pp - p[i])).z;
+    }
+    return (s[0] &gt;= 0 &amp;&amp; s[1] &gt;= 0 &amp;&amp; s[2] &gt;= 0) || (s[0] &lt;= 0 &amp;&amp; s[1] &lt;= 0 &amp;&amp; s[2] &lt;= 0);
+}
+
+int main() {
+    int n;  cin &gt;&gt; n;
+    for (int i = 0; i &lt; 3; i++) {
+        cin &gt;&gt; p[i].x &gt;&gt; p[i].y;
+    }
+    p[3] = p[0];    // 这里不写也可以，只是后面p[i+1]要写成p[(i+1)%3]
+    for (int i = 0; i &lt; 3; i++) {
+        v[i] = p[i + 1] - p[i];
+    }
+    for (int y = n - 1; y &gt;= 0; y--) {
+        for (int x = 0; x &lt; n; x++) {
+            if (judge(Point(x, y))) {
+                cout &lt;&lt; &quot;*&quot;;
+            } else {
+                cout &lt;&lt; &quot;.&quot;;
+            }
+        }   cout &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h4 id="std2cpp直线公式法">std2.cpp(直线公式法)</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;iostream&gt;
+using namespace std;
+typedef long long llong;
+const int MOD = 1e9 + 7;
+const int N = 1e3 + 5;
+
+struct Point {
+    int x, y;
+    Point(int x = 0, int y = 0) : x(x), y(y) { }
+};
+
+struct Lines {
+    int a, b, c;    // 直线一般式的三个参数ABC, Ax+By+C=0
+    Lines(int a = 0, int b = 0, int c = 0) : a(a), b(b), c(c) { }
+    Lines(const Point&amp; p1, const Point&amp; p2) {   // 通过p1和p2两点的直线方程，手算很容易算出来
+        a = p1.y - p2.y;
+        b = p2.x - p1.x;
+        c = p1.x * p2.y - p1.y * p2.x;
+    }
+    int side(const Point&amp; p) const {    
+        int t = a * p.x + b * p.y + c;
+        return t &gt; 0 ? 1 : (t == 0 ? 0 : -1);
+        // 这里返回符号而不是原值，避免后面乘法爆int
+    }
+};
+
+int n, k;
+Point p[5];
+Lines l[5];
+
+bool judge(const Point&amp; pp) {
+    if (l[0].side(pp) * l[0].side(p[2]) &lt; 0)  return false;
+    if (l[1].side(pp) * l[1].side(p[0]) &lt; 0)  return false;
+    if (l[2].side(pp) * l[2].side(p[1]) &lt; 0)  return false;
+    return true;
+}
+
+int main() {
+    int n;  cin &gt;&gt; n;
+    for (int i = 0; i &lt; 3; i++) {
+        cin &gt;&gt; p[i].x &gt;&gt; p[i].y;
+    }
+    p[3] = p[0];
+    for (int i = 0; i &lt; 3; i++) {
+        l[i] = Lines(p[i], p[i + 1]);
+    }
+    for (int y = n - 1; y &gt;= 0; y--) {
+        for (int x = 0; x &lt; n; x++) {
+            if (judge(Point(x, y))) {
+                cout &lt;&lt; &quot;*&quot;;
+            } else {
+                cout &lt;&lt; &quot;.&quot;;
+            }
+        }   cout &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+<h4 id="std3cpp面积法">std3.cpp(面积法)</h4>
+<pre><code class="language-cpp">#include &lt;cstdio&gt;
+#include &lt;cmath&gt;
+#include &lt;vector&gt;
+#include &lt;iostream&gt;
+using namespace std;
+typedef long long llong;
+const int MOD = 1e9 + 7;
+const int N = 1e3 + 5;
+
+struct Point {
+    int x, y;
+    Point(int x = 0, int y = 0) : x(x), y(y) { }
+};
+
+int n, k;
+Point p[5];
+
+int getTwiceArea(Point a, Point b, Point c) {   // 二倍的面积，可以通过坐标直接算，也可以用叉积算
+    return abs((a.x - b.x) * (a.y - c.y) - (a.y - b.y) * (a.x - c.x));
+}
+
+bool judge(const Point&amp; pp) {
+    int ans1 = getTwiceArea(p[0], p[1], p[2]);
+    int ans2 = 0;
+    for (int i = 0; i &lt; 3; i++) {
+        ans2 += getTwiceArea(pp, p[i], p[i + 1]);
+    }
+    return ans1 == ans2;
+}
+
+int main() {
+    int n;  cin &gt;&gt; n;
+    for (int i = 0; i &lt; 3; i++) {
+        cin &gt;&gt; p[i].x &gt;&gt; p[i].y;
+    }
+    p[3] = p[0];
+    for (int y = n - 1; y &gt;= 0; y--) {
+        for (int x = 0; x &lt; n; x++) {
+            if (judge(Point(x, y))) {
+                cout &lt;&lt; &quot;*&quot;;
+            } else {
+                cout &lt;&lt; &quot;.&quot;;
+            }
+        }   cout &lt;&lt; endl;
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[51Nod-2071 不相交子区间 题解]]></title>
         <id>https://greydoveh.github.io/post/51nod-2071/</id>
@@ -609,102 +891,6 @@ int main() {
     }
     cout &lt;&lt; ans &lt;&lt; &quot;\n&quot;;
     return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[C#学习笔记合集]]></title>
-        <id>https://greydoveh.github.io/post/CS-Learning/</id>
-        <link href="https://greydoveh.github.io/post/CS-Learning/">
-        </link>
-        <updated>2022-03-27T05:08:17.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="c学习笔记-目录">C#学习笔记 - 目录</h1>
-<div class="archives-container">
-<article class="post">
-<a href = "https://greydoveh.github.io/post/CS-Enum/">
-<h2 class="post-title">枚举</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Array/">
-<h2 class="post-title">数组</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Delegate-Lambda-Event/">
-<h2 class="post-title">委托、匿名方法、事件</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Interface/">
-<h2 class="post-title">接口</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Convert/">
-<h2 class="post-title">转换</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Generic/">
-<h2 class="post-title">泛型</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-ENumerator-Iterator/">
-<h2 class="post-title">枚举器和迭代器</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-DLL-EXE-Namespace/">
-<h2 class="post-title">命名空间和程序集</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Preprocess/">
-<h2 class="post-title">预处理指令</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-Reflection-Attribute/">
-<h2 class="post-title">反射和特性</h2>
-</a>
-<a href = "https://greydoveh.github.io/post/CS-sth/">
-<h2 class="post-title">杂</h2>
-</a>
-</article>
-</div>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[LeetCode 918.环形数组的最大和]]></title>
-        <id>https://greydoveh.github.io/post/leetcode-918/</id>
-        <link href="https://greydoveh.github.io/post/leetcode-918/">
-        </link>
-        <updated>2022-02-16T03:50:14.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="leetcode-918环形数组的最大和">LeetCode 918.环形数组的最大和</h1>
-<p><a href="https://leetcode-cn.com/problems/maximum-sum-circular-subarray/">题目链接</a></p>
-<h3 id="思路">思路</h3>
-<p>思路和<a href="https://leetcode-cn.com/problems/maximum-subarray/">LeetCode 53.最大子数组和</a>类似<br>
-在原题基础上，先求中间一段最大子数组和ans1，容易知道ans1是<strong>不跨越原点的最大值</strong><br>
-然后再求一个<strong>跨越原点的最大值</strong><br>
-这个思路和上面的反过来，先求中间一段<strong>最小子数组和</strong>ans2，然后用<strong>总和减去该最小子数组和</strong>，得到的即是<strong>跨越两边的最大值</strong>sum[n] - ans2<br>
-最后<strong>两者取最大值</strong>返回max(ans1, sum[n] - ans2);</p>
-<blockquote>
-<p>注意一个特殊情况，当整个数组全为负数的时候，最小子数组和为整个数组的和，会导致返回的值为0，此时取得是一个空的子数组，但是题目要求要的是一个<strong>非空</strong>子数组的和，所以要判断一下左右边界</p>
-</blockquote>
-<h3 id="代码">代码</h3>
-<pre><code class="language-csharp">public class Solution {
-    public int MaxSubarraySumCircular(int[] nums) {
-        int[] sum = new int [nums.Length + 1];
-        for (int i = 1; i &lt; sum.Length; i++) {
-            sum[i] = sum[i - 1] + nums[i - 1];
-        }
-        int min = sum[0], ans1 = int.MinValue;
-        for (int i = 1; i &lt; sum.Length; i++) {
-            ans1 = Math.Max(ans1, sum[i] - min);
-            min = Math.Min(sum[i], min);
-        }
-        int max = sum[0], ans2 = int.MaxValue, l = 0, r = 0, maxIndex = 0;
-        for (int i = 1; i &lt; sum.Length; i++) {
-            if (ans2 &gt; sum[i] - max) {
-                r = i;
-                l = maxIndex;
-                ans2 = sum[i] - max;
-            }
-            if (sum[i] &gt; max) {
-                max = sum[i];
-                maxIndex = i;
-            }
-        }
-        if (l == 0 &amp;&amp; r == sum.Length - 1) {
-            return ans1;
-        }
-        return Math.Max(ans1, sum[sum.Length - 1] - ans2);
-    }
 }
 </code></pre>
 ]]></content>
